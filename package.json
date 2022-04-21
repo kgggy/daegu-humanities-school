@@ -17,6 +17,9 @@
   },
   "homepage": "https://github.com/Resoft-kr/Daegu-inmun-server-app#readme",
   "dependencies": {
-    "express": "^4.17.3"
+    "express": "^4.17.3",
+    "tui-grid": "^4.21.0",
+    "winston": "^3.7.2",
+    "winston-daily-rotate-file": "^4.6.1"
   }
 }

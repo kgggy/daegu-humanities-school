@@ -9,7 +9,7 @@ const session = require('express-session');
 
 const app = express(); //express 패키지 호출, app변수 객체 생성. => app객체에 기능 하나씩 연결.
 
-const routes = require('./routes');
+const routes = require('./routes/api');
 const adminRoutes = require('./routes/admin_api');
 
 // view engine setup
