@@ -6,7 +6,7 @@ const multer = require("multer");
 const path = require('path');
 const fs = require('fs');
 
-var models = require('../../models');
+//var models = require('../../models');
 var connection = require('../../config/db').conn;
 
 //파일업로드 모듈
