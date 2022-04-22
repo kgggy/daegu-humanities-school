@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var connection = require('../../config/db').conn;
+var connection = require('../../../config/db').conn;
 
 //갤러리 글 전체 목록 조회
 router.get('/', async (req, res) => {
