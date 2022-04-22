@@ -1,13 +1,14 @@
 var express = require('express');
 var router = express.Router();
-var connection = require('../../config/db').conn;
+var connection = require('../../../config/db').conn;
 
 //이름, 전화번호로 회원 유무 검색
 router.post('/', async (req, res) => {
     try {
-        const sql = "select * from user where userName = ? and userPhone1 = ? and userPhone2 = ? and userPhone3 = ?";
-        const param = [req.body.userName, req.body.userPhone1, req.body.userPhone2, req.body.userPhone3];
+        const sql = "select * from user where userName = ? and userPhone = ?";
+        const param = [req.body.userName, req.body.userPhone];
         connection.query(sql, param, (err, results) => {
+            console.log(results);
             if (err) {
                 console.log(err);
             }
