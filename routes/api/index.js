@@ -5,47 +5,47 @@ const router = express.Router();
 
 const greeting = require('./greeting.js');
 const userSelect = require('./user/userSelect.js')
-const userInfoUpdate = require('./user/userInfoUpdate.js')
 const mypageUpdate = require('./user/mypageUpdate.js');
 const mypageSelectOne = require('./user/mypageSelectOne.js')
-const notice = require('./notice.js');
-const gallery = require('./gallery.js');
-const refer = require('./refer.js');
-const support = require('./support.js');
-const comment = require('./comment.js');
+const banner = require('./banner/banner.js');
 const others = require('./others.js');
-const board = require('./board.js');
-const login = require('./login.js');
-const like = require('./like.js');
-const event = require('./event.js');
-const hit = require('./hit.js');
-const blame = require('./blame.js');
+const login = require('./login/login.js');
+const event = require('./vote/voteSelect.js');
 const boardMain = require('./board/boardMain.js');
 const boardSelect = require('./board/boardSelect.js');
 const boardSelectOne = require('./board/boardSelectOne.js');
 const boardHitSelect = require('./board/boardHitSelect.js');
+const presidentSelect = require('./president/presidentSelect.js');
+const eventSelect = require('./event/eventSelect.js');
+const voteAttend = require('./vote/voteAttend.js');
+const voteSelect = require('./vote/voteSelect.js');
+const cmtSelect = require('./comment/cmtSelect.js');
+const cmtInsert = require('./comment/cmtInsert.js');
+const cmtDelete = require('./comment/cmtDelete.js');
+const rcmdUpdate = require('./recommend/rcmdUpdate.js');
+const rcmdSelect = require('./recommend/rcmdSelect.js');
+const blame = require('./blame/blame.js');
 
 router.use('/greeting', greeting);
-router.use('/userInfoUpdate', userInfoUpdate);
 router.use('/userSelect', userSelect);
 router.use('/mypageUpdate', mypageUpdate);
 router.use('/mypageSelectOne', mypageSelectOne);
-router.use('/notice', notice);
-router.use('/gallery', gallery);
-router.use('/refer', refer);
-router.use('/support', support);
-router.use('/comment', comment);
+router.use('/banner', banner);
 router.use('/others', others);
-router.use('/board', board);
 router.use('/login', login);
-router.use('/like', like);
-router.use('/event', event);
-router.use('/hit', hit);
-router.use('/blame', blame);
+router.use('/eventSelect', eventSelect);
 router.use('/boardSelect', boardSelect);
 router.use('/boardSelectOne', boardSelectOne);
 router.use('/boardMain', boardMain);
 router.use('/boardHitSelect', boardHitSelect);
-
+router.use('/presidentSelect', presidentSelect);
+router.use('/voteAttend', voteAttend);
+router.use('/voteSelect', voteSelect);
+router.use('/cmtSelect', cmtSelect);
+router.use('/cmtInsert', cmtInsert);
+router.use('/cmtDelete', cmtDelete);
+router.use('/rcmdUpdate', rcmdUpdate);
+router.use('/rcmdSelect', rcmdSelect);
+router.use('/blame', blame);
 
 module.exports = router;
