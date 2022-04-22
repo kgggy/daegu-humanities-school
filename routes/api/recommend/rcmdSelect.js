@@ -1,14 +1,14 @@
 var express = require('express');
 var router = express.Router();
-var connection = require('../../config/db').conn;
+var connection = require('../../../config/db').conn;
 
-//조회한 사람 목록보기
-router.get('/hitUserList', async (req, res) => {
+//좋아요한 유저목록 조회
+router.get('/', async (req, res) => {
     const param = req.query.boardId;
     try {
-        const sql = "select u.uid, u.userName, u.userImg\
-                       from hitCount h\
-                  left join user u on u.uid = h.uid\
+        const sql = "select r.rcmdId, r.boardId, u.userName, u.uid, u.userImg\
+                       from recommend r\
+                  left join user u on r.uid = u.uid\
                       where boardId = ? and u.uid < 10000";
         let likeUsers;
         connection.query(sql, param, (err, result) => {
@@ -25,7 +25,5 @@ router.get('/hitUserList', async (req, res) => {
         res.status(401).send(error.message);
     }
 });
-
-
 
 module.exports = router;

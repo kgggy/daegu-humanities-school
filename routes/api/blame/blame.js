@@ -1,8 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
-// DB 커넥션 생성
-var connection = require('../../config/db').conn;
+var connection = require('../../../config/db').conn;
 
 //신고하기
 router.get('/', async (req, res) => {
