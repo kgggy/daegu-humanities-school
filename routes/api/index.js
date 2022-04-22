@@ -10,7 +10,6 @@ const mypageSelectOne = require('./user/mypageSelectOne.js')
 const banner = require('./banner/banner.js');
 const others = require('./others.js');
 const login = require('./login/login.js');
-const event = require('./vote/voteSelect.js');
 const boardMain = require('./board/boardMain.js');
 const boardSelect = require('./board/boardSelect.js');
 const boardSelectOne = require('./board/boardSelectOne.js');
