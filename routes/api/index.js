@@ -4,8 +4,10 @@ const router = express.Router();
 
 
 const greeting = require('./greeting.js');
-const user = require('./user.js')
-const mypage = require('./mypage.js');
+const userSelect = require('./user/userSelect.js')
+const userInfoUpdate = require('./user/userInfoUpdate.js')
+const mypageUpdate = require('./user/mypageUpdate.js');
+const mypageSelectOne = require('./user/mypageSelectOne.js')
 const notice = require('./notice.js');
 const gallery = require('./gallery.js');
 const refer = require('./refer.js');
@@ -18,10 +20,16 @@ const like = require('./like.js');
 const event = require('./event.js');
 const hit = require('./hit.js');
 const blame = require('./blame.js');
+const boardMain = require('./board/boardMain.js');
+const boardSelect = require('./board/boardSelect.js');
+const boardSelectOne = require('./board/boardSelectOne.js');
+const boardHitSelect = require('./board/boardHitSelect.js');
 
 router.use('/greeting', greeting);
-router.use('/user', user);
-router.use('/mypage', mypage);
+router.use('/userInfoUpdate', userInfoUpdate);
+router.use('/userSelect', userSelect);
+router.use('/mypageUpdate', mypageUpdate);
+router.use('/mypageSelectOne', mypageSelectOne);
 router.use('/notice', notice);
 router.use('/gallery', gallery);
 router.use('/refer', refer);
@@ -34,7 +42,10 @@ router.use('/like', like);
 router.use('/event', event);
 router.use('/hit', hit);
 router.use('/blame', blame);
-
+router.use('/boardSelect', boardSelect);
+router.use('/boardSelectOne', boardSelectOne);
+router.use('/boardMain', boardMain);
+router.use('/boardHitSelect', boardHitSelect);
 
 
 module.exports = router;
