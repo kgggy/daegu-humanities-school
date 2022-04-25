@@ -24,6 +24,7 @@ const cmtDelete = require('./comment/cmtDelete.js');
 const rcmdUpdate = require('./recommend/rcmdUpdate.js');
 const rcmdSelect = require('./recommend/rcmdSelect.js');
 const blame = require('./blame/blame.js');
+const infoUpdate = require('./user/infoUpdate.js');
 
 router.use('/greeting', greeting);
 router.use('/userSelect', userSelect);
@@ -46,5 +47,6 @@ router.use('/cmtDelete', cmtDelete);
 router.use('/rcmdUpdate', rcmdUpdate);
 router.use('/rcmdSelect', rcmdSelect);
 router.use('/blame', blame);
+router.use('/infoUpdate', infoUpdate);
 
 module.exports = router;
