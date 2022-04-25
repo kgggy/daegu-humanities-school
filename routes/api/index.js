@@ -10,7 +10,6 @@ const mypageSelectOne = require('./user/mypageSelectOne.js')
 const banner = require('./banner/banner.js');
 const others = require('./others.js');
 const login = require('./login/login.js');
-const event = require('./vote/voteSelect.js');
 const boardMain = require('./board/boardMain.js');
 const boardSelect = require('./board/boardSelect.js');
 const boardSelectOne = require('./board/boardSelectOne.js');
@@ -25,6 +24,7 @@ const cmtDelete = require('./comment/cmtDelete.js');
 const rcmdUpdate = require('./recommend/rcmdUpdate.js');
 const rcmdSelect = require('./recommend/rcmdSelect.js');
 const blame = require('./blame/blame.js');
+const infoUpdate = require('./user/infoUpdate.js');
 
 router.use('/greeting', greeting);
 router.use('/userSelect', userSelect);
@@ -47,5 +47,6 @@ router.use('/cmtDelete', cmtDelete);
 router.use('/rcmdUpdate', rcmdUpdate);
 router.use('/rcmdSelect', rcmdSelect);
 router.use('/blame', blame);
+router.use('/infoUpdate', infoUpdate);
 
 module.exports = router;
