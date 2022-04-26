@@ -2,11 +2,11 @@ const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const logger = require('morgan');
+const morgan = require('morgan');
 const expressLayouts = require('express-ejs-layouts');
 const ejs = require('ejs');
 const session = require('express-session');
-
+const winston = require('./config/winston'); 
 const app = express(); //express 패키지 호출, app변수 객체 생성. => app객체에 기능 하나씩 연결.
 
 const routes = require('./routes/api');
@@ -17,7 +17,7 @@ const adminRoutes = require('./routes/admin_api');
 // app.set('view engine', 'pug');
 
 //app.use => 미들웨어 연결
-app.use(logger('dev')); //요청에 대한 정보 출력
+app.use(morgan('dev')); //요청에 대한 정보 출력
 app.use(express.json());
 app.use(express.urlencoded({
   extended: true
