@@ -158,3 +158,95 @@
 [31m    at next (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\express\lib\router\index.js:275:10)[39m
 [31m    at Function.handle (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\express\lib\router\index.js:174:3)[39m
 [31m    at router (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\express\lib\router\index.js:47:12)[39m
+ 2022-04-26 13:04:78 || [ [31merror[39m ] ▶ [31muncaughtException: Cannot find module './m_board.js'[39m
+[31mRequire stack:[39m
+[31m- C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\routes\admin_api\index.js[39m
+[31m- C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\app.js[39m
+[31m- C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\bin\www[39m
+[31mError: Cannot find module './m_board.js'[39m
+[31mRequire stack:[39m
+[31m- C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\routes\admin_api\index.js[39m
+[31m- C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\app.js[39m
+[31m- C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\bin\www[39m
+[31m    at Function.Module._resolveFilename (node:internal/modules/cjs/loader:933:15)[39m
+[31m    at Function.Module._load (node:internal/modules/cjs/loader:778:27)[39m
+[31m    at Module.require (node:internal/modules/cjs/loader:1005:19)[39m
+[31m    at require (node:internal/modules/cjs/helpers:102:18)[39m
+[31m    at Object.<anonymous> (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\routes\admin_api\index.js:8:17)[39m
+[31m    at Module._compile (node:internal/modules/cjs/loader:1101:14)[39m
+[31m    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1153:10)[39m
+[31m    at Module.load (node:internal/modules/cjs/loader:981:32)[39m
+[31m    at Function.Module._load (node:internal/modules/cjs/loader:822:12)[39m
+[31m    at Module.require (node:internal/modules/cjs/loader:1005:19)[39m
+ 2022-04-26 13:04:84 || [ [31merror[39m ] ▶ [31muncaughtException: Cannot read properties of undefined (reading 'length')[39m
+[31mTypeError: Cannot read properties of undefined (reading 'length')[39m
+[31m    at Query.<anonymous> (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\routes\admin_api\m_board.js:81:43)[39m
+[31m    at Query.<anonymous> (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\Connection.js:526:10)[39m
+[31m    at Query._callback (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\Connection.js:488:16)[39m
+[31m    at Query.Sequence.end (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\protocol\sequences\Sequence.js:83:24)[39m
+[31m    at Query.ErrorPacket (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\protocol\sequences\Query.js:92:8)[39m
+[31m    at Protocol._parsePacket (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\protocol\Protocol.js:291:23)[39m
+[31m    at Parser._parsePacket (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\protocol\Parser.js:433:10)[39m
+[31m    at Parser.write (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\protocol\Parser.js:43:10)[39m
+[31m    at Protocol.write (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\protocol\Protocol.js:38:16)[39m
+[31m    at Socket.<anonymous> (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\Connection.js:88:28)[39m
+ 2022-04-26 13:04:12 || [ [31merror[39m ] ▶ [31muncaughtException: Cannot read properties of undefined (reading 'length')[39m
+[31mTypeError: Cannot read properties of undefined (reading 'length')[39m
+[31m    at Query.<anonymous> (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\routes\admin_api\m_board.js:81:43)[39m
+[31m    at Query.<anonymous> (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\Connection.js:526:10)[39m
+[31m    at Query._callback (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\Connection.js:488:16)[39m
+[31m    at Query.Sequence.end (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\protocol\sequences\Sequence.js:83:24)[39m
+[31m    at Query.ErrorPacket (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\protocol\sequences\Query.js:92:8)[39m
+[31m    at Protocol._parsePacket (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\protocol\Protocol.js:291:23)[39m
+[31m    at Parser._parsePacket (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\protocol\Parser.js:433:10)[39m
+[31m    at Parser.write (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\protocol\Parser.js:43:10)[39m
+[31m    at Protocol.write (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\protocol\Protocol.js:38:16)[39m
+[31m    at Socket.<anonymous> (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\Connection.js:88:28)[39m
+ 2022-04-26 14:04:46 || [ [31merror[39m ] ▶ [31muncaughtException: Cannot read properties of undefined (reading 'length')[39m
+[31mTypeError: Cannot read properties of undefined (reading 'length')[39m
+[31m    at Query.<anonymous> (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\routes\admin_api\m_board.js:81:43)[39m
+[31m    at Query.<anonymous> (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\Connection.js:526:10)[39m
+[31m    at Query._callback (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\Connection.js:488:16)[39m
+[31m    at Query.Sequence.end (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\protocol\sequences\Sequence.js:83:24)[39m
+[31m    at Query.ErrorPacket (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\protocol\sequences\Query.js:92:8)[39m
+[31m    at Protocol._parsePacket (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\protocol\Protocol.js:291:23)[39m
+[31m    at Parser._parsePacket (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\protocol\Parser.js:433:10)[39m
+[31m    at Parser.write (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\protocol\Parser.js:43:10)[39m
+[31m    at Protocol.write (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\protocol\Protocol.js:38:16)[39m
+[31m    at Socket.<anonymous> (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\Connection.js:88:28)[39m
+ 2022-04-26 14:04:85 || [ [31merror[39m ] ▶ [31muncaughtException: Cannot read properties of undefined (reading 'length')[39m
+[31mTypeError: Cannot read properties of undefined (reading 'length')[39m
+[31m    at Query.<anonymous> (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\routes\admin_api\m_board.js:81:43)[39m
+[31m    at Query.<anonymous> (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\Connection.js:526:10)[39m
+[31m    at Query._callback (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\Connection.js:488:16)[39m
+[31m    at Query.Sequence.end (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\protocol\sequences\Sequence.js:83:24)[39m
+[31m    at Query.ErrorPacket (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\protocol\sequences\Query.js:92:8)[39m
+[31m    at Protocol._parsePacket (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\protocol\Protocol.js:291:23)[39m
+[31m    at Parser._parsePacket (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\protocol\Parser.js:433:10)[39m
+[31m    at Parser.write (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\protocol\Parser.js:43:10)[39m
+[31m    at Protocol.write (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\protocol\Protocol.js:38:16)[39m
+[31m    at Socket.<anonymous> (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\Connection.js:88:28)[39m
+ 2022-04-26 14:04:47 || [ [31merror[39m ] ▶ [31muncaughtException: Cannot read properties of undefined (reading 'length')[39m
+[31mTypeError: Cannot read properties of undefined (reading 'length')[39m
+[31m    at Query.<anonymous> (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\routes\admin_api\m_board.js:81:43)[39m
+[31m    at Query.<anonymous> (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\Connection.js:526:10)[39m
+[31m    at Query._callback (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\Connection.js:488:16)[39m
+[31m    at Query.Sequence.end (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\protocol\sequences\Sequence.js:83:24)[39m
+[31m    at Query.ErrorPacket (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\protocol\sequences\Query.js:92:8)[39m
+[31m    at Protocol._parsePacket (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\protocol\Protocol.js:291:23)[39m
+[31m    at Parser._parsePacket (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\protocol\Parser.js:433:10)[39m
+[31m    at Parser.write (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\protocol\Parser.js:43:10)[39m
+[31m    at Protocol.write (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\protocol\Protocol.js:38:16)[39m
+[31m    at Socket.<anonymous> (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\Connection.js:88:28)[39m
+ 2022-04-26 15:04:28 || [ [31merror[39m ] ▶ [31muncaughtException: Cannot read properties of undefined (reading 'length')[39m
+[31mTypeError: Cannot read properties of undefined (reading 'length')[39m
+[31m    at Query.<anonymous> (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\routes\admin_api\m_board.js:80:43)[39m
+[31m    at Query.<anonymous> (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\Connection.js:526:10)[39m
+[31m    at Query._callback (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\Connection.js:488:16)[39m
+[31m    at Query.Sequence.end (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\protocol\sequences\Sequence.js:83:24)[39m
+[31m    at Query.ErrorPacket (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\protocol\sequences\Query.js:92:8)[39m
+[31m    at Protocol._parsePacket (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\protocol\Protocol.js:291:23)[39m
+[31m    at Parser._parsePacket (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\protocol\Parser.js:433:10)[39m
+[31m    at Parser.write (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\protocol\Parser.js:43:10)[39m
+[31m    at Protocol.write (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\protocol\Protocol.js:38:16)[39m
+[31m    at Socket.<anonymous> (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\Connection.js:88:28)[39m

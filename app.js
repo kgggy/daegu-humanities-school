@@ -59,7 +59,7 @@ app.set('view engine', 'ejs');
 // app.engine('ejs', require('ejs').__express);
 // app.engine('html', require('ejs').renderFile);
 // app.set('views', __dirname + '/views/ejs');   //view 경로 설정
-app.set('views', path.join(__dirname, '/views/ejs'));
+app.set('views', path.join(__dirname, '/views/admin_ejs'));
 
 
 // app.get('/', (req, res) => { res.render(__dirname + "/views/ejs/index.ejs", {layout:false}) })
