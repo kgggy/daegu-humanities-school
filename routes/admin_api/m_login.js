@@ -59,7 +59,7 @@ router.get('/logout', async (req, res) => {
             res.send("<script>alert('로그아웃 되었습니다.'); location.href='/admin'</script>");
         });
     } else {
-        res.redirect('/admin/m_user/page?page=1');
+        res.redirect('/admin/m_user?page=1');
     }
 });
 

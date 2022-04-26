@@ -37,7 +37,7 @@ var upload = multer({ //multer안에 storage정보
 });
 
 //사용자 전체조회
-router.get('/page', async (req, res) => {
+router.get('/', async (req, res) => {
   var page = req.query.page;
   var searchType1 = req.query.searchType1 == undefined ? "" : req.query.searchType1;
   var searchType2 = req.query.searchType2 == undefined ? "" : req.query.searchType2;
@@ -46,19 +46,21 @@ router.get('/page', async (req, res) => {
   var keepSearch = "&searchType1=" + searchType1 +
     "&searchType2=" + searchType2 + "&searchType3=" + searchType3 + "&searchText=" + searchText;
 
-  var sql = "select * from user where uid <= 10000";
+  var sql = "select *,\
+                   concat(substr(userPhone, 1, 3), '-',  substr(userPhone, 4, 4), '-', substr(userPhone, 8, 4)) as userPhone\
+              from user where uid <= 10000";
 
   if (searchType1 != '') {
-    sql += " and userAdres2 = '" + searchType1 + "' \n";
+    sql += " and userNum = '" + searchType1 + "' \n";
   }
   if (searchType2 != '') {
-    sql += " and userType = '" + searchType2 + "' \n";
+    sql += " and userAuth = '" + searchType2 + "' \n";
   }
   if (searchType3 != '') {
-    sql += " and userPosition = '" + searchType3 + "' \n";
+    sql += " and userCrew = '" + searchType3 + "' \n";
   }
   if (searchText != '') {
-    sql += " and (hosName like '%" + searchText + "%' or userName like '%" + searchText + "%')";
+    sql += " and (userJob like '%" + searchText + "%' or userName like '%" + searchText + "%')";
   }
   sql += " order by uid desc;"
   try {
@@ -75,7 +77,7 @@ router.get('/page', async (req, res) => {
       if (last < endPage) {
         endPage = last
       };
-      let route = req.app.get('views') + '/m_user/m_user';
+      let route = req.app.get('views') + '/user/user';
       res.render(route, {
         searchType1: searchType1,
         searchType2: searchType2,
@@ -92,7 +94,7 @@ router.get('/page', async (req, res) => {
         last: last,
         keepSearch: keepSearch
       });
-      // console.log(last)
+      // console.log(results)
       // console.log("endPage = " + endPage)
       // console.log("page = " + page)
       // console.log("startPage = " + startPage)
@@ -119,7 +121,7 @@ router.get('/selectOne', async (req, res) => {
       if (err) {
         console.log(err);
       }
-      let route = req.app.get('views') + '/m_user/orgm_viewForm';
+      let route = req.app.get('views') + '/user/user_viewForm';
       res.render(route, {
         result: result,
         page: page,

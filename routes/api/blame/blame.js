@@ -6,8 +6,8 @@ var connection = require('../../../config/db').conn;
 router.get('/', async (req, res) => {
     try {
         var targetUid = req.query.targetUid == undefined ? "10000" : req.query.targetUid;
-        const param = [req.query.uid, req.query.targetContentId, targetUid, req.query.targetType, req.query.blaContent];
-        const sql = "insert into blame(uid, targetContentId, targetUid, targetType, blaContent) values(?, ?, ?, ?, ?);";
+        const param = [req.query.uid, req.query.blameContent, targetUid, req.query.blameDiv, req.query.targetContentId];
+        const sql = "call blameInsert (?, ?, ?, ?, ?);";
         connection.query(sql, param, (err) => {
             if (err) {
                 console.log(err);
