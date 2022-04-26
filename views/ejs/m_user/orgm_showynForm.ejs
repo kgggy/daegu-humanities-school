@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="/stylesheets/css/default.css" />
+	<link rel="stylesheet" type="text/css" href="/stylesheets/css/basic.css" />
+	<link rel="stylesheet" type="text/css" href="/stylesheets/css/layout.css" />
+	<!--<link href="/js/jquery/css/jquery-ui-1.8.2.custom.css" rel="stylesheet" type="text/css"/>-->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css" />
+	<script type="text/javascript" src="/stylesheets/jquery/jquery-1.7.1.min.js"></script>
+	<script type="text/javascript" src="/stylesheets/jquery/jquery-ui-1.8.16.custom.min.js"></script>
+	<script type="text/javascript" src="/stylesheets/jquery/jquery.validate.js"></script>
+	<script type="text/javascript" src="/stylesheets/jquery/jquery.form.js"></script>
+	<script src="/stylesheets/js/common.js"></script>
+</head>
+
+<body style="background: #fff;">
+	<div class="popup">
+		<h2><span class="float_l">회원 테이블 관리</span>></h2>
+
+		<div class="content">
+			<table>
+				<tr>
+					<th width="35%">프로필사진</th>
+					<% if(result.length > 0 && result[0].userImg != null && result[0].userImg != '') {%>
+					<td><img src="../../../<%= result[0].userImg %>" alt="사진" width="117px" /></td>
+					<% }else{ %>
+					<td><img src="../../uploads/normal_img.jpg" alt="" width="117px" /></td>
+					<% } %>
+					<th width="20%"><label><input type="radio">노출</label>
+				</tr>
+				<tr>
+					<th>일련번호</th>
+					<td>
+						<%if(result[0].uid !=null && result[0].uid!='null' && result[0].uid!=''){%>
+						<%=result[0].uid%>
+						<%}%>
+				</td>
+				<th><label><input type="radio">노출</label>
+				</tr>
+				<tr>
+					<th class="necessary">닉네임</th>
+					<td>
+						<%if(result[0].userNick !=null && result[0].userNick!='null' && result[0].userNick!=''){%>
+						<%=result[0].userNick %>
+						<%}%>
+					</td>
+					<th><label><input type="radio">노출</label>
+				</tr>
+				<tr>
+					<th class="necessary">이메일</th>
+					<td>
+						<%if(result[0].userEmail !=null && result[0].userEmail!='null' && result[0].userEmail!=''){%>
+						<%=result[0].userEmail %>
+						<%}%>
+					</td>
+					<th><label><input type="radio">노출</label>
+				</tr>
+				<tr>
+					<th>나이</th>
+					<td>
+						<%if(result[0].userAge !=null && result[0].userAge!='null' && result[0].userAge!=''){%>
+						<%=result[0].userAge %>세
+						<%}%>
+					</td>
+					<th><label><input type="radio">노출</label>
+				</tr>
+				<tr>
+					<th>주소1</th>
+					<td>
+						<%if(result[0].userAdres1 !=null && result[0].userAdres1 !='null' && result[0].userAdres1!=''){%>
+						<%=result[0].userAdres1%>
+						<%}%>
+					</td>
+					<th><label><input type="radio">노출</label>
+				</tr>
+				<tr>
+					<th>주소2</th>
+					<td>
+						<%if(result[0].userAdres2 !=null && result[0].userAdres2!='null' & result[0].userAdres2!=''){%>
+						<%=result[0].userAdres2 %>
+						<%}%>
+					</td>
+					<th><label><input type="radio">노출</label>
+				</tr>
+				<tr>
+					<th>학교</th>
+					<td>
+						<%if(result[0].userSchool !=null && result[0].userSchool!='null' && result[0].userSchool!=''){%>
+						<%=result[0].userSchool %>
+						<%}%>
+					</td>
+					<th><label><input type="radio">노출</label>
+				</tr>
+				<tr>
+					<th>포인트</th>
+					<td>
+						<%if(result[0].userPoint !=null && result[0].userPoint!='null' && result[0].userPoint!=''){%>
+						<%=result[0].userPoint %>점
+						<%}%>
+					</td>
+					<th><label><input type="radio">노출</label>
+				</tr>
+				<tr>
+					<th>계산점수</th>
+					<td>
+						<%if(result[0].userScore !=null && result[0].userScore!='null' && result[0].userScore!=''){%>
+						<%=result[0].userScore %>점
+						<%}%>
+					</td>
+					<th><label><input type="radio">노출</label>
+				</tr>
+				<tr>
+					<th>나무등급</th>
+					<td>
+						<%if(result[0].treeGrade !=null && result[0].treeGrade!='null' && result[0].treeGrade!=''){%>
+						<%=result[0].treeGrade %>
+						<%}%>
+					</td>
+					<th><label><input type="radio">노출</label>
+				</tr>
+				<tr>
+					<th>작성한 게시글 수</th>
+					<td>
+						<%if(result[0].contentAll !=null && result[0].contentAll!='null' && result[0].contentAll!=''){%>
+						<%=result[0].contentAll %>개
+						<%}%>
+					</td>
+					<th><label><input type="radio">노출</label>
+				</tr>
+				<tr>
+					<th>상태</th>
+					<td>
+						<%if(result[0].userStatus !=null && result[0].userStatus!='null' && result[0].userStatus!=''){%>
+						<% if (result[0].userStatus == '0'){%>
+						일반회원
+						<% } else if (result[0].userStatus == '1') {%>
+						탈퇴회원
+						<%}%>   
+						<%}%>
+					</td>
+					<th><label><input type="radio">노출</label>
+				</tr>
+				<tr>
+					<th>개인정보 동의여부</th>
+					<td>
+						<%if(result[0].userAgree !=null && result[0].userAgree!='null' && result[0].userAgree!=''){%>
+						<% if (result[0].userAgree == '0'){%>
+						동의
+						<% } else if (result[0].userAgree == '1') {%>
+						비동의
+						<%}%>   
+						<%}%>
+					</td>
+					<th><label><input type="radio">노출</label>
+				</tr>
+			</table>
+
+			<p class="btn">
+				<form name="udtForm" role="form">
+					<input type="hidden" name="uid" value="<%=result[0].uid%>">
+					<button type="button" id="update_btn">수정</button>
+					<!-- <button type="button" id="delete_btn">삭제</button> -->
+				</form>
+				<button class="btn_big_black hand" onclick="window.close();">취소</button>
+			</p>
+		</div>
+	</div>
+
+	<script>
+		$(document).ready(function () {
+			var formObj = $("form[name='udtForm']");
+			// 수정 
+			$("#update_btn").on("click", function () {
+				formObj.attr("action", "userUdtForm");
+				formObj.attr("method", "get");
+				formObj.submit();
+			})
+
+			// 삭제
+			// $("#delete_btn").on("click", function () {
+			// 	formObj.attr("action", "userDelete");
+			// 	formObj.attr("method", "get");
+			// 	if (confirm("삭제하시겠습니까?") == true) {
+			// 		alert("삭제되었습니다.");
+			// 		formObj.submit();
+			// 	} else {
+			// 		return;
+			// 	}
+			// })
+		})
+
+		// 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 '[0] = 회원관리'
+		var navDropdown = document.getElementsByClassName("nav-dropdown");
+			navDropdown[0].className += 'open';
+			
+		//check box
+
+
+		if ($('#userStatusValue').val() == '0') {
+			$('#userStatus1').prop("checked", true);
+		} else if ($('#userStatusValue').val() == '1') {
+			$('#userStatus2').prop("checked", true);
+		};
+	</script>

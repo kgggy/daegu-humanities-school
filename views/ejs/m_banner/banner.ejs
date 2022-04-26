@@ -1,0 +1,170 @@
+<main class="main">
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">Home</li>
+        <li class="breadcrumb-item">
+            <a style="font-weight: bold;">배너관리</a>
+        </li>
+        <% if(bannerDiv == 'p') { %>
+        <li class="breadcrumb-item active">팝업배너</li>
+        <% }else if(bannerDiv == 'm1') { %>
+        <li class="breadcrumb-item active">메인 영상 배너</li>
+        <% }else if(bannerDiv == 'm2') { %>
+        <li class="breadcrumb-item active">메인 이미지 배너</li>
+        <% } %>
+    </ol>
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fa fa-align-justify"></i>
+                            <% if(results.length > 0 && bannerDiv == 'p') {%>
+                            팝업 배너 관리 (최대 9개까지 등록 가능합니다.)
+                            <% }else if(results.length > 0 && bannerDiv == 'm1'){ %>
+                            메인 영상 배너 관리
+                            <% }else if(results.length > 0 && bannerDiv == 'm2'){ %>
+                            메인 이미지 배너 관리
+                            <% } %>
+                        </div>
+                        <div class="card-body">
+                            <form id="bannerForm" name="bannerForm" method="" action="">
+                                <input type="hidden" name="bannerId" value="" />
+                                <input type="hidden" name="bannerRoute" value="" />
+                                <input type="hidden" id="bannerDiv" name="bannerDiv" value="<%=bannerDiv%>" />
+                                <table class="table table-responsive-sm table-hover">
+                                    <colgroup>
+                                        <col width="5%" />
+                                        <col width="20%" />
+                                        <col width="10%" />
+                                        <col width="15%" />
+                                        <col width="15%" />
+                                        <col width="10%" />
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th>번호</th>
+                                            <% if(bannerDiv != 'm1') { %>
+                                            <th>이미지</th>
+                                            <% } else { %>
+                                            <th>경로</th>
+                                            <% } %>
+                                            <th>시작날짜</th>
+                                            <th>끝날짜</th>
+                                            <th>노출여부</th>
+                                            <th>순서</th>
+                                            <th>비고</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% if(results.length > 0) { %>
+                                        <% for(var i = 0; i < results.length; i++){ %>
+                                        <tr>
+                                            <td><%= i + 1 %></td>
+                                            <% if(bannerDiv != 'm1') { %>
+                                            <% if(results[i].bannerRoute != null && results[i].bannerRoute != '') {%>
+                                            <td><img src="../../../<%= results[i].bannerRoute %>" alt="사진"
+                                                    style="padding:20px !important; width:250px" /></td>
+                                            <% }else{ %>
+                                            <td><img src="../../../public/images/certification/sprout.png" alt=""
+                                                    style="padding:20px !important; width:250px" /></td>
+                                            <% } %>
+                                            <% } else { %>
+                                            <td><%=results[i].bannerRoute %></td>
+                                            <% } %>
+                                            <td><%=results[i].startDatefmt %></td>
+                                            <td><%=results[i].endDatefmt%></td>
+                                            <% if(results[i].showYN == 0) {%>
+                                            <td>O</td>
+                                            <% }else{ %>
+                                            <td>X</td>
+                                            <% } %>
+                                            <td><%=results[i].showNo%></td>
+                                            <td>
+                                                <input id="searchAction" type="button"
+                                                    class="btn btn-block btn-outline-success"
+                                                    onclick="bannerUpdate('<%=results[i].bannerId%>')" value="수정 " />
+                                                <button type="button" id="delete_btn" name="bannerDelete"
+                                                    class="btn btn-block btn-outline-danger"
+                                                    data-bannerId="<%=results[i].bannerId%>"
+                                                    data-bannerRoute="<%=results[i].bannerRoute%>">삭제</button>
+                                            </td>
+                                        </tr>
+                                        <% } %>
+                                        <% } else {%>
+                                        <tr>
+                                            <td colspan="7">
+                                                등록된 목록이 없습니다.
+                                            </td>
+                                        </tr>
+                                        <%}%>
+            </tbody>
+        </table>
+</form>
+<div class="mt_20">
+    <p class="float_r">
+        <input id="enrollAction" class="btn btn-block btn-outline-success" type="button" onclick="enroll('<%= results.length %>')"
+                                        value="등록" />
+                                        </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</main>
+
+<script>
+    // 삭제
+    const formObj = $("form[name='bannerForm']");
+    $("button[name=bannerDelete]").on("click", function () {
+        $('input[name=bannerId').val($(this).attr('data-bannerId'));
+        $('input[name=bannerRoute').val($(this).attr('data-bannerRoute'));
+        // console.log($(this).attr('data-bannerRoute'));
+        formObj.attr("action", "bannerDelete");
+        formObj.attr("method", "get");
+        if (confirm("삭제하시겠습니까?") == true) {
+            formObj.submit();
+            alert("삭제되었습니다.");
+        } else {
+            return;
+        }
+    });
+
+    function bannerUpdate(str) {
+        $('input[name=bannerId').val(str);
+        formObj.attr("action", "bannerUdtForm");
+        formObj.attr("method", "get");
+        formObj.submit();
+    }
+
+    function enroll(results) {
+        if (results > 8) {
+            alert("배너는 최대 9개까지 등록 가능합니다.");
+        } else {
+            formObj.attr("action", "bannerWritForm");
+            formObj.attr("method", "get");
+            formObj.submit();
+        }
+    }
+
+    $(document).ready(function () {
+        //쿼리스트링 페이지
+        function getUrlParams() {
+            var params = {};
+            window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (str, key, value) {
+                params[key] = value;
+            });
+            return params;
+        }
+        var param = getUrlParams();
+        var bannerDiv = document.getElementById("bannerDiv");
+        bannerDiv.value = param.bannerDiv;
+    });
+
+    // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 '[4] = 배너관리'
+    var navDropdown = document.getElementsByClassName("nav-dropdown");
+        navDropdown[4].className += 'open';
+</script>

@@ -1,0 +1,179 @@
+<main class="main">
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">Home</li>
+        <li class="breadcrumb-item">
+            <a style="font-weight: bold;">챌린지 관리</a>
+        </li>
+        <li class="breadcrumb-item active">참여자 목록</li>
+    </ol>
+
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header"><i class="fa fa-align-justify"></i> 참여자 목록 </div>
+                        <div class="card-body">
+                            <form name="userForm" action="" method="get">
+                                <input type="hidden" id="page" name="page" value="">
+                                <div align="right" style="display: flex; justify-content: end; gap: 5px;">
+                                    <select name="searchType1" class="dropdown">
+                                        <option value="">회원상태</option>
+                                        <option value="0" <%if(searchType1=="0"){%> selected="selected" <%}%>>활동중</option>
+                                        <option value="1" <%if(searchType1=="1"){%> selected="selected" <%}%>>탈퇴</option>
+                                    </select>
+                                    <select name="searchType2" class="dropdown">
+                                        <option value="">나이대</option>
+                                        <option value="20" <%if(searchType2=="20"){%> selected="selected" <%}%>>10대</option>
+                                        <option value="30" <%if(searchType2=="30"){%> selected="selected" <%}%>>20대</option>
+                                        <option value="40" <%if(searchType2=="40"){%> selected="selected" <%}%>>30대</option>
+                                        <option value="50" <%if(searchType2=="50"){%> selected="selected" <%}%>>40대</option>
+                                        <option value="60" <%if(searchType2=="60"){%> selected="selected" <%}%>>50대</option>
+                                        <option value="61" <%if(searchType2=="61"){%> selected="selected" <%}%>>60대 이상</option>
+                                    </select>
+                                    <% if(searchText != '') { %> <input class="searchbox" type="text" name="searchText"
+                                            value="<%=searchText%>" />
+                                        <% } else {%>
+                                        <input class="searchbox" type="text" name="searchText"
+                                            placeholder=" 이메일, 닉네임, 학교" />
+                                        <% } %>
+                                        <button class="btn btn-block btn-outline-success" type="submit"
+                                            id="searchAction" style="margin-bottom: 10px;">검색</button>
+
+                                </div>
+                                <table id="exampleTable" class="table userTable table-responsive-sm table-hover">
+                                    <colgroup>
+                                        <col width="5%" />
+                                        <col width="15%" />
+                                        <col width="22%" />
+                                        <col width="10%" />
+                                        <col width="10%" />
+                                        <col width="10%" />
+                                        <col width="8%" />
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th>번호</th>
+                                            <th>닉네임</th>
+                                            <th>이메일</th>
+                                            <th>나이</th>
+                                            <th>학교</th>
+                                            <th>참여일자</th>
+                                            <th>비고</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% if(results.length > 0) { %>
+                                        <% for(var i = (page * page_num) - page_num; i < (page * page_num); i++) { 
+                                            if(i > length){
+                                                i++;
+                                            } else { %>
+                                        <tr class="pointer"
+                                            onclick="location.href='/admin/m_user/selectOne?uid=<%=results[i].uid%>&page=<%=page%>'">
+                                            <td>
+                                                <%= i + 1 %>
+                                            </td>
+                                            <td>
+                                                <%=results[i].userNick%>
+                                            </td>
+                                            <td>
+                                                <%=results[i].userEmail%>
+                                            </td>
+                                            <td>
+                                                <%= results[i].userAge %>
+                                            </td>
+                                            <td>
+                                                <%= results[i].userSchool %>
+                                            </td>
+                                            <td>
+                                                <%= results[i].joinDate %>
+                                            </td>
+                                            <td onclick='event.cancelBubble=true;'>
+                                                <button id="comment_btn" type="button"
+                                                    class="btn btn-block btn-outline-success"
+                                                    onclick="location.href='/admin/m_certiContent/certiContentAll?page=<%=page%>&certiDivision=1&certiTitle=&searchText=<%= results[i].userNick %>'">작성한
+                                                    게시글(<%=results[i].countAll %>)</button>
+                                            </td>
+                                        </tr>
+                                        <% } %>
+                                        <% } %>
+                                        <% } else { %>
+                                        <tr>
+                                            <td colspan="7">챌린지에 참여한 회원이 없습니다.</td>
+                                        </tr>
+                                        <% } %>
+                                    </tbody>
+                                </table>
+                                <div>
+                                    <input class="btn btn-block btn-outline-success" type="button"
+                                        id="excelFileExport" value="엑셀 다운로드"
+                                        style="margin-bottom: 15px; width: 140px; display: inline-block;" />
+                                </div>
+                                <div class="mt_20">
+                                    <div class="paging" id="page_navi">
+                                        <ul class="pagination customPaging">
+                                            <li> <a href="/admin/m_user/page?page=1<%= keepSearch %>" class="num">
+                                                    <<</a> </li> <li> <a <%if((page<last-1)||(page==1)){%><%} else {%>
+                                                            href="/admin/m_user/page?page=<%= parseInt(page) - 1 %><%= keepSearch %>"
+                                                            class="num" <% } %>>
+                                                            <</a> </li>
+                                                                <% for(var i = 0; i < results.length / page_num; i++){  %>
+                                                                <li class="paging_on">
+                                                                <a href="/admin/m_user/page?page=<%= i + 1 %><%= keepSearch %>"
+                                                                    <%if(page==i+1){%>class="selected"
+                                                                    <%}%> class="num"><%= i + 1 %></a> </li> <% } %>
+                                                                    <li> <a <%if(page>last-1){%><%} else {%>
+                                                                        href="/admin/m_user/page?page=<%= parseInt(page) + 1 %><%= keepSearch %>"
+                                                                        class="num" <% } %>>></a></li>
+                                            <li><a href="/admin/m_user/page?page=<%= last %><%= keepSearch %>"
+                                                    class="num">>></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</main>
+
+<script>
+    //쿼리스트링 페이지
+    function getUrlParams() {
+        var params = {};
+        window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (str, key, value) {
+            params[key] = value;
+        });
+        return params;
+    }
+    var param = getUrlParams();
+    var page = document.getElementById("page");
+    page.value = param.page;
+    var formObj = $("form[name='userForm']");
+
+    //검색
+    $("#searchAction").on("click", function () {
+        formObj.attr("action", "/admin/m_participants");
+        formObj.attr("method", "get");
+        formObj.submit();
+    })
+    // 엑셀 다운로드
+    $("#excelFileExport").on("click", function () {
+        formObj.attr("action", "/admin/m_participants/userExcel");
+        formObj.attr("method", "get");
+        formObj.submit();
+    })
+    var certiDivi = document.getElementById("certiDivision").value
+
+    if(certiDivi == 0){
+        // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 '[2] = 탄소실천관리'
+        var navDropdown = document.getElementsByClassName("nav-dropdown");
+            navDropdown[2].className += 'open';
+    } else if(certiDivi == 1){
+        // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 '[3] = 챌린지관리'
+        var navDropdown = document.getElementsByClassName("nav-dropdown");
+            navDropdown[3].className += 'open';        
+    }
+</script>

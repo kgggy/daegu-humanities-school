@@ -1,0 +1,226 @@
+<main class="main">
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">Home</li>
+        <li class="breadcrumb-item">
+            <a style="font-weight: bold;">탄소 실천 관리</a>
+        </li>
+        <li class="breadcrumb-item active">탄소 실천 종류 등록</li>
+        <!-- Breadcrumb Menu-->
+    </ol>
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <%if(division == 0){%>
+                        <div class="card-header">
+                            <i class="fa fa-align-justify"></i> 탄소실천 종류 등록</div>
+                        <% } else {%>
+                        <div class="card-header">
+                            <i class="fa fa-align-justify"></i> 챌린지 종류 등록</div>
+                        <% } %>
+                        <div class="card-body">
+                            <!-- 컨텐츠 -->
+                            <form id="certiForm" name="certiForm" method="" action="" enctype="multipart/form-data">
+                                <input type="hidden" name="certiDivision" value="<%= division %>">
+                                <input type="hidden" name="certiSubDivision" value="">
+                                <input type="hidden" name="certiShow" value="">
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label" for="text-input">대표 이미지</label>
+                                    <div class="col-md-9">
+                                        <input type="file" id="file" name="file" />
+                                    </div>
+                                </div>
+                                <%if(division == 0){%>
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label" for="text-input">분류</label>
+                                    <div class="col-md-9">
+                                        <select class="dropdown" id="certiSubDivision">
+                                            <option value='' selected="selected">--선택--</option>
+                                            <% for(var i = 0; i < div.length ; i++){  %>
+                                            <option value="<%= div[i].certiSubDivision %>">
+                                                <%= div[i].certiSubDivision %></option>
+                                            <% } %>
+                                        </select>
+                                    </div>
+                                </div>
+                                <% } %>
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label" for="text-input">종류명</label>
+                                    <div class="col-md-9">
+                                        <input class="form-control" id="certiTitle" type="text" name="certiTitle"
+                                            value="">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label" for="text-input">설명글</label>
+                                    <div class="col-md-9">
+                                        <textarea class="form-control text-min-height" id="certiDetail" type="text" name="certiDetail"
+                                            ></textarea>
+                                    </div>
+                                </div>
+                                <% if(division == 0) {%>
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label" for="text-input">포인트</label>
+                                    <div class="col-md-9">
+                                        <input class="form-control" id="certiPoint" type="text" name="certiPoint"
+                                            value="" placeholder="숫자만 입력해주세요.">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label" for="text-input">단계</label>
+                                    <div class="col-md-9">
+                                        <input class="form-control" id="certiDiff" type="text" name="certiDiff" value=""
+                                            placeholder="1 - 5까지의 숫자만 입력해주세요.">
+                                    </div>
+                                </div>
+                                <% }else{ %>
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label" for="text-input">참여방법</label>
+                                    <div class="col-md-9">
+                                        <textarea class="form-control text-min-height" id="certiDetail_how" type="text"
+                                            name="certiDetail_how"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label" for="text-input">이벤트</label>
+                                    <div class="col-md-9">
+                                        <textarea class="form-control text-min-height" id="certiDetail_event" type="text"
+                                            name="certiDetail_event"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label" for="text-input">추첨방식</label>
+                                    <div class="col-md-9">
+                                        <textarea class="form-control text-min-height" id="certiDetail_raffle" type="text"
+                                            name="certiDetail_raffle"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label" for="text-input">권한</label>
+                                    <div class="col-md-9">
+                                        <input class="form-control" id="certiAuth" type="text" name="certiAuth"
+                                            value="">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label" for="text-input">시작 날짜</label>
+                                    <div class="col-md-9">
+                                        <input class="form-control" id="certiStartDate" type="date"
+                                            name="certiStartDate" value="">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label" for="text-input">마지막 날짜</label>
+                                    <div class="col-md-9">
+                                        <input class="form-control" id="certiEndDate" type="date" name="certiEndDate"
+                                            value="">
+                                    </div>
+                                </div>
+                                <% } %>
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label" for="text-input">노출여부</label>
+                                    <div class="col-md-9">
+                                        <select class="dropdown" id="certiShow">
+                                            <option value='0' selected="selected">노출</option>
+                                            <option value="1">비노출</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label">예시 이미지</label>
+                                    <div style="display: flex; gap: 25px; padding-left: 15px">
+                                        좋은 예<input type="file" id="file" name="file" />
+                                        나쁜 예<input type="file" id="file" name="file" />
+                                    </div>
+                                </div>
+                                <!--option 버튼  -->
+                                <div class="option_button">
+                                    <div>
+                                        <button class="btn btn-block btn-outline-success" type="button" id="update_btn"
+                                            onclick="certiWrite()">등록</button>
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-block btn-outline-danger" type="button" id="delete_btn"
+                                            onclick="history.go(-1)">취소</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</main>
+<script type="text/javascript">
+    $(document).ready(function () {
+        //확장자 체크
+        $("input:file[name='file']").change(function () {
+            var str = $(this).val();
+            var fileName = str.split('\\').pop().toLowerCase();
+            // alert(fileName);
+            checkFileName(fileName);
+        });
+    });
+
+    //확장자 체크
+    function checkFileName(str) {
+        var ext = str.split('.').pop().toLowerCase();
+        // alert(ext);
+        if ($.inArray(ext, ['jpg', 'png', 'jpeg', 'gif']) == -1) {
+            alert(ext + '파일은 업로드 하실 수 없습니다.');
+            $("input:file[name='file']").val("");
+        }
+    }
+
+    //종류 등록
+    function certiWrite() {
+        var certiTitle = $("#certiTitle").val();
+        var certiDiff = $("#certiDiff").val();
+        var certiPoint = $("#certiPoint").val();
+        var certiImg = $("#file").val();
+
+        if (certiImg == '') {
+            alert("이미지를 선택해주세요.");
+            return false;
+        }
+        if ($("#certiSubDivision option:selected").val() == "") {
+            alert("분류를 선택하세요");
+            return false;
+        }
+        if (certiTitle == "") {
+            alert("종류명을 입력하세요");
+            return false;
+        }
+        if (certiPoint == "") {
+            alert("포인트를 입력하세요");
+            return false;
+        }
+        if (certiDiff == "") {
+            alert("단계를 입력하세요");
+            return false;
+        }
+        if (confirm("등록하시겠습니까?") == true) {
+            $('input[name=certiSubDivision]').val($("#certiSubDivision option:selected").val());
+            $('input[name=certiShow]').val($("#certiShow option:selected").val());
+            $("#certiForm").attr("action", "certiWrit");
+            $("#certiForm").attr("method", "post");
+            $("#certiForm").submit();
+            alert("등록이 완료되었습니다.");
+        } else {
+            return;
+        }
+    };
+    var certiDivi = document.getElementById("certiDivision").value
+
+    if(certiDivi == 0){
+    // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 '[2] = 탄소실천관리'
+    var navDropdown = document.getElementsByClassName("nav-dropdown");
+        navDropdown[2].className += 'open';
+    } else if(certiDivi == 1){
+        // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 '[3] = 챌린지관리'
+        var navDropdown = document.getElementsByClassName("nav-dropdown");
+            navDropdown[3].className += 'open';        
+    }
+</script>

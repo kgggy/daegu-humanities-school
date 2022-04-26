@@ -1,0 +1,72 @@
+<title>ECOCE</title>
+<link rel="shortcut icon" href="/public/user/main/logo01.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="/public/stylesheets/css/style.css" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.5.5/css/simple-line-icons.min.css">
+<link href="/public/stylesheets/pace-progress/css/pace.min.css" rel="stylesheet">
+<link href="/public/stylesheets/datatables-plugins/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+<style>
+	.btn-primary {
+		color: #fff;
+		background-color: #f8841f;
+		border-color: #f8841f;
+	}
+
+	.btn-primary:hover {
+		opacity: 0.7;
+		background-color: #f8841f;
+		border-color: #f8841f;
+	}
+</style>
+
+<body class="app flex-row align-items-center"
+	style="background: url('${contextPath}/images/user/main/banner1-6.png') no-repeat; background-size: 100%;">
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-8">
+				<div class="card-group">
+					<div class="card p-4" style="opacity: 0.96;">
+						<div class="card-body">
+							<img alt="로고" src="../../public/images/logo.png" width="60%">
+							<p class="text-muted">Sign In to your account</p>
+
+							<form class="form-horizontal" id="frm" action="/admin/login" method="post">
+								<div class="input-group mb-3">
+									<div class="input-group-prepend">
+										<span class="input-group-text">
+											<i class="icon-user"></i>
+										</span>
+									</div>
+									<input class="form-control" type="text" placeholder="아이디" id="comNick"
+										name="comNick" value="" autofocus="autofocus" />
+								</div>
+								<div class="input-group mb-4">
+									<div class="input-group-prepend">
+										<span class="input-group-text">
+											<i class="icon-lock"></i>
+										</span>
+									</div>
+									<input class="form-control" type="password" placeholder="패스워드" id="comPwd" value=""
+										name="comPwd" />
+								</div>
+								<div class="row">
+									<div class="col-6">
+										<button class="btn btn-primary px-4" type="submit" id="loginBtn">Login</button>
+									</div>
+								</div>
+							</form>
+
+						</div>
+
+					</div>
+					<div class="card text-white bg-primary d-md-down-none" style="width:44%; opacity: 0.96;">
+						<div style="text-align: center;">
+							<img alt="로고" src="../../public/images/aaron-burden-2IzoIHBgYAo-unsplash.jpg" width="100%">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>

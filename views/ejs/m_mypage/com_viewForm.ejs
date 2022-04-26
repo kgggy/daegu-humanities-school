@@ -1,0 +1,116 @@
+<main class="main">
+   <!-- Breadcrumb-->
+   <ol class="breadcrumb">
+      <li class="breadcrumb-item">Home</li>
+      <li class="breadcrumb-item">
+         <a style="font-weight: bold;">마이페이지</a>
+      </li>
+      <li class="breadcrumb-item active">내 정보 관리</li>
+      <!-- Breadcrumb Menu-->
+   </ol>
+
+   <div class="container-fluid">
+      <div class="animated fadeIn">
+         <div class="row">
+            <div class="col-lg-6">
+               <div class="card">
+                  <div class="card-header">
+                     <i class="fa fa-align-justify"></i> 내 정보 관리</div>
+                  <div class="card-body">
+                     <form name="udtForm" role="form">
+                        <!-- 컨텐츠 -->
+                        <div class="form-group row">
+                           <label class="col-md-2 col-form-label" for="text-input">회원번호</label>
+                           <div class="col-md-9">
+                              <input class="form-control" id="comId" type="text" name="comId" readonly
+                                 value="<%=result[0].comId%>">
+                           </div>
+                        </div>
+                        <div class="form-group row">
+                           <label class="col-md-2 col-form-label" for="text-input">아이디</label>
+                           <div class="col-md-9">
+                              <input class="form-control" id="comNick" type="text" name="comNick" readonly
+                                 value="<%=result[0].comNick%>">
+                           </div>
+                        </div>
+                        <div class="form-group row">
+                           <label class="col-md-2 col-form-label" for="text-input">기업명</label>
+                           <div class="col-md-9">
+                              <input class="form-control" id="comName" type="text" name="comName" readonly
+                                 value="<%=result[0].comName%>">
+                           </div>
+                        </div>
+                        <div class="form-group row">
+                           <label class="col-md-2 col-form-label" for="text-input">사업자등록번호</label>
+                           <div class="col-md-9">
+                              <input class="form-control" id="comNum" type="text" name="comNum" readonly
+                                 value="<%=result[0].comNum%>">
+                           </div>
+                        </div>
+                        <div class="form-group row">
+                           <label class="col-md-2 col-form-label" for="text-input">회사주소</label>
+                           <div class="col-md-9">
+                              <input class="form-control" id="comAdres1" type="text" name="comAdres1" readonly
+                                 value="<%=result[0].comAdres1%>">
+                              <input class="form-control" id="comAdres2" type="text" name="comAdres2" readonly
+                                 value="<%=result[0].comAdres2%>">
+                           </div>
+                        </div>
+                        <div class="form-group row">
+                           <label class="col-md-2 col-form-label" for="text-input">대표자명</label>
+                           <div class="col-md-9">
+                              <input class="form-control" id="comPresiName" name="comPresiName" readonly
+                                 value="<%=result[0].comPresiName%>">
+                           </div>
+                        </div>
+                        <div class="form-group row">
+                           <label class="col-md-2 col-form-label" for="text-input">담당자명</label>
+                           <div class="col-md-9">
+                              <input class="form-control" id="comManagerName" type="text" name="comManagerName" readonly
+                                 value="<%=result[0].comManagerName%>">
+                           </div>
+                        </div>
+                        <div class="form-group row">
+                           <label class="col-md-2 col-form-label" for="text-input">휴대폰번호</label>
+                           <div class="col-md-9">
+                              <input class="form-control" id="comPhoneNum" type="text" name="comPhoneNum" readonly
+                                 value="<%=result[0].comPhoneNum%>">
+                           </div>
+                        </div>
+                        <div class="form-group row">
+                           <label class="col-md-2 col-form-label" for="text-input">이메일</label>
+                           <div class="col-md-9">
+                              <input class="form-control" id="comEmail" type="text" name="comEmail" readonly
+                                 value="<%=result[0].comEmail%>">
+                           </div>
+                        </div>
+                        <!--option 버튼  -->
+                        <div class="option_button">
+                           <div>
+                              <button class="btn btn-block btn-outline-success" type="button"
+                                 id="update_btn">수정</button>
+                           </div>
+                        </div>
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</main>
+
+<script type="text/javascript">
+   var formObj = $("form[name='udtForm']");
+   $(document).ready(function () {
+      // 수정 폼 연결
+      $("#update_btn").on("click", function () {
+         formObj.attr("action", "comUserUdtForm");
+         formObj.attr("method", "get");
+         formObj.submit();
+      });
+   })
+   // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 '[6] = 마이페이지'
+   var navDropdown = document.getElementsByClassName("nav-dropdown");
+        navDropdown[6].className += 'open';
+</script>

@@ -1,0 +1,329 @@
+<main class="main">
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">Home</li>
+        <%if(result[0].certiDivision == 0){%>
+        <li class="breadcrumb-item">
+            <a style="font-weight: bold;">탄소 실천 관리</a>
+        </li>
+        <li class="breadcrumb-item active">탄소 실천 종류 상세</li>
+        <% } else {%>
+        <li class="breadcrumb-item">
+            <a style="font-weight: bold;">챌린지 관리</a>
+        </li>
+        <li class="breadcrumb-item active">챌린지 종류 상세</li>
+        <% } %>
+    </ol>
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <%if(result[0].certiDivision == 0){%>
+                        <div class="card-header">
+                            <i class="fa fa-align-justify"></i> 탄소실천 종류 수정</div>
+                        <% } else {%>
+                        <div class="card-header">
+                            <i class="fa fa-align-justify"></i> 챌린지 종류 수정</div>
+                        <% } %>
+                        <div class="card-body">
+                            <!-- 컨텐츠 -->
+                            <form action="" id="certiUpdate" name="certiUpdate" method="" enctype="multipart/form-data">
+                                <input type="hidden" id="certiSubDivision" name="certiSubDivision" value="">
+                                <!-- <input type="hidden" id="certiAuth" name="certiAuth" value=""> -->
+                                <input type="hidden" id="route" name="route" value="">
+                                <input type="hidden" id="img" name="img" value="">
+                                <input type="hidden" id="page" name="page" value="<%=page%>">
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label" for="text-input">번호</label>
+                                    <div class="col-md-9">
+                                        <input class="form-control" id="certiTitleId" type="text" name="certiTitleId"
+                                            value="<%=result[0].certiTitleId%>" readonly>
+                                    </div>
+                                </div>
+                                <% if(sessionComId == 11) { %>
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label" for="text-input">대표 이미지</label>
+                                    <div class="col-md-9">
+                                        <% if(result.length > 0 && result[0].certiImage != null && result[0].certiImage != '') {%>
+                                        <div class="certi-img">
+                                            <img src="../../../<%= result[0].certiImage %>" alt="사진" />
+                                        </div>
+                                        <button name="searchAction" data-route="<%=result[0].certiImage%>"
+                                            data-img="certiImage" data-inputReset="image1"
+                                            class="btn btn-block btn-outline-danger fileDelete"
+                                            type="button">삭제</button>
+                                        <% } else { %>
+                                        <input class="certiImage" type="file" id="file" name="image1" />
+                                        <% } %>
+                                        <input type="hidden" id="certiImage" name="certiImage"
+                                            value="<%=result[0].certiImage%>" />
+                                        </td>
+                                    </div>
+                                </div>
+                                <% } %>
+                                <% if(sessionComId == 11) { %>
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label" for="text-input">좋은 예</label>
+                                    <div class="col-md-9">
+                                        <% if(result.length > 0 && result[0].certiExamImg1 != null && result[0].certiExamImg1 != '') {%>
+                                        <div class="certi-img">
+                                            <img src="../../../<%= result[0].certiExamImg1 %>" alt="사진" />
+                                        </div>
+                                        <button name="searchAction" class="btn btn-block btn-outline-danger fileDelete"
+                                            type="button" data-route="<%=result[0].certiExamImg1%>"
+                                            data-img="certiExamImg1" data-inputReset="image2">삭제</button>
+                                        <% }else{ %>
+                                        <input type="file" id="file" name="image2" />
+                                        <% } %>
+                                        <input type="hidden" id="certiExamImg1" name="certiExamImg1"
+                                            value="<%=result[0].certiExamImg1%>" />
+                                        </td>
+                                    </div>
+                                </div>
+                                <% } %>
+                                <% if(sessionComId == 11) { %>
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label" for="text-input">나쁜 예</label>
+                                    <div class="col-md-9">
+                                        <% if(result.length > 0 && result[0].certiExamImg2 != null && result[0].certiExamImg2 != '') {%>
+                                        <div class="certi-img">
+                                            <img src="../../../<%= result[0].certiExamImg2 %>" alt="사진" />
+                                        </div>
+                                        <button name="searchAction" class="btn btn-block btn-outline-danger fileDelete"
+                                            type="button" data-route="<%=result[0].certiExamImg2%>"
+                                            data-img="certiExamImg2" data-inputReset="image3">삭제</button>
+                                        <% }else{ %>
+                                        <input type="file" id="file" name="image3" />
+                                        <% } %>
+                                        <input type="hidden" id="certiExamImg2" name="certiExamImg2"
+                                            value="<%=result[0].certiExamImg2%>" />
+                                        </td>
+                                    </div>
+                                </div>
+                                <% } %>
+                                <% if(result[0].certiDivision == 0) {%>
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label" for="text-input">분류</label>
+                                    <div class="col-md-9">
+                                        <select id="division" name="division" class="dropdown">
+                                            <option value="" selected="selected">--분류--</option>
+                                            <% for(var i = 0; i < div.length ; i++){  %>
+                                            <option value="<%= div[i].certiSubDivision %>"
+                                                <%if(result[0].certiSubDivision==div[i].certiSubDivision){%>
+                                                selected="selected" <%}%>><%= div[i].certiSubDivision %></option>
+                                                <% } %> </select> </div> </div> <% } %> <div class="form-group row">
+                                                <label class="col-md-2 col-form-label" for="text-input">종류명</label>
+                                                <div class="col-md-9">
+                                                    <input class="form-control" id="certiTitle" type="text"
+                                                        name="certiTitle" value="<%=result[0].certiTitle%>">
+                                                </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-2 col-form-label" for="text-input">설명글</label>
+                                        <div class="col-md-9">
+                                            <textarea class="form-control" id="certiDetail" type="text"
+                                                name="certiDetail"><%=result[0].certiDetail%></textarea>
+                                        </div>
+                                    </div>
+                                    <% if(result[0].certiDivision == 0) {%>
+                                    <div class="form-group row">
+                                        <label class="col-md-2 col-form-label" for="text-input">포인트</label>
+                                        <div class="col-md-9">
+                                            <input class="form-control" id="certiPoint" type="text" name="certiPoint"
+                                                value="<%=result[0].certiPoint%>">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-2 col-form-label" for="text-input">단계</label>
+                                        <div class="col-md-9">
+                                            <input class="form-control" id="certiDiff" type="text" name="certiDiff"
+                                                value="<%=result[0].certiDiff%>">
+                                        </div>
+                                    </div>
+                                    <% }else{ %>
+                                    <div class="form-group row">
+                                        <label class="col-md-2 col-form-label" for="text-input">주체</label>
+                                        <div class="col-md-9">
+                                            <% if(sessionComId == 11) { %>
+                                            <input class="form-control" id="comName" type="text" name="comName"
+                                                value="<%=result[0].comName%>">
+                                            <% } else { %>
+                                            <input class="form-control" id="comName" type="text" name="comName"
+                                                value="<%=result[0].comName%>" readonly>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-2 col-form-label" for="text-input">권한</label>
+                                        <div class="col-md-9">
+                                            <input class="form-control" id="certiAuth" type="text" name="certiAuth"
+                                                value="<%=result[0].certiAuth%>">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-2 col-form-label" for="text-input">기간</label>
+                                        <div class="col-md-9">
+                                            <% if(sessionComId == 11) { %>
+                                            <input class="form-control certiLong" id="certiStartDate" type="date"
+                                                name="certiStartDate" value="<%=result[0].certiStartDate%>">
+                                            <input class="form-control certiLong" id="certiEndDate" type="date"
+                                                name="certiEndDate" value="<%=result[0].certiEndDate%>">
+                                            <% } else { %>
+                                            <input class="form-control certiLong" id="certiStartDate" type="date"
+                                                name="certiStartDate" value="<%=result[0].certiStartDate%>" readonly>
+                                            <input class="form-control certiLong" id="certiEndDate" type="date"
+                                                name="certiEndDate" value="<%=result[0].certiEndDate%>" readonly>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-2 col-form-label" for="text-input">참여방법</label>
+                                        <div class="col-md-9">
+                                            <textarea class="form-control" id="certiDetail_how" type="text"
+                                                name="certiDetail_how"><%=result[0].certiDetail_how%></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-2 col-form-label" for="text-input">이벤트</label>
+                                        <div class="col-md-9">
+                                            <textarea class="form-control" id="certiDetail_event" type="text"
+                                                name="certiDetail_event"><%=result[0].certiDetail_event%></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-2 col-form-label" for="text-input">추첨방식</label>
+                                        <div class="col-md-9">
+                                            <textarea class="form-control" id="certiDetail_raffle" type="text"
+                                                name="certiDetail_raffle"><%=result[0].certiDetail_raffle%></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-2 col-form-label" for="text-input">예시사진 설명글</label>
+                                        <div class="col-md-9">
+                                            <textarea class="form-control" id="certiExamDetail" type="text"
+                                                name="certiExamDetail"><%=result[0].certiExamDetail%></textarea>
+                                        </div>
+                                    </div>
+                                    <% } %>
+                                    <% if(sessionComId == 11) { %>
+                                    <div class="form-group row">
+                                        <label class="col-md-2 col-form-label" for="text-input">노출여부</label>
+                                        <div class="col-md-9">
+                                            <select class="dropdown" name="certiShow" id="certiShow">
+                                                <option value="0" <%if(result[0].certiShow=="0"){%> selected="selected" <%}%> >노출</option>
+                                                <option value="1" <%if(result[0].certiShow=="1"){%> selected="selected" <%}%> >비노출</option>
+                                            </select>
+                                        </div> 
+                                    </div> 
+                                    <% } %> <!--option 버튼 -->
+                                                    <div class="option_button">
+                                                        <div>
+                                                            <button class="btn btn-block btn-outline-success"
+                                                                type="button" id="update_btn"
+                                                                onclick="certiUpdate(); return false;">수정</button>
+                                                        </div>
+                                                        <div>
+                                                            <button class="btn btn-block btn-outline-danger"
+                                                                type="button" onclick="history.go(-1)">취소</button>
+                                                        </div>
+                                                    </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    $(document).ready(function () {
+        alert(sessionComId)
+        //확장자 체크
+        $("input:file[name='file']").change(function () {
+            var str = $(this).val();
+            var fileName = str.split('\\').pop().toLowerCase();
+            // alert(fileName);
+            checkFileName(fileName);
+        });
+    });
+
+    //확장자 체크
+    function checkFileName(str) {
+        var ext = str.split('.').pop().toLowerCase();
+        // alert(ext);
+        if ($.inArray(ext, ['jpg', 'png', 'jpeg', 'gif']) == -1) {
+            alert(ext + '파일은 업로드 하실 수 없습니다.');
+            $("input:file[name='file']").val("");
+        }
+    }
+
+    const formObj = $("form[name='certiUpdate']");
+    //수정
+    $("#update_btn").on("click", function () {
+        var certiImage = $(".certiImage").val();
+
+        if (certiImage == '') {
+            alert("대표이미지를 선택해주세요.");
+            return false;
+        }
+        if ($("#division option:selected").val() == '') {
+            alert("분류를 선택해주세요.");
+            return false;
+        }
+        if ($("input[name=certiTitle]").val() == '') {
+            alert("종류명을 입력해주세요.");
+            return false;
+        }
+        if ($("input[name=certiDetail]").val() == '') {
+            alert("설명글을 입력해주세요.");
+            return false;
+        }
+        if ($("input[name=certiDiff]").val() == '') {
+            alert("단계를 입력해주세요.");
+            return false;
+        }
+        if (confirm("수정하시겠습니까?") == true) {
+            const content = $("#content").val();
+            $('input[name=certiSubDivision]').val($("#division option:selected").val());
+            // $('input[name=certiAuth]').val($("#chooseAuth option:selected").text());
+            $("#certiDetail").attr("value", content);
+            formObj.attr("action", "certiUpdate");
+            formObj.attr("method", "post");
+            formObj.submit();
+            alert("수정이 완료되었습니다.");
+        } else {
+            return;
+        }
+    });
+
+    $('button[name="searchAction"]').on('click', function (e) {
+        parent = this.parentNode;
+        parent.innerHTML = "";
+        const input = document.createElement('input');
+        parent.append(input);
+        input.setAttribute('type', 'hidden');
+        input.setAttribute('name', 'deleteFileId');
+        input.value = this.dataset['route'];
+        const inputReset = document.createElement('input');
+        const resetName = this.dataset['inputreset']
+        inputReset.setAttribute('type', 'file');
+        inputReset.setAttribute('id', 'file');
+        inputReset.setAttribute('name', resetName);
+        inputReset.className += 'certiImg'
+        parent.append(inputReset);
+    })
+
+    var certiDivi = document.getElementById("certiDivision").value
+
+    if(certiDivi == 0){
+    // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 '[2] = 탄소실천관리'
+    var navDropdown = document.getElementsByClassName("nav-dropdown");
+        navDropdown[2].className += 'open';
+    } else if(certiDivi == 1){
+        // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 '[3] = 챌린지관리'
+        var navDropdown = document.getElementsByClassName("nav-dropdown");
+            navDropdown[3].className += 'open';        
+    }
+</script>

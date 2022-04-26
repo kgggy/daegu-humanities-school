@@ -1,0 +1,288 @@
+<link rel="stylesheet" type="text/css" href="../../../public/stylesheets/css/sub.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css" />
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<!--주소api-->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+<script>
+	window.onload = function () {
+		document.getElementById("address_kakao").addEventListener("click", function () {
+			new daum.Postcode({
+				oncomplete: function (data) {
+					// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+					// 예제를 참고하여 다양한 활용법을 확인해 보세요.
+					document.getElementById("address_kakao").value = data.address; // 주소 넣기
+					document.querySelector("input[id=address_detail]").focus(); //상세입력 포커싱
+				}
+			}).open();
+		});
+	}
+</script>
+
+<body class="signUp-body">
+	<div class="signUp-wrap">
+		<div class="signUp-imgWrap">
+			<a href="/admin"><img src="../../../public/images/logo.png"></a> 
+		</div>
+		<form id="enrollForm" name="enrollForm" action="companyEnroll" method="post">
+			<div class="inputInfo">
+				<div class="id-wrap">
+					<p class="idText">아이디</p>
+					<div class="inputId-wrap">
+						<input type="text" id="comNick" name="comNick" class="inputId signup-input" />
+						<button class="idChkBtn">중복확인</button>
+					</div>
+				</div>
+				<div class="pw-wrap">
+					<p class="pwText">비밀번호</p>
+					<input type="password" id="comPwd1" name="comPwd1" class="inputPw signup-input" />
+				</div>
+				<div class="pwCheck-wrap">
+					<p class="pwCheckText">비밀번호 확인</p>
+					<input type="password" id="comPwd2" name="comPwd" class="inputPwCheck signup-input" />
+				</div>
+				<div class="id-wrap">
+					<p class="idText">기업명</p>
+					<div class="inputId-wrap">
+						<input type="text" id="comName" name="comName" class="inputId signup-input" />
+					</div>
+				</div>
+				<div class="id-wrap">
+					<p class="nameText">사업자등록번호</p>
+					<input type="" id="comNum" name="comNum" class="inputName" placeholder="" />
+				</div>
+				<div class="id-wrap">
+					<p class="nameText">회사주소</p>
+					<input type="text" id="address_kakao" name="comAdres1" class="signup-input" readonly />
+					<input type="text" id="address_detail" name="comAdres2" class="inputName signup-input"
+						placeholder="상세주소를 입력해주세요" />
+				</div>
+				<div class="id-wrap">
+					<p class="nameText">대표자명</p>
+					<input type="text" id="comPresiName" name="comPresiName" class="inputName signup-input" />
+				</div>
+				<div class="id-wrap">
+					<p class="nameText">담당자명</p>
+					<input type="text" id="comManagerName" name="comManagerName" class="inputName signup-input" />
+				</div>
+				<div class="tel-wrap">
+					<p class="telText">휴대폰 번호</p>
+					<div class="inputTel-wrap">
+						<input type="text" id="comPhoneNum" name="comPhoneNum" class="inputTel signup-input"
+							placeholder="ex) 01012341234" />
+					</div>
+				</div>
+				<div class="id-wrap">
+					<p class="idText">이메일</p>
+					<div class="inputId-wrap">
+						<input type="text" id="comEmail" name="comEmail" class="inputId signup-input" />
+					</div>
+				</div>
+
+
+			</div>
+
+			<!-- <div class="agree-wrap">
+				<ul>
+					<li>
+						<div class="chkAll chkAndtitle">
+							<input type="checkbox" id="chkAll" name="chkAll" class="chkAllBtn" />
+							<p class="termTitle">약관 전체동의</p>
+						</div>
+					</li>
+					<li class="term">
+						<div class="chkAndtitle">
+							<input type="checkbox" id="chk" name="chk" class="agreeBtn necessary" />
+							<p class="termTitle essential-term">개인정보 수집 및 이용 동의서</p>
+						</div>
+						<button>
+							<i class="fas fa-chevron-right modal-custom-button" href="#myModal1"></i>
+						</button>
+					</li>
+
+					<li class="term">
+						<div class="chkAndtitle">
+							<input type="checkbox" id="chk necessary" name="chk" class="agreeBtn necessary" />
+							<p class="termTitle essential-term">마케팅 활용 목적 개인정보 수집 동의</p>
+						</div>
+						<button>
+							<i class="fas fa-chevron-right modal-custom-button" href="#myModal2"></i>
+						</button>
+					</li>
+
+					<li class="term">
+						<div class="chkAndtitle">
+							<input type="checkbox" id="chk" name="chk" class="agreeBtn" />
+							<p class="termTitle option-term">제3자 정보 제공 동의</p>
+						</div>
+						<button>
+							<i class="fas fa-chevron-right modal-custom-button" href="#myModal3"></i>
+						</button>
+					</li>
+				</ul>
+			</div>
+			<div class="termWarn">
+				<p>필수항목 동의 거부 시에는 회원가입이 제한됩니다.</p>
+			</div> -->
+
+			<div class="signUpSuccess">
+				<button type="submit" id="success" >회원가입</button>
+			</div>
+		</form>
+	</div>
+
+	<!-- 모달 
+	<div id="myModal1" class="modal-custom">
+
+		 모달내용 
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4>이용동의</h4>
+			</div>
+			<div class="modal-body">
+				<p>111내용입니다</p>
+				<p>내용내용</p>
+			</div>
+			<div class="close-modal">닫기</i>
+			</div>
+		</div>
+	</div>-->
+
+	<!-- 모달 
+	<div id="myModal2" class="modal-custom">
+
+		 모달내용 
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4>마케팅 활용 동의</h4>
+			</div>
+			<div class="modal-body">
+				<p>222내용입니다</p>
+				<p>내용내용</p>
+			</div>
+			<div class="close-modal">닫기</i>
+			</div>
+		</div>
+	</div>-->
+
+	<!-- 모달 
+	<div id="myModal3" class="modal-custom">-->
+
+		<!-- 모달내용 
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4>개인정보 수집 이용동의</h4>
+			</div>
+			<div class="modal-body">
+				<p>333내용입니다</p>
+				<p>내용내용</p>
+				<p>333내용입니다</p>
+				<p>내용내용</p>
+				<p>333내용입니다</p>
+				<p>내용내용</p>
+				<p>333내용입니다</p>
+				<p>내용내용</p>
+				<p>333내용입니다</p>
+				<p>내용내용</p>
+				<p>333내용입니다</p>
+				<p>내용내용</p>
+				<p>333내용입니다</p>
+				<p>내용내용</p>
+				<p>333내용입니다</p>
+				<p>내용내용</p>
+				<p>333내용입니다</p>
+				<p>내용내용</p>
+				<p>333내용입니다</p>
+				<p>내용내용</p>
+				<p>내용내용</p>
+				<p>333내용입니다</p>
+				<p>내용내용</p>
+				<p>333내용입니다</p>
+				<p>내용내용</p>
+				<p>333내용입니다</p>
+				<p>내용내용</p>
+				<p>내용내용</p>
+				<p>333내용입니다</p>
+				<p>내용내용</p>
+				<p>333내용입니다</p>
+				<p>내용내용</p>
+				<p>333내용입니다</p>
+				<p>내용내용</p>
+			</div>
+			<div class="close-modal">닫기</i>
+			</div>
+		</div>
+	</div>-->
+
+	<script>
+		// $(document).ready(function () {
+		// 	$("#chkAll").click(function () {
+		// 		if ($("#chkAll").is(":checked")) {
+		// 			$("input[name=chk]").prop("checked", true);
+		// 			$("#success").prop("disabled", false);
+		// 			$("#success").addClass("signUpActive");
+		// 		} else {
+		// 			$("input[name=chk]").prop("checked", false);
+		// 			$('#success').prop("disabled", true);
+		// 			$("#success").removeClass("signUpActive");
+		// 		}
+		// 	});
+
+
+		// 	$("input[name=chk]").click(function () {
+		// 		var total = $("input[name=chk]").length;
+		// 		var checked = $("input[name=chk]:checked").length;
+		// 		if (total != checked)
+		// 			$("#chkAll").prop("checked", false);
+		// 		else
+		// 			$("#chkAll").prop("checked", true);
+		// 	});
+		// });
+
+		// var btn = document.querySelectorAll(".modal-custom-button");
+		// var modals = document.querySelectorAll('.modal-custom');
+		// var exitBtns = document.getElementsByClassName("close-modal");
+
+		// for (var i = 0; i < btn.length; i++) {
+		// 	btn[i].onclick = function (e) {
+		// 		e.preventDefault();
+		// 		modal = document.querySelector(e.target.getAttribute("href"));
+		// 		modal.style.display = "block";
+		// 	}
+		// }
+
+		// for (var i = 0; i < exitBtns.length; i++) {
+		// 	exitBtns[i].onclick = function () {
+		// 		for (var index in modals) {
+		// 			if (typeof modals[index].style !== 'undefined')
+		// 				modals[index].style.display = "none";
+		// 		}
+		// 	}
+		// }
+
+		// window.onclick = function (event) {
+		// 	if (event.target.classList.contains('modal-custom')) {
+		// 		for (var index in modals) {
+		// 			if (typeof modals[index].style !== 'undefined')
+		// 				modals[index].style.display = "none";
+		// 		}
+		// 	}
+		// }
+
+		// $("input.necessary").click(function () {
+		// 	var total = $("input.necessary").length;
+		// 	var checked = $("input.necessary:checked").length;
+		// 	if (total == checked) {
+		// 		$("#success").prop("disabled", false);
+		// 		$("#success").addClass("signUpActive");
+		// 	} else {
+		// 		$('#success').prop("disabled", true);
+		// 		$("#success").removeClass("signUpActive");
+		// 	}
+		// });
+
+		// 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 '[0] = 회원관리'
+		var navDropdown = document.getElementsByClassName("nav-dropdown");
+			navDropdown[0].className += 'open';
+	</script>
+</body>

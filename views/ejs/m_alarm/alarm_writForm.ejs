@@ -1,0 +1,383 @@
+<style>
+   .alarm {
+      height: 600px;
+   }
+
+   .sendMessage {
+      height: 600px;
+   }
+
+   #userSearchBtn {
+      width: 200px;
+   }
+
+   #alarmContent {
+      height: 300px;
+   }
+
+   #userListTable {
+      table-layout: fixed;
+   }
+
+   #userListSendTable {
+      table-layout: fixed;
+   }
+   #alarmContent{
+      height: 400px;
+   }
+</style>
+
+<main class="main">
+   <!-- Breadcrumb-->
+   <ol class="breadcrumb">
+      <li class="breadcrumb-item">Home</li>
+      <li class="breadcrumb-item">
+         <a style="font-weight: bold;">알림</a>
+      </li>
+      <li class="breadcrumb-item active">알림 등록</li>
+      <!-- Breadcrumb Menu-->
+   </ol>
+
+   <div class="container-fluid">
+      <div class="animated fadeIn">
+         <div class="row" style="padding-left: 100px;">
+            <div class="col-md-11">
+               <div class="card">
+                  <div class="card-header">
+                     <i class="fa fa-align-justify"></i> 회원선택
+                  </div>
+                  <div class="card-body">
+                     <form action="" id="userSearch" method="post" autocomplete="off"></form>
+                     <!-- 컨텐츠 -->
+                     <div align="right" style="display: flex; justify-content: center; gap: 5px;">
+
+                        <select name="searchType2" class="dropdown" onchange="changeSearchSelect(this.value)">
+                           <option value="5">전체</option>
+                           <option value="2">닉네임</option>
+                           <option value="3">이메일</option>
+                        </select>
+
+                        <input type="hidden" name="search_user" id="search_user" value="0">
+                        <input type="hidden" name="search_company" id="search_company" value="0">
+                        <input type="hidden" class="form-control" name="search_name" id="search_name" value=""
+                           placeholder="닉네임검색" style="width: 326px;">
+                        <input type="hidden" class="form-control" name="search_email" id="search_email" value=""
+                           placeholder="이메일검색" style="width: 326px;">
+
+                        <button type="button" class="btn btn-block btn-outline-success" id="userSearchBtn">회원검색</button>
+
+                     </div>
+
+                  </div>
+                  </form>
+               </div>
+            </div>
+
+            <!-- 회원리스트 -->
+            <div class="col-md-4">
+               <div class="card alarm list">
+                  <div class="card-header">
+                     <i class="fa fa-align-justify"></i> 받는사람 등록
+                  </div>
+                  <div class="card-body">
+                     <!-- 컨텐츠 -->
+                   
+                        <div class="form-group row">
+                           <strong for="text-input">회원리스트</strong>
+                           <div name="userList" style="width:420px; height:450px; overflow:auto">
+                              <table id="userListTable" width="100%" border="0" cellspacing="0" cellpadding="0">
+                                 <colgroup>
+                                    <col width="10%" />
+                                    <col width="50%" />
+                                    <col width="40%" />
+                                 </colgroup>
+                                 <thead>
+                                    <tr style="text-align:center">
+                                       <th><input type="checkbox" name="chkAlluser" id="chkAlluser" /></th>
+                                       <th>이메일</th>
+                                       <th>닉네임</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody id="userListTbody">
+
+                                    <!-- <tr>
+                                        <td colspan="8">
+                                            데이터가 존재하지 않습니다.
+                                        </td>
+                                    </tr> -->
+
+                                 </tbody>
+                              </table>
+                           </div>
+                        </div>
+
+                  </div>
+                  <!--option 버튼  -->
+                  <div class="option_button" style="padding-left: 1.25rem; margin-bottom: 15px;">
+                     <div>
+                        <button class="btn btn-block btn-outline-success" type="button" id="userCart">선택 회원 담기</button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-md-4">
+               <div class="card alarm send">
+                  <div class="card-header">
+                     <i class="fa fa-align-justify"></i> 알림 보낼 회원
+                  </div>
+                  <div class="card-body">
+                     <!-- 컨텐츠 -->
+                        <div class="form-group row">
+                           <strong for="text-input">회원리스트</strong>
+                           <div name="userList" style="width:420px; height:450px; overflow:auto">
+                              <table id="userListSendTable" width="100%" border="0" cellspacing="0" cellpadding="0">
+                                 <colgroup>
+                                    <col width="10%" />
+                                    <col width="50%" />
+                                    <col width="40%" />
+                                 </colgroup>
+                                 <thead>
+                                    <tr style="text-align:center">
+                                       <th><input type="checkbox" name="chkAlluserSend" id="chkAlluserSend" /></th>
+                                       <th>이메일</th>
+                                       <th>이름</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody id="userListSendTbody">
+
+                                 </tbody>
+                              </table>
+                           </div>
+                        </div>
+
+                  </div>
+                  <!--option 버튼  -->
+                  <div class="option_button" style="padding-left: 1.25rem; margin-bottom: 15px;">
+                     <div>
+                        <button class="btn btn-block btn-outline-danger" type="button" id="userDelete">선택 회원 빼기</button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            <div class="col-md-3">
+               <div class="card sendMessage">
+                  <div class="card-header">
+                     <i class="fa fa-align-justify"></i> 알림내용
+                  </div>
+                  <div class="card-body">
+                     <!-- 컨텐츠 -->
+                     <form action="" id="alarmWrite" method="post" autocomplete="off">
+                        <div class="form-group row">
+                           <strong>전달할 내용</strong>
+
+                           <textarea class="form-control" id="alarmContent" type="text" name="alarmContent"
+                              value=""></textarea>
+
+                        </div>
+
+                  </div>
+                  <!--option 버튼  -->
+                  <div class="option_button" style="padding-left: 1.25rem; margin-bottom: 15px;">
+                     <div>
+                        <button class="btn btn-block btn-outline-success" type="button" id="enroll_btn">알림전송</button>
+                     </div>
+                     <div>
+                        <button class="btn btn-block btn-outline-success" type="button" id="enrollAll_btn">알림전체전송</button>
+                     </div>
+                  </div>
+                  </form>
+               </div>
+            </div>
+
+         </div>
+
+
+      </div>
+   </div>
+</main>
+
+<script type="text/javascript">
+   $(document).ready(function () {
+
+      const formSearch = $("form[name='userSearch']");
+      // 검색
+      $("#userSearchBtn").on("click", function () {
+
+         var searchName = document.getElementById("search_name");
+         var searchEmail = document.getElementById("search_email");
+
+         fetch("alarmSearch", {
+               method: "POST",
+               headers: {
+                  "Content-Type": "application/json",
+                  'Accept': 'application/json',
+               },
+               body: JSON.stringify({
+                  search_name: searchName.value,
+                  search_email: searchEmail.value,
+               }),
+            })
+            .then((response) => response.json())
+            .then(function (data) {
+               var fetchLeng = data.fetchSearch.length;
+               var fetchDatas = data.fetchSearch;
+               var str = '';
+
+               if (fetchLeng > 0) {
+                  for (fetchData of fetchDatas) {
+                     $("#userListTbody").empty();
+                     str +=
+                        '<tr style="text-align:center"><td onclick="event.cancelBubble=true;"><input type="checkbox" id="chk" name="chk" value="' +
+                        fetchData.uid + '" /></td>';
+                     str +=
+                        '<td>' +
+                        fetchData.userEmail + '</td>';
+                     str +=
+                        '<td>' +
+                        fetchData.userNick + '</td> </tr>';
+                  }
+                  $("#userListTbody").append(str);
+               }
+
+
+            });
+
+      })
+
+      //알림 전체전송
+      $("#enrollAll_btn").click(function () {
+        
+         var alarmContent = $("#alarmContent").val();
+         
+         if (alarmContent == "") {
+            alert("알림을 입력하세요.");
+            $("#alarmContent").focus();
+            return false;
+         }
+         if (confirm("등록하시겠습니까?") == true) {
+            $("#alarmWrite").attr("action", "alarmAllSend");
+            $("#alarmWrite").submit();
+         } else {
+            return;
+         }
+      });
+
+      //알림전송
+      $("#enroll_btn").click(function () {
+
+         var alarmContent = $("#alarmContent").val();
+
+         if (alarmContent == "") {
+            alert("알림을 입력하세요.");
+            $("#alarmContent").focus();
+            return false;
+         }
+
+         if (confirm("등록하시겠습니까?") == true) {
+            var chkArr = [];
+            $("#userListSendTbody").children("tr").children("td")
+            .children('input:checked').each(function () {
+               chkArr.push($(this).val());
+            });
+
+            if (chkArr == "") {
+                  alert("회원을 선택해주세요.");
+                  return false;
+            }
+
+            fetch("alarmSend", {
+               method: "POST",
+               headers: {
+                  "Content-Type": "application/json",
+                  'Accept': 'application/json',
+               },
+               body: JSON.stringify({
+                  chkArr: chkArr,
+                  alarmContent: alarmContent,
+               }),
+            }).then((response) => response.json())
+               .then(function (data) {
+                  alert("정상적으로 알림이 전송되었습니다.");
+            });
+               
+         } else {
+            return;
+         }
+      });
+
+   });
+
+
+   // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 '[5] = 알림'
+   var navDropdown = document.getElementsByClassName("nav-dropdown");
+   navDropdown[5].className += 'open';
+
+   //셀렉트박스 값들고오기
+   function changeSearchSelect(e) {
+
+      var searchName = document.getElementById("search_name");
+      var searchEmail = document.getElementById("search_email");
+      var searchUser = document.getElementById("search_user");
+
+      if (e == '2') {
+         searchEmail.value = '';
+         searchEmail.setAttribute('type', 'hidden');
+         searchName.setAttribute('type', 'text');
+      } else if (e == '3') {
+         searchName.value = '';
+         searchName.setAttribute('type', 'hidden');
+         searchEmail.setAttribute('type', 'text');
+      } else if (e == '5') {
+         searchEmail.setAttribute('type', 'hidden');
+         searchName.setAttribute('type', 'hidden');
+         searchEmail.value = '';
+         searchName.value = '';
+      }
+   }
+
+   //체크박스
+   $("#chkAlluser").click(function () {
+      if ($("#chkAlluser").prop("checked"))
+         $("#userListTbody").children("tr").children("td").children('#chk').prop("checked", true);
+      else
+         $("#userListTbody").children("tr").children("td").children('#chk').prop("checked", false);
+   });
+
+   //체크박스
+   $("#chkAlluserSend").click(function () {
+      if ($("#chkAlluserSend").prop("checked"))
+         $("#userListSendTbody").children("tr").children("td").children('#chk').prop("checked", true);
+      else
+         $("#userListSendTbody").children("tr").children("td").children('#chk').prop("checked", false);
+   });
+
+   //datatable 적용 해제
+   $("#userListTable").dataTable({
+      "ordering": false
+   });
+   //datatable 적용 해제
+   $("#userListSendTable").dataTable({
+      "ordering": false
+   });
+
+   // 선택회원담기
+   $("#userCart").click(function () {
+      var chkArr = [];
+      $("#userListTbody").children("tr").children("td").children('input:checked').each(function () {
+         if ($(".odd") != null) {
+            $(".odd").remove();
+         }
+         $("#userListSendTable").append($(this).parent().parent());
+      });
+   });
+
+   // 선택회원빼기
+   $("#userDelete").click(function () {
+      $("#userListSendTbody").children("tr").children("td").children('input:checked').each(function () {
+         $("#userListTbody").append($(this).parent().parent());;
+      });
+   });
+
+
+</script>
