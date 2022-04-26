@@ -1,29 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
+<html
+  lang="en"
+  class="light-style layout-menu-fixed"
+  dir="ltr"
+  data-theme="theme-default"
+  data-assets-path="../assets/"
+  data-template="vertical-menu-template-free"
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
 
-<head>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="../../public/stylesheets/jquery/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="/public/stylesheets/css/style.css" />
-    <link rel="stylesheet" type="text/css" href="/public/stylesheets/css/sub.css" />
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.5.5/css/simple-line-icons.min.css">
-    <link rel="stylesheet" href="/public/stylesheets/datatables-plugins/dataTables.bootstrap4.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css" />
-    <link rel="stylesheet" href="//cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
-    <!--드롭다운-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.easydropdown/2.1.4/themes/easydropdown.css">
-    <script type='text/javascript' src="https://cdn.jsdelivr.net/jquery.easydropdown/2.1.4/jquery.easydropdown.js">
-    </script>
-    <script src="/public/stylesheets/datatables-plugins/dataTables.bootstrap4.js"></script>
-    <script src="/public/stylesheets/bootstrap/js/bootstrap.min.js"></script>
-    <!-- 없으면 테이블 크기 이상해짐 -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
-    <script src="/public/stylesheets/coreui/coreui.min.js"></script>
-    <script src="//cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
-</head>
+    <title>대구인문사회대학 회원수첩 관리자</title>
+
+    <meta name="description" content="" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../../public/sneat/assets/img/favicon/favicon.ico" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Icons. Uncomment required icon fonts -->
+    <link rel="stylesheet" href="../../public/sneat/assets/vendor/fonts/boxicons.css" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="../../public/sneat/assets/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="../../public/sneat/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="../../public/sneat/assets/css/demo.css" />
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="../../public/sneat/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+
+    <!-- Page CSS -->
+
+    <!-- Helpers -->
+    <script src="../../public/sneat/assets/vendor/js/helpers.js"></script>
+
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script src="../../public/sneat/assets/js/config.js"></script>
+  </head>
+>>>>>>> 4f5b82e959206928cd1d23ae0e6400f9422dc26d
 <style>
     table.dataTable td,
     table.dataTable th {
@@ -220,15 +245,78 @@
         cursor: pointer;
     }
 </style>
+<body>
+   <!-- Layout wrapper -->
+   <div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+      <!-- 네비네비!!Menu -->
+      <%- include('../partials/adminNav.ejs') %>
+      <!-- / 네비네비Menu -->
 
-<%- include('../partials/adminTop.ejs') %>
-<%- include('../partials/adminNav.ejs') %>
-<section>
-    <div id="container">
-        <%- defineContent('body') %>
+      <!-- Layout container -->
+      <div class="layout-page">
+        <!-- 탑???Navbar -->
+        <%- include('../partials/adminTop.ejs') %>
+        
+
+        <!-- / Navbar -->
+
+        <!-- Content wrapper -->
+        <div class="content-wrapper">
+          <!-- Content -->
+
+          <div class="container-xxl flex-grow-1 container-p-y">
+            
+
+            
+
+            
+            <%- defineContent('body') %>
+            
+
+            
+
+            
+          </div>
+          <!-- / Content -->
+
+          <!-- 푸터!!!!Footer -->
+          <%- include('../partials/adminTail.ejs') %>
+          <!-- / Footer -->
+
+          <div class="content-backdrop fade"></div>
+        </div>
+        <!-- Content wrapper -->
+      </div>
+      <!-- / Layout page -->
     </div>
-</section>
-<%- include('../partials/adminTail.ejs') %>
+
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
+  </div>
+  <!-- / Layout wrapper -->
+
+  <!-- Core JS -->
+  <!-- build:js assets/vendor/js/core.js -->
+  <script src="../assets/vendor/libs/jquery/jquery.js"></script>
+  <script src="../assets/vendor/libs/popper/popper.js"></script>
+  <script src="../assets/vendor/js/bootstrap.js"></script>
+  <script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+
+  <script src="../assets/vendor/js/menu.js"></script>
+  <!-- endbuild -->
+
+  <!-- Vendors JS -->
+  <script src="../assets/vendor/libs/masonry/masonry.js"></script>
+
+  <!-- Main JS -->
+  <script src="../assets/js/main.js"></script>
+
+  <!-- Page JS -->
+
+  <!-- Place this tag in your head or just before your close body tag. -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  </body>
 
 
 <%- script %>

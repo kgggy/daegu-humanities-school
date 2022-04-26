@@ -1,10 +1,10 @@
 var express = require('express');
 var router = express.Router();
-//const models = require('../../models');
+const models = require('../../models');
 
 //로그인 페이지로 이동
 router.get('/', (req, res) => {
-    let route = req.app.get('views') + '/index';
+    let route = req.app.get('views') + '/auth-login-basic';
     res.render(route, {
         layout: false
     })
