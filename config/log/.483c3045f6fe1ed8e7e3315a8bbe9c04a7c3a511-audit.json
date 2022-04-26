@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": false,
+        "amount": 30
+    },
+    "auditLog": "C:\\Users\\flash51\\Desktop\\daegu-humanity-app\\config\\log\\.483c3045f6fe1ed8e7e3315a8bbe9c04a7c3a511-audit.json",
+    "files": [
+        {
+            "date": 1650954440211,
+            "name": "C:\\Users\\flash51\\Desktop\\daegu-humanity-app\\config\\log\\2022-04-26.log",
+            "hash": "90a1701cb496f1ddaf744d3c7665146c"
+        }
+    ],
+    "hashType": "md5"
+}

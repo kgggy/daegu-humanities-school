@@ -5,8 +5,9 @@ var connection = require('../../../config/db').conn;
 // 전체 회원 목록
 router.get('/', async (req, res) => {
   try {
+    const page = parseInt(req.query.page);
     let user;
-    connection.query('select * from user where uid <= 10000', (err, results, fields) => {
+    connection.query('select * from user where uid <= 10000 limit 15 offset ?;', page * 15, (err, results, fields) => {
       if (err) {
         console.log(err);
       }
@@ -20,6 +21,8 @@ router.get('/', async (req, res) => {
 
 //회원 검색
 router.get('/search', async (req, res) => {
+  const page = parseInt(req.query.page);
+  console.log(req.query);
   var userNum = req.query.userNum == undefined ? "" : req.query.userNum;
   var userAuth = req.query.userAuth == undefined ? "" : req.query.userAuth;
   var userCrew = req.query.userCrew == undefined ? "" : req.query.userCrew;
@@ -35,10 +38,11 @@ router.get('/search', async (req, res) => {
     sql += " and u.userCrew = '" + userCrew + "' \n";
   }
   if (searchText != '') {
-    sql += " and (u.userName like '%" + searchText + "%' or u.userJob like '%" + searchText + "%') order by u.uid";
+    sql += " and (u.userName like '%" + searchText + "%' or u.userJob like '%" + searchText + "%')";
   }
+  sql += " order by u.uid limit 15 offset ?;"
   try {
-    connection.query(sql, function (err, results) {
+    connection.query(sql,  page * 15, function (err, results) {
       if (err) {
         console.log(err);
       }
