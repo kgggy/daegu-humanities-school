@@ -1,0 +1,241 @@
+<style>
+    .subTitle {
+        display: inline-block;
+        text-align: left;
+        width: 500px !important;
+        height: 34px !important;
+        position: relative;
+        width: 160px;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        background: #fff;
+        border-radius: 3px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+    }
+
+    .sub div:first-child {
+        display: inline-block;
+        text-align: left;
+        padding-right: 50px;
+        width: auto !important;
+        height: 34px !important;
+    }
+
+    .subTitle option {
+        font-size: 13px !important;
+        padding: 10px 12px !important;
+    }
+
+    .subTitle option.hover {
+        background-color: orange;
+    }
+</style>
+<main class="main">
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">Home</li>
+        <%if(division == 0){%>
+        <li class="breadcrumb-item">
+            <a style="font-weight: bold;">탄소 실천 관리</a>
+        </li>
+        <li class="breadcrumb-item active">탄소 실천 글 관리</li>
+        <% } else {%>
+        <li class="breadcrumb-item">
+            <a style="font-weight: bold;">챌린지 관리</a>
+        </li>
+        <li class="breadcrumb-item active">챌린지 글 관리</li>
+        <% } %>
+        <!-- Breadcrumb Menu-->
+    </ol>
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <%if(division == 0){%>
+                        <div class="card-header">
+                            <i class="fa fa-align-justify"></i> 탄소실천 글 수정</div>
+                        <% } else {%>
+                        <div class="card-header">
+                            <i class="fa fa-align-justify"></i> 챌린지 글 수정</div>
+                        <% } %>
+                        <div class="card-body">
+                            <!-- 컨텐츠 -->
+                            <form id="udtForm" name="udtForm" method="" action="" enctype="multipart/form-data">
+                                <input type="hidden" id="fileRoute" name="fileRoute" value="">
+                                <input type="hidden" id="fileNo" name="fileNo" value="">
+                                <input type="hidden" id="certiDivision" name="certiDivision" value="<%=division%>">
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label" for="text-input">글번호</label>
+                                    <div class="col-md-9">
+                                        <input class="form-control" id="certiContentId" type="text"
+                                            name="certiContentId" readonly value="<%=result[0].certiContentId%>">
+                                    </div>
+                                </div>
+                                <%if(division == 0){%>
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label" for="text-input">분류</label>
+                                    <div class="col-md-9">
+                                        <select class="dropdown" name="certiSubDivision" id="certiSubDivision">
+                                            <option value='' selected="selected">--선택--</option>
+                                            <% for(var i = 0; i < div.length ; i++){  %>
+                                             <option value="<%= div[i].certiSubDivision %>"
+                                                <%if(result[0].certiSubDivision==div[i].certiSubDivision){%> selected="selected"
+                                                <%}%>><%= div[i].certiSubDivision %></option> 
+                                            <% } %>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label" for="text-input">종류명</label>
+                                    <div class="col-md-9">
+                                        <select class="subTitle" name="certiTitleId" id="certiTitleId">
+                                            <option value="<%= result[0].certiTitleId %>"><%= result[0].certiTitle %></option> 
+                                        </select>
+                                    </div>
+                                </div>
+                                <% } else { %>
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label" for="text-input">권한</label>
+                                    <div class="col-md-9">
+                                        <select class="dropdown">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label" for="text-input">종류명</label>
+                                    <div class="col-md-9">
+                                        <select class="subTitle" name="certiTitleId" id="certiTitleId">
+                                            <% for(var i = 0; i < c_div.length ; i++){  %>
+                                                <option value="<%= c_div[i].certiTitleId %>" <%if(result[0].certiTitle==c_div[i].certiTitle){%> selected="selected"
+                                                    <%}%>><%= c_div[i].certiTitle %></option> 
+                                                    <%}%>
+                                        </select>
+                                    </div>
+                                </div>
+                                <% } %>
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label" for="text-input">이미지</label>
+                                    <div class="col-md-9">
+                                        <% if(result[0].fileRoute != null) { %>
+                                        <div class="file-wrap" style="padding-left: 15px;">
+                                            <% for(var i = 0; i < result.length; i++) {%>
+                                            <p><span><%=result[i].fileOrgName%></span>
+                                                <button name="fileDelete" data-fileNo="<%=result[i].fileNo%>"
+                                                    data-fileRoute="<%=result[i].fileRoute%>"
+                                                    class="btn btn-block btn-outline-danger fileDelete">삭제</button></p>
+                                            <% } %>
+                                            <% if(result.length < 5) { %>
+                                            <% for(var i = 0; i < 5-result.length; i++) {%>
+                                            <br><br><input type="file" id="file" name="file" /><br><br>
+                                            <% } %>
+                                            <% } %>
+                                            <% } else {%>
+                                            <div
+                                                style="display: flex; flex-direction: column; gap: 25px; padding-left: 15px">
+                                                <input type="file" id="file" name="file">
+                                                <input type="file" id="file" name="file" />
+                                                <input type="file" id="file" name="file" />
+                                                <input type="file" id="file" name="file" />
+                                                <input type="file" id="file" name="file" />
+                                            </div>
+                                        </div>
+                                        <% } %>
+                                    </div>
+                                </div>
+                                <!--option 버튼  -->
+                                <div class="option_button">
+                                    <div>
+                                        <button class="btn btn-block btn-outline-success" type="button"
+                                            id="update_btn">수정</button>
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-block btn-outline-danger" type="button" id="delete_btn"
+                                            onclick="history.go(-1)">취소</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</main>
+
+<script type="text/javascript">
+    var formObj = $("form[name='udtForm']");
+    $(document).ready(function () {
+        // 수정
+        $("#update_btn").on("click", function () {
+            formObj.attr("action", "certiContUpdate");
+            formObj.attr("method", "post");
+            if (confirm("실제 파일이 삭제되고 변경됩니다. 게시글을 수정하시겠습니까?") == true) {
+                alert("수정이 왼료되었습니다.");
+                formObj.submit();
+            }
+        });
+
+        //첨부파일 삭제
+        $("[name=fileDelete]").on("click", function () {
+            $('input[name=fileNo').val($(this).attr('data-fileNo'));
+            $('input[name=fileRoute').val($(this).attr('data-fileRoute'));
+            if (confirm("실제 파일이 삭제됩니다. 정말 삭제하시겠습니까?") == true) {
+                formObj.attr("action", "fileDelete");
+                formObj.attr("method", "get");
+                alert("삭제되었습니다.");
+                formObj.submit();
+            } else {
+                return;
+            }
+        });
+
+        $("select[name='certiSubDivision']").on("change", function () {
+            // alert("aaa")
+            var target = $("select[name='certiTitleId']");
+            target.empty();
+            var sub = $("#certiSubDivision option:selected").val();
+            // console.log(sub)
+            if (sub == "") {
+                target.append("<option value=''>--분류를 선택해주세요--</option>");
+                return;
+            }
+            $.ajax({
+                url: '/admin/m_certiContent/certiWritForm_subdropdown',
+                dataType: 'json',
+                type: 'GET',
+                data: {
+                    param: sub
+                },
+                success: function (secondDiv) {
+                    if (secondDiv.length == 0) {
+                        // alert(JSON.stringify(secondDiv));
+                        target.attr('disabled', 'disabled');
+                        target.append("<option value=''>종류가 존재하지 않습니다.</option>");
+                    } else {
+                        target.append(
+                            "<option value='' selected='selected'>--선택--</option>");
+                        $(secondDiv).each(function (i) {
+                            target.removeAttr('disabled', 'disabled');
+                            target.append("<option value='" + secondDiv[i]
+                                .certiTitleId + "'>" + secondDiv[i].certiTitle +
+                                "</option>")
+                        });
+                    }
+                }
+            });
+        });
+    });
+    var certiDivi = document.getElementById("certiDivision").value
+
+    if(certiDivi == 0){
+    // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 '[2] = 탄소실천관리'
+        var navDropdown = document.getElementsByClassName("nav-dropdown");
+            navDropdown[2].className += 'open';
+    } else if(certiDivi == 1){
+        // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 '[3] = 챌린지관리'
+        var navDropdown = document.getElementsByClassName("nav-dropdown");
+            navDropdown[3].className += 'open';        
+    }
+</script>

@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": false,
+        "amount": 30
+    },
+    "auditLog": "C:\\Users\\flash106\\Desktop\\프로젝트\\Daegu-inmun-server-app\\config\\log\\.877ab9c8047a99e38a1dddbdd3a4be6b4ff77165-audit.json",
+    "files": [
+        {
+            "date": 1650936567018,
+            "name": "C:\\Users\\flash106\\Desktop\\프로젝트\\Daegu-inmun-server-app\\config\\log\\2022-04-26.log",
+            "hash": "996f7c8fcebe0375610577171203cf2e"
+        }
+    ],
+    "hashType": "md5"
+}

@@ -1,0 +1,144 @@
+    <main class="main">
+       <!-- Breadcrumb-->
+       <ol class="breadcrumb">
+          <li class="breadcrumb-item">Home</li>
+          <li class="breadcrumb-item">
+             <a style="font-weight: bold;">게시판관리</a>
+          </li>
+          <li class="breadcrumb-item active">게시글 상세</li>
+          <!-- Breadcrumb Menu-->
+       </ol>
+
+       <div class="container-fluid">
+          <div class="animated fadeIn">
+             <div class="row">
+                <div class="col-lg-6">
+                   <div class="card">
+                      <form name="udtForm" role="form">
+                         <input type="hidden" id="page" name="page" value="<%=page%>">
+                         <input type="hidden" id="searchText" name="searchText" value="<%=searchText%>">
+                         <input type="hidden" id="writId" name="writId" value="<%=result[0].writId%>">
+                         <input type="hidden" id="boardId" name="boardId" value="<%=result[0].boardId%>">
+                         <div class="card-header">
+                            <i class="fa fa-align-justify"></i> 게시글 상세</div>
+                         <div class="card-body">
+                            <!-- 컨텐츠 -->
+                            <div class="form-group row">
+                               <label class="col-md-2 col-form-label" for="text-input">글번호</label>
+                               <div class="col-md-9">
+                                  <input class="form-control" id="ucmtitle" type="text" name="ucmtitle"
+                                     disabled="disabled" value="<%=result[0].writId%>">
+                               </div>
+                            </div>
+                            <div class="form-group row">
+                               <label class="col-md-2 col-form-label" for="text-input">제목</label>
+                               <div class="col-md-9">
+                                  <input class="form-control" id="ucmtitle" type="text" name="ucmtitle"
+                                     disabled="disabled" value="<%=result[0].writTitle%>">
+                               </div>
+                            </div>
+                            <div class="form-group row">
+                               <label class="col-md-2 col-form-label" for="text-input">작성자</label>
+                               <div class="col-md-9">
+                                  <input class="form-control" id="ucmtitle" type="text" name="ucmtitle"
+                                     disabled="disabled" value="<%=result[0].userNick%><%=result[0].comNick%>">
+                               </div>
+                            </div>
+                            <div class="form-group row">
+                               <label class="col-md-2 col-form-label" for="text-input">우선순위</label>
+                               <div class="col-md-9">
+                                  <input class="form-control" id="ucmtitle" type="text" name="ucmtitle"
+                                     disabled="disabled" value="<%=result[0].writRank%>">
+                               </div>
+                            </div>
+                            <div class="form-group row">
+                               <label class="col-md-2 col-form-label" for="text-input">작성일/수정일</label>
+                               <div class="col-md-9">
+                                  <input class="form-control" id="ucmtitle" type="text" name="ucmtitle"
+                                     disabled="disabled"
+                                     value="<%=result[0].writDatefmt%>/<%=result[0].writUpdDatefmt%>">
+                               </div>
+                            </div>
+                            <div class="form-group row">
+                               <label class="col-md-2 col-form-label" for="text-input">조회수</label>
+                               <div class="col-md-9">
+                                  <input class="form-control" id="ucmtitle" type="text" name="ucmtitle"
+                                     disabled="disabled" value="<%=result[0].writHit%>">
+                               </div>
+                            </div>
+                            <div class="form-group row">
+                               <label class="col-md-2 col-form-label" for="text-input">내용</label>
+                               <div class="col-md-9">
+                                  <%-result[0].writContent%>
+                               </div>
+                            </div>
+                            <div class="form-group row">
+                               <label class="col-md-2 col-form-label">첨부파일</label>
+                               <% if(result[0].fileRoute != null) { %>
+                               <div class="file-wrap">
+                                  <% for(var i = 0; i < result.length; i++) {%>
+                                  <div id="" style="padding: 10px;">
+                                     <p><img src="../../../<%= result[i].fileRoute %>" style="width:300px; margin-bottom: 15px;">
+                                        <a href="../../../<%= result[i].fileRoute %>"
+                                           class="btn btn-block btn-outline-success" type="button" download>파일 다운로드</a>
+                                     </p>
+                                     <input type="hidden" name="fileNo" value="<%=result[i].fileNo%>">
+                                     <input type="hidden" name="fileRoute" value="<%=result[i].fileRoute%>">
+                                  </div>
+                                  <% } %>
+                               </div>
+                               <% }%>
+                               <% if(result[0].fileRoute == null) { %>
+                               <div id="fileDiv" style="padding: 10px;">
+                                  파일이 없습니다.
+                               </div>
+                               <br><% } %>
+                            </div>
+                            <!--option 버튼  -->
+                            <div class="option_button">
+                               <div>
+                                  <button class="btn btn-block btn-outline-success" type="button"
+                                     id="update_btn">수정</button>
+                               </div>
+                               <div>
+                                  <button class="btn btn-block btn-outline-danger" type="button"
+                                     id="delete_btn">삭제</button>
+                               </div>
+                               <div>
+                                  <button class="btn btn-block btn-outline-success" type="button"
+                                     onclick="location.href='/admin/m_board/all?boardId=<%=result[0].boardId%>&page=<%=page%>&searchText=<%=searchText%>'">목록</button>
+                               </div>
+                            </div>
+                         </div>
+                      </form>
+                   </div>
+                </div>
+             </div>
+          </div>
+       </div>
+    </main>
+
+    <script type="text/javascript">
+       var formObj = $("form[name='udtForm']");
+       $(document).ready(function () {
+          // 수정 폼 연결
+          $("#update_btn").on("click", function () {
+             formObj.attr("action", "brdUdtForm");
+             formObj.attr("method", "get");
+             formObj.submit();
+          });
+          // 삭제
+          $("#delete_btn").on("click", function () {
+             formObj.attr("action", "brdDelete");
+             formObj.attr("method", "get");
+             if (confirm("게시글을 삭제하시겠습니까?") == true) {
+                formObj.submit();
+             } else {
+                return;
+             }
+          });
+       })
+    // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 '[1] = 게시판관리'
+    var navDropdown = document.getElementsByClassName("nav-dropdown");
+        navDropdown[1].className += 'open';       
+    </script>

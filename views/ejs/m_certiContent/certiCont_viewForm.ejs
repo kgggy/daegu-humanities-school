@@ -1,0 +1,159 @@
+<main class="main">
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">Home</li>
+        <%if(division == 0){%>
+        <li class="breadcrumb-item">
+            <a style="font-weight: bold;">탄소 실천 관리</a>
+        </li>
+        <li class="breadcrumb-item active">탄소 실천 글 관리</li>
+        <% } else {%>
+        <li class="breadcrumb-item">
+            <a style="font-weight: bold;">챌린지 관리</a>
+        </li>
+        <li class="breadcrumb-item active">챌린지 글 관리</li>
+        <% } %>
+    </ol>
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <%if(division == 0){%>
+                        <div class="card-header">
+                            <i class="fa fa-align-justify"></i> 탄소실천 글 상세보기</div>
+                        <% } else {%>
+                        <div class="card-header">
+                            <i class="fa fa-align-justify"></i> 챌린지 글 상세보기</div>
+                        <% } %>
+                        <div class="card-body">
+                            <!-- 컨텐츠 -->
+                            <form id="udtForm" name="udtForm" method="" action="">
+                                <input type="hidden" id="certiDivision" name="certiDivision" value="<%= division %>">
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label" for="text-input">글번호</label>
+                                    <div class="col-md-9">
+                                        <input class="form-control" id="certiContentId" type="text"
+                                            name="certiContentId" readonly value="<%=result[0].certiContentId%>">
+                                    </div>
+                                </div>
+                                <%if(division == 0){%>
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label" for="text-input">분류</label>
+                                    <div class="col-md-9">
+                                        <input class="form-control" id="certiSubDivision" type="text"
+                                            name="certiSubDivision" disabled="disabled"
+                                            value="<%=result[0].certiSubDivision%>">
+                                    </div>
+                                </div>
+                                <% } else { %>
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label" for="text-input">권한</label>
+                                    <div class="col-md-9">
+                                        <input class="form-control" id="certiAuth" type="text" name="certiAuth"
+                                            disabled="disabled" value="<%=result[0].certiAuth%>">
+                                    </div>
+                                </div>
+                                <% } %>
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label" for="text-input">종류명</label>
+                                    <div class="col-md-9">
+                                        <input class="form-control" id="certiTitle" type="text" name="certiTitle"
+                                            disabled="disabled" value="<%=result[0].certiTitle%>">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label" for="text-input">좋아요 수</label>
+                                    <div class="col-md-9">
+                                        <input class="form-control" id="rcount" type="text" name="rcount"
+                                            disabled="disabled" value="<%=result[0].rcount%>">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label" for="text-input">작성자</label>
+                                    <div class="col-md-9">
+                                        <input class="form-control" id="comNick" type="text" name="comNick"
+                                            disabled="disabled" value="<%=result[0].userNick%><%=result[0].comNick%>">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label" for="text-input">작성일</label>
+                                    <div class="col-md-9">
+                                        <input class="form-control" id="certiContentDatefmt" type="text"
+                                            name="certiContentDatefmt" disabled="disabled"
+                                            value="<%=result[0].certiContentDatefmt%>">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-2 col-form-label" for="text-input">이미지</label>
+                                    <div class="col-md-9">
+                                        <% if(result.length > 0 && result[0].fileRoute != null && result[0].fileRoute != '') {%>
+                                        <% for(var i = 0; i < result.length; i++) { %>
+                                        <img src="../../../<%= result[i].fileRoute %>" alt="사진"
+                                            style="padding:0 50px 8px 0 !important; width:40%; vertical-align: top !important;" />
+                                        <a href="../../../<%= result[i].fileRoute %>"
+                                            class="btn btn-block btn-outline-success" type="button" style="width:30%;"
+                                            download>파일 다운로드</a>
+                                        </p>
+                                        <input type="hidden" name="fileRoute" value="<%=result[i].fileRoute%>">
+                                        <% } %>
+                                        <% }else{ %>
+                                        이미지가 존재하지 않습니다.
+                                        <% } %>
+                                    </div>
+                                </div>
+                                <!--option 버튼  -->
+                                <div class="option_button">
+                                    <!-- <div>
+                                        <button class="btn btn-block btn-outline-success" type="button"
+                                            id="update_btn">수정</button>
+                                    </div> -->
+                                    <div>
+                                        <button class="btn btn-block btn-outline-danger" type="button"
+                                            id="delete_btn">삭제</button>
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-block btn-outline-success" type="button"
+                                            onclick="location.href='/admin/m_certiContent/certiContentAll?certiDivision=<%=division%>&page=1'">목록</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</main>
+
+<script type="text/javascript">
+    var formObj = $("form[name='udtForm']");
+    $(document).ready(function () {
+        // // 수정 폼 연결
+        // $("#update_btn").on("click", function () {
+        //     formObj.attr("action", "certiContUdtForm");
+        //     formObj.attr("method", "get");
+        //     formObj.submit();
+        // });
+        // 삭제
+        $("#delete_btn").on("click", function () {
+            formObj.attr("action", "certiContDelete");
+            formObj.attr("method", "get");
+            if (confirm("게시글을 삭제하시겠습니까?") == true) {
+                formObj.submit();
+            } else {
+                return;
+            }
+        });
+    })
+    var certiDivi = document.getElementById("certiDivision").value
+
+    if(certiDivi == 0){
+    // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 '[2] = 탄소실천관리'
+    var navDropdown = document.getElementsByClassName("nav-dropdown");
+        navDropdown[2].className += 'open';
+    } else if(certiDivi == 1){
+        // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 '[3] = 챌린지관리'
+        var navDropdown = document.getElementsByClassName("nav-dropdown");
+            navDropdown[3].className += 'open';        
+    }
+</script>

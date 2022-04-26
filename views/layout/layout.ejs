@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="../../public/stylesheets/jquery/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/public/stylesheets/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/public/stylesheets/css/sub.css" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.5.5/css/simple-line-icons.min.css">
+    <link rel="stylesheet" href="/public/stylesheets/datatables-plugins/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css" />
+    <link rel="stylesheet" href="//cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
+    <!--드롭다운-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.easydropdown/2.1.4/themes/easydropdown.css">
+    <script type='text/javascript' src="https://cdn.jsdelivr.net/jquery.easydropdown/2.1.4/jquery.easydropdown.js">
+    </script>
+    <script src="/public/stylesheets/datatables-plugins/dataTables.bootstrap4.js"></script>
+    <script src="/public/stylesheets/bootstrap/js/bootstrap.min.js"></script>
+    <!-- 없으면 테이블 크기 이상해짐 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
+    <script src="/public/stylesheets/coreui/coreui.min.js"></script>
+    <script src="//cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+</head>
+<style>
+    table.dataTable td,
+    table.dataTable th {
+        padding: 0.75rem !important;
+    }
+
+    table.dataTable.no-footer {
+        border-bottom: none !important;
+    }
+
+    table.dataTable thead .sorting,
+    table.dataTable thead .sorting_asc,
+    table.dataTable thead .sorting_desc {
+        background-image: none !important;
+    }
+
+    /* 드롭다운 스타일 */
+    /* form => easydropdown, 검색 input => searchbox */
+    .easydropdown {
+        text-align: right;
+        display: flex;
+        justify-content: end;
+        margin-bottom: 7px;
+        gap: 8px;
+    }
+
+    .dropdown {
+        display: inline-block;
+        text-align: left;
+        width: 120px !important;
+        height: 34px !important;
+    }
+
+    .certidropdown {
+        width: 200px !important;
+    }
+
+    .dropdown .selected {
+        display: inline-block !important;
+        padding: 10px 12px !important;
+    }
+
+    .dropdown .selected,
+    .dropdown li {
+        font-size: 13px !important;
+    }
+
+    .dropdown ul {
+        padding: 0;
+    }
+
+    .searchbox {
+        height: 34px !important;
+        border: 1px solid darkgray;
+        border-radius: 7%;
+    }
+
+    input::-webkit-input-placeholder {
+        color: darkgray;
+    }
+
+    .dropdown li.focus {
+        background-color: rgb(252, 139, 95);
+    }
+
+    /* 검색, 등록, 삭제 버튼 style */
+    #searchAction,
+    #enrollAction,
+    #delete_btn {
+        width: 60px;
+        display: inline-block;
+        margin-bottom: 15px;
+    }
+
+    /* 페이징 스타일 */
+    .page {
+        text-align: center;
+        width: 50%;
+    }
+
+    .pagination {
+        list-style: none;
+        display: inline-block;
+        padding: 0;
+        margin-top: 20px;
+    }
+
+    .pagination li {
+        display: inline;
+        text-align: center;
+    }
+
+    .pagination a {
+        float: left;
+        display: block;
+        font-size: 14px;
+        text-decoration: none;
+        padding: 5px 12px;
+        color: #2c2e31;
+        line-height: 1.5;
+    }
+
+    .first {
+        margin-right: 15px;
+    }
+
+    .last {
+        margin-left: 15px;
+    }
+
+    .first:hover,
+    .last:hover,
+    .left:hover,
+    .right:hover {
+        color: #FC8B5F;
+    }
+
+    .pagination a.active {
+        cursor: default;
+        color: #ffffff;
+    }
+
+    .pagination a:active {
+        outline: none;
+    }
+
+    .customPaging .num {
+        margin-left: 3px;
+        padding: 0;
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        /* -moz-border-radius: 100%;
+        -webkit-border-radius: 100%; */
+        /* border-radius: 100%; */
+    }
+    .customPaging .selected {
+        margin-left: 3px;
+        padding: 0;
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        background-color: #FC8B5F;
+        color: #ffffff;
+    }
+
+    .customPaging .num:hover {
+        background-color: #FC8B5F;
+        color: #ffffff;
+    }
+
+    .customPaging .num.active,
+    .customPaging .num:active {
+        background-color: #FC8B5F;
+        cursor: pointer;
+    }
+
+    .paging {
+        text-align: center;
+    }
+
+    .arrow-left {
+        width: 0;
+        height: 0;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+        border-right: 10px solid blue;
+    }
+
+    div.dataTables_wrapper div.dataTables_info {
+        display: none !important;
+    }
+
+    div.dataTables_wrapper div.dataTables_paginate {
+        display: none !important;
+    }
+
+    div.dataTables_wrapper div.dataTables_length label {
+        display: none !important;
+    }
+
+    div.dataTables_wrapper div.dataTables_filter label {
+        display: none;
+    }
+
+    /* 첨부파일삭제버튼 */
+    .fileDelete {
+        display: inline;
+        width: 55px;
+        margin-left: 10px;
+    }
+
+    tr {
+        cursor: pointer;
+    }
+</style>
+
+<%- include('../partials/adminTop.ejs') %>
+<%- include('../partials/adminNav.ejs') %>
+<section>
+    <div id="container">
+        <%- defineContent('body') %>
+    </div>
+</section>
+<%- include('../partials/adminTail.ejs') %>
+
+
+<%- script %>
+<script>
+    $("#exampleTable").DataTable({
+        paging: false,
+        "language": {
+            "zeroRecords": "데이터가 존재하지 않습니다."
+        }
+    });
+</script>
+
+</html>

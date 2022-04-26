@@ -1,0 +1,151 @@
+<!-- ckeditor -->
+<script src="../../../public/build/ckeditor.js"></script>
+<style>
+   .ck.ck-editor__main>.ck-editor__editable:not(.ck-focused) {
+      border-color: var(--ck-color-base-border);
+      height: 40%;
+   }
+
+   .ck.ck-editor__editable:not(.ck-editor__nested-editable).ck-focused {
+      height: 400px;
+   }
+
+   .ck.ck-editor__main>.ck-editor__editable:not(.ck-focused) {
+      height: 400px;
+   }
+</style>
+<main class="main">
+   <!-- Breadcrumb-->
+   <ol class="breadcrumb">
+      <li class="breadcrumb-item">Home</li>
+      <li class="breadcrumb-item">
+         <a style="font-weight: bold;">게시판관리</a>
+      </li>
+      <li class="breadcrumb-item active">게시글 등록</li>
+      <!-- Breadcrumb Menu-->
+   </ol>
+
+   <div class="container-fluid">
+      <div class="animated fadeIn">
+         <div class="row">
+            <div class="col-lg-6">
+               <div class="card">
+                  <div class="card-header">
+                     <i class="fa fa-align-justify"></i> 게시글 등록
+                  </div>
+                  <div class="card-body">
+                     <!-- 컨텐츠 -->
+                     <form action="" id="boardwrite" method="post" enctype="multipart/form-data" autocomplete="off">
+                        <input type="hidden" id="uid" name="uid" value="<%= uid %>">
+                        <input type="hidden" id="boardId" name="boardId" value="<%= boardId %>">
+                        <input type="hidden" id="writContent" name="writContent" value="">
+                        <div class="form-group row">
+                           <label class="col-md-2 col-form-label" for="text-input">제목</label>
+                           <div class="col-md-9">
+                              <input class="form-control" id="writTitle" type="text" name="writTitle" value="">
+                           </div>
+                        </div>
+                        <div class="form-group row">
+                           <label class="col-md-2 col-form-label" for="text-input">우선순위</label>
+                           <div class="col-md-9">
+                              <input class="form-control" id="writRank" type="text" name="writRank" value="">
+                           </div>
+                        </div>
+                        <div class="form-group row">
+                           <label class="col-md-2 col-form-label" for="text-input">내용</label>
+                           <div class="col-md-9">
+                              <textarea name="editor" class="editor" id="editor"></textarea>
+                           </div>
+                        </div>
+                        <div class="form-group row">
+                           <label class="col-md-2 col-form-label">첨부파일</label>
+                           <div style="display: flex; flex-direction: column; gap: 25px; padding-left: 15px">
+                              <input type="file" id="file" name="file">
+                              <input type="file" id="file" name="file" />
+                              <input type="file" id="file" name="file" />
+                              <input type="file" id="file" name="file" />
+                              <input type="file" id="file" name="file" />
+                           </div>
+                        </div>
+                  </div>
+                  <!--option 버튼  -->
+                  <div class="option_button" style="padding-left: 1.25rem; margin-bottom: 15px;">
+                     <div>
+                        <button class="btn btn-block btn-outline-success" type="button" id="enroll_btn">등록</button>
+                     </div>
+                     <div>
+                        <button class="btn btn-block btn-outline-danger" type="button"
+                           onclick="history.go(-1)">취소</button>
+                     </div>
+                  </div>
+                  </form>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   </div>
+</main>
+
+<script type="text/javascript">
+   $(document).ready(function () {
+      //ckeditor
+      ClassicEditor
+         .create(document.querySelector('#editor'), {
+            language: 'ko'
+         })
+         .then(newEditor => {
+            editor = newEditor;
+         })
+         .catch(error => {
+            console.error(error);
+         });
+
+      $("#enroll_btn").click(function () {
+         // const aa = Array.from(editor.ui.componentFactory.names());
+         // console.log(aa);
+         var writTitle = $("#writTitle").val();
+         // var content = $("#content").val();
+         // $('input[name=inputNm]').attr('value',goContent);
+         var content = editor.getData();
+         // console.log(content);
+
+         if (writTitle == "") {
+            alert("제목을 입력하세요.");
+            $("#writTitle").focus();
+            return false;
+         }
+
+         if (content == "") {
+            alert("내용을 입력하세요.");
+            $("#editor").focus();
+            return false;
+         }
+
+         if (confirm("등록하시겠습니까?") == true) {
+            $('input[name=writContent]').attr('value', content);
+            $("#boardwrite").attr("action", "boardwrite");
+            $("#boardwrite").submit();
+         } else {
+            return;
+         }
+      });
+
+      //쿼리스트링값 가져와서 넘기기
+      // function getUrlParams() {
+      //    var params = {};
+      //    window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (str, key, value) {
+      //       params[key] = value;
+      //    });
+      //    return params;
+      // }
+      // var param = getUrlParams();
+      // var uid = document.getElementById("uid");
+      // uid.value = param.uid;
+      // var boardId = document.getElementById("boardId");
+      // boardId.value = param.boardId;
+   });
+    // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 '[1] = 게시판관리'
+    var navDropdown = document.getElementsByClassName("nav-dropdown");
+        navDropdown[1].className += 'open';   
+</script>

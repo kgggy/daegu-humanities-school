@@ -1,0 +1,251 @@
+<style>
+    .userTable thead tr .sorting:first-child::before,
+    .userTable thead tr .sorting_asc:first-child::before,
+    .userTable thead tr .sorting_asc:first-child::after,
+    .userTable thead .sorting_desc:first-child:after,
+    .userTable thead .sorting:first-child:after,
+    .userTable thead .sorting:first-child {
+        content: none !important;
+        cursor: unset
+    }
+</style>
+<main class="main">
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">Home</li>
+        <li class="breadcrumb-item">
+            <a style="font-weight: bold;">회원관리</a>
+        </li>
+        <li class="breadcrumb-item active">회원정보</li>
+    </ol>
+
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header"><i class="fa fa-align-justify"></i> 일반 회원 관리 </div>
+                        <div class="card-body">
+                            <form name="userForm" action="" method="get">
+                                <input type="hidden" id="page" name="page" value="">
+                                <div align="right" style="display: flex; justify-content: end; gap: 5px;">
+                                    <select name="searchType1" class="dropdown">
+                                        <option value="">회원상태</option>
+                                        <option value="0" <%if(searchType1=="0"){%> selected="selected" <%}%>>활동중</option>
+                                        <option value="1" <%if(searchType1=="1"){%> selected="selected" <%}%>>탈퇴</option>
+                                    </select>
+                                    <select name="searchType2" class="dropdown">
+                                        <option value="">동의여부</option>
+                                        <option value="0" <%if(searchType2=="0"){%> selected="selected" <%}%>>동의</option>
+                                        <option value="1" <%if(searchType2=="1"){%> selected="selected" <%}%>>비동의</option>
+                                    </select>
+                                    <select name="searchType3" class="dropdown">
+                                        <option value="">나이대</option>
+                                        <option value="20" <%if(searchType3=="20"){%> selected="selected" <%}%>>10대</option>
+                                        <option value="30" <%if(searchType3=="30"){%> selected="selected" <%}%>>20대</option>
+                                        <option value="40" <%if(searchType3=="40"){%> selected="selected" <%}%>>30대</option>
+                                        <option value="50" <%if(searchType3=="50"){%> selected="selected" <%}%>>40대</option>
+                                        <option value="60" <%if(searchType3=="60"){%> selected="selected" <%}%>>50대</option>
+                                        <option value="61" <%if(searchType3=="61"){%> selected="selected" <%}%>>60대 이상</option>
+                                    </select>
+                                    <select name="searchType4" class="dropdown">
+                                        <option value="">나무등급</option>
+                                        <option value="씨앗" <%if(searchType4=="씨앗"){%> selected="selected" <%}%>>씨앗</option>
+                                        <option value="새싹" <%if(searchType4=="새싹"){%> selected="selected" <%}%>>새싹</option>
+                                        <option value="아기나무" <%if(searchType4=="아기나무"){%> selected="selected" <%}%>>아기나무</option>
+                                        <option value="꽃나무" <%if(searchType4=="꽃나무"){%> selected="selected" <%}%>>꽃나무</option>
+                                        <option value="열매나무" <%if(searchType4=="열매나무"){%> selected="selected" <%}%>>열매나무</option>
+                                    </select>
+                                    <% if(searchText != '') { %> <input class="searchbox" type="text" name="searchText"
+                                            value="<%=searchText%>" />
+                                        <% } else {%>
+                                        <input class="searchbox" type="text" name="searchText"
+                                            placeholder=" 이메일, 닉네임, 학교" />
+                                        <% } %>
+                                        <button class="btn btn-block btn-outline-success" type="submit"
+                                            id="searchAction" style="margin-bottom: 10px;">검색</button>
+
+                                </div>
+                                <table id="exampleTable" class="table userTable table-responsive-sm table-hover">
+                                    <colgroup>
+                                        <col width="5%" />
+                                        <col width="5%" />
+                                        <col width="20%" />
+                                        <col width="20%" />
+                                        <col width="10%" />
+                                        <col width="10%" />
+                                        <col width="10%" />
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th><input type="checkbox" name="chkAll" id="chkAll" /></th>
+                                            <th>번호</th>
+                                            <th>이메일</th>
+                                            <th>닉네임</th>
+                                            <th>포인트</th>
+                                            <th>가입날짜</th>
+                                            <th>권한</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% if(results.length > 0) { %>
+                                        <% for(var i = (page * page_num) - page_num; i < (page * page_num); i++) { 
+                                        if(i > length){
+                                            i++;
+                                        } else { %>
+                                        <tr class="pointer" onclick="location.href='/admin/m_user/selectOne?uid=<%=results[i].uid%>&page=<%=page%><%=keepSearch%>'">
+                                            <td onclick='event.cancelBubble=true;'><input type="checkbox" id="chk" name="chk" value="<%=results[i].uid %>"
+                                                    data-img="<%=results[i].userImg%>" />
+                                            </td>
+                                            <td>
+                                                <%=results[i].uid%>
+                                            </td>
+                                            <td>
+                                                <%=results[i].userEmail%>
+                                            </td>
+                                            <td>
+                                                <%= results[i].userNick %>
+                                            </td>
+                                            <td>
+                                                <%= results[i].userPoint %>점
+                                            </td>
+                                            <td>
+                                                <%= results[i].userRegDatefmt %>
+                                            </td>
+                                            <td>
+                                                <%if(results[i].userStatus !=null && results[i].userStatus!='null' && results[i].userStatus!=''){%>
+                                                <% if (results[i].userStatus == '0'){%>
+                                                활동중
+                                                <% } else if (results[i].userStatus == '1') {%>
+                                                탈퇴
+                                                <%}%>   
+                                            <%}%>
+                                            </td>
+                                        </tr>
+                                        <% } %>
+                                        <% } %>
+                                        <% } else { %>
+                                        <tr>
+                                            <td colspan="7">등록된 회원이 없습니다.</td>
+                                        </tr>
+                                        <% } %>
+                                    </tbody>
+                                </table>
+                                <div>
+                                    <div>
+                                        <button type="button" id="enrollAction"
+                                            class="btn btn-block btn-outline-success"
+                                            style="width: 60px; display: inline-block;"
+                                            onclick="location.href='/admin/m_user/userInsertForm'">등록</button>
+                                        <input type="hidden" id="userImg" name="userImg" value="" />
+                                        <input type="hidden" id="uid" name="uid" value="" />
+                                        <button class="btn btn-block btn-outline-danger" type="button"
+                                            id="delete_btn">삭제</button>
+                                        <input class="btn btn-block btn-outline-success" type="button"
+                                            id="excelFileExport" value="엑셀 다운로드"
+                                            style="margin-bottom: 15px; width: 140px; display: inline-block;" />
+                                    </div>
+                                    <div class="mt_20">
+                                        <div class="paging" id="page_navi">
+                                            <ul class="pagination customPaging">
+                                                <li> <a href="/admin/m_user/page?page=1<%= keepSearch %>" class="num">
+                                                        <<</a> </li> <li> <a
+                                                                <%if((page==1)){%><%} else {%>
+                                                                href="/admin/m_user/page?page=<%= parseInt(page) - 1 %><%= keepSearch %>"
+                                                                class="num" <% } %>>
+                                                                <</a> </li>
+                                                                    <% for(var i = startPage; i < endPage; i++){  %>
+                                                                    <li class="paging_on">
+                                                                    <a href="/admin/m_user/page?page=<%= i + 1 %><%= keepSearch %>"
+                                                                        <%if(page==i+1){%>class="selected"
+                                                                        <%}%> class="num"><%= i + 1 %></a> </li> <% } %>
+                                                                        <li> <a <%if(page>last-1){%><%} else {%>
+                                                                            href="/admin/m_user/page?page=<%= parseInt(page) + 1 %><%= keepSearch %>"
+                                                                            class="num" <% } %>>></a></li>
+                                                <li><a href="/admin/m_user/page?page=<%= last %><%= keepSearch %>"
+                                                        class="num">>></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</main>
+<script>
+    $(document).ready(function () {
+        const formObj = $("form[name='userForm']");
+        // 삭제
+        $("#delete_btn").on("click", function () {
+            var chkArr = [];
+            $("input[name=chk]:checked").each(function () {
+                chkArr.push($(this).val());
+            });
+            $('#uid').val(chkArr);
+            if (chkArr == "") {
+                alert("삭제할 목록을 선택해주세요.");
+                return false;
+            }
+            var chkImg = [];
+            $("input[name=chk]:checked").each(function () {
+                chkImg.push($(this).attr('data-img'));
+            });
+            $('#userImg').val(chkImg);
+            formObj.attr("action", "userDelete");
+            formObj.attr("method", "get");
+            if (confirm("삭제하시겠습니까?") == true) {
+                formObj.submit();
+            } else {
+                return false;
+            }
+        })
+        //쿼리스트링 페이지
+        function getUrlParams() {
+            var params = {};
+            window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (str, key, value) {
+                params[key] = value;
+            });
+            return params;
+        }
+        var param = getUrlParams();
+        var page = document.getElementById("page");
+        page.value = param.page;
+        //검색
+        $("#searchAction").on("click", function () {
+            formObj.attr("action", "/admin/m_user/page");
+            formObj.attr("method", "get");
+            formObj.submit();
+        })
+        // 엑셀 다운로드
+        $("#excelFileExport").on("click", function () {
+            formObj.attr("action", "userExcel");
+            formObj.attr("method", "get");
+            formObj.submit();
+        })
+
+        
+    });
+    
+    // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 '[0] = 회원관리'
+    var navDropdown = document.getElementsByClassName("nav-dropdown");
+        navDropdown[0].className += 'open';
+
+    // 선택
+    $("#chkAll").click(function () {
+        if ($("#chkAll").is(":checked"))
+            $("input[name=chk]").prop("checked", true);
+        else
+            $("input[name=chk]").prop("checked", false);
+    });
+    $("input[name=chk]").click(function () {
+        var total = $("input[name=chk]").length;
+        var checked = $("input[name=chk]:checked").length;
+        if (total != checked)
+            $("#chkAll").prop("checked", false);
+        else
+            $("#chkAll").prop("checked", true);
+    });
+</script>

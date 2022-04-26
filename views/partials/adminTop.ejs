@@ -1,0 +1,54 @@
+<body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
+	<header class="app-header navbar">
+		<button class="navbar-toggler sidebar-toggler d-lg-none mr-auto" type="button" data-toggle="sidebar-show">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<a class="navbar-brand" href="/admin/m_user/page?page=1">
+			<img class="navbar-brand-full" src="../../public/images/logo.png" width="130" alt="csbridge Logo">
+		</a>
+		<button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<ul class="nav navbar-nav ml-auto">
+			<li class="nav-item d-md-down-none" style="margin-right: 20px;">
+				<span><a onclick="passwordChange()" style="cursor: pointer;"><strong></strong></a> 관리자 님! 반갑습니다.</span>
+				<form class="form-horizontal" action="/admin/logout">
+					<button style="border:none; color: #20a8d8; background-color: transparent; outline: none;">
+					  <i class="icon-logout"></i>
+					  로그아웃
+					</button>
+				  </form>
+				  </li>
+
+		</ul>
+		<!-- <button class="navbar-toggler aside-menu-toggler d-md-down-none" type="button" data-toggle="aside-menu-lg-show">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <button class="navbar-toggler aside-menu-toggler d-lg-none" type="button" data-toggle="aside-menu-show">
+        <span class="navbar-toggler-icon"></span>
+      </button> -->
+	</header>
+
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$("#logoutBtn").unbind("click").click(function (e) {
+				e.preventDefault();
+				fn_logout();
+			});
+			$('table').DataTable();
+		});
+
+		function fn_logout() {
+			if (window.confirm("로그아웃 하시겠습니까?")) {
+				window.location.href = "/admin/logouttry.action";
+			}
+		}
+
+		function passwordChange(adidx) {
+			var url = "/admin/adminpopup.action";
+			var parameters = "?adidx=" + adidx;
+			url += parameters;
+			window.open(url, "", "width=500, height=600");
+		}
+	</script>
