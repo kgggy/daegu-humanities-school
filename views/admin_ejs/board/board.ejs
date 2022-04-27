@@ -14,7 +14,7 @@
             <input class="searchbox" type="text" name="searchText"
                                             value="<%=searchText%>" />
 
-                                             <table class="table table-hove">
+            <table class="table table-hove">
             <thead>
                 <tr>
                     <th><input type="checkbox" name="chkAll" id="chkAll" /></th>
@@ -22,8 +22,6 @@
                     <th>이름</th>
                     <th>기수</th>
                     <th>휴대폰</th>
-                    <th>직책</th>
-                    <th>소속</th>
                 </tr>
             </thead>
             <tbody class="table-border-bottom-0">
@@ -50,18 +48,12 @@
                         <td>
                             <%= results[i].boardDate %>
                         </td>
-                        <td>
-                            <%= results[i].uid%>
-                        </td>
-                        <td>
-                            <%= results[i].userJob %>
-                        </td>
                     </tr>
                     <% } %>
                     <% } %>
                     <% } else { %>
                     <tr>
-                        <td colspan="7">등록된 회원이 없습니다.</td>
+                        <td colspan="7">등록된 게시물이 없습니다.</td>
                     </tr>
                     <% } %>
      
