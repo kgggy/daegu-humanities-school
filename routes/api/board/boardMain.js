@@ -5,7 +5,7 @@ var connection = require('../../../config/db').conn;
 //게시판 메인
 router.get('/', async (req, res) => {
     try {
-        const param = req.query.boardDivId;
+        const param = req.query.crewDiv;
         let gallery;
         let notice;
         let refer;
@@ -15,9 +15,10 @@ router.get('/', async (req, res) => {
                 left join boardDiv d on b.boardDivId = d.boardDivId\
                 left join file f on f.boardId = b.boardId\
                where b.boardDivId = 2\
+                and b.crewDiv = ?\
             group by f.boardId\
             order by b.boardId desc limit 3";
-        connection.query(sql1, (err, results) => {
+        connection.query(sql1, param, (err, results) => {
             if (err) {
                 console.log(err);
                 res.json({
@@ -28,8 +29,9 @@ router.get('/', async (req, res) => {
             var sql2 = "select * from board b\
                 left join boardDiv d on b.boardDivId = d.boardDivId\
                     where b.boardDivId = 1\
+                    and b.crewDiv = ?\
                  order by b.boardId desc limit 3";
-            connection.query(sql2, (err, results) => {
+            connection.query(sql2, param, (err, results) => {
                 if (err) {
                     console.log(err);
                     res.json({
@@ -40,8 +42,9 @@ router.get('/', async (req, res) => {
                 var sql3 = "select * from board b\
                 left join boardDiv d on b.boardDivId = d.boardDivId\
                     where b.boardDivId = 3\
+                    and b.crewDiv = ?\
                  order by b.boardId desc limit 3";
-                connection.query(sql3, (err, results) => {
+                connection.query(sql3, param, (err, results) => {
                     if (err) {
                         console.log(err);
                         res.json({
@@ -52,10 +55,11 @@ router.get('/', async (req, res) => {
                     const sql4 = "select *,\
                                         (select choose from vote v where e.eventId = v.eventId and uid = ?) as voteyn\
                                     from event e\
+                                    where e.crewDiv = ?\
                                 order by eventId desc limit 1;\
                                   call checkvote(@yes, @nono, @undefine);\
                                   select @yes, @nono, @undefine;"
-                    connection.query(sql4, req.query.uid, (err, results) => {
+                    connection.query(sql4, [req.query.uid, param], (err, results) => {
                         if (err) {
                             console.log(err);
                             res.json({

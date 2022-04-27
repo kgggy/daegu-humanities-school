@@ -1,170 +1,130 @@
-<main class="main">
-   <!-- Breadcrumb-->
-   <ol class="breadcrumb">
-      <li class="breadcrumb-item">Home</li>
-      <li class="breadcrumb-item">
-         <a style="font-weight: bold;">회원관리</a>
-      </li>
-      <li class="breadcrumb-item active">회원정보</li>
-      <!-- Breadcrumb Menu-->
-   </ol>
-
-   <div class="container-fluid">
-      <div class="animated fadeIn">
-         <div class="row">
-            <div class="col-lg-6">
-               <div class="card">
-                  <div class="card-header">
-                     <i class="fa fa-align-justify"></i> 회원정보 수정</div>
-                  <div class="card-body">
-                     <!-- 컨텐츠 -->
-                     <form action="" id="userForm" method="" enctype="multipart/form-data">
-                        <input type="hidden" id="page" name="page" value="<%=page%>">
-                        <div class="form-group row">
-                           <label class="col-md-2 col-form-label" for="text-input">회원번호</label>
-                           <div class="col-md-9">
-                              <input class="form-control" id="uid" type="text" name="uid" readonly
-                                 value="<%=result[0].uid%>">
-                           </div>
-                        </div>
-                        <div class="form-group row">
-                           <label class="col-md-2 col-form-label" for="text-input">프로필사진</label>
-                           <div class="col-md-9">
-                              <% if(result.length > 0 && result[0].userImg != null && result[0].userImg != '') {%>
-                              <img src="../../../<%= result[0].userImg %>" alt="사진" width="40%" />
-                              <button id="searchAction" class="btn btn-block btn-outline-danger" type="button"
-                                 onclick="javascript:file_del();">삭제</button>
-                              <input type="hidden" id="userImg" name="userImg" value="<%=result[0].userImg%>">
-                              </td>
-                              <% }else{ %>
-                              <input type="file" id="file" name="file" />
-                              <% } %>
-                           </div>
-                        </div>
-                        <div class="form-group row">
-                           <label class="col-md-2 col-form-label" for="text-input">이메일</label>
-                           <div class="col-md-9">
-                              <input class="form-control" id="userEmail" type="text" name="userEmail"
-                                 value="<%=result[0].userEmail%>">
-                           </div>
-                        </div>
-                        <div class="form-group row">
-                           <label class="col-md-2 col-form-label" for="text-input">닉네임</label>
-                           <div class="col-md-9">
-                              <input class="form-control" id="userNick" type="text" name="userNick"
-                                 value="<%=result[0].userNick%>">
-                           </div>
-                        </div>
-                        <div class="form-group row">
-                           <label class="col-md-2 col-form-label" for="text-input">나이</label>
-                           <div class="col-md-9">
-                              <input class="form-control" id="userAge" type="number" name="userAge"
-                                 value="<%=result[0].userAge%>">
-                           </div>
-                        </div>
-                        <div class="form-group row">
-                           <% if(result.userAdres1 > 0 && result[0].userAdres1 != null && result[0].userAdres1 != '') {%>
-                           <label class="col-md-2 col-form-label" for="text-input">주소</label>
-                           <div class="col-md-9">
-                              <input class="form-control" id="userAdres1" type="text" name="userAdres1"
-                                 value="<%=result[0].userAdres1%>">
-                           </div>
-                           <label class="col-md-2 col-form-label" for="text-input"></label>
-                           <div class="col-md-9">
-                              <input class="form-control" id="userAdres2" type="text" name="userAdres2"
-                                 value="<%=result[0].userAdres2%>">
-                           </div>
-                           <% }else{ %>
-                           <label class="col-md-2 col-form-label" for="text-input">주소</label>
-                           <div class="col-md-9">
-                              <input class="form-control" id="userAdres1" type="text" name="userAdres1"
-                                 placeholder="시 / 도 (ex.대구광역시)">
-                           </div>
-                           <label class="col-md-2 col-form-label" for="text-input"></label>
-                           <div class="col-md-9">
-                              <input class="form-control" id="userAdres2" type="text" name="userAdres2"
-                                 placeholder="시 / 군 / 구 (ex.달서구)">
-                           </div>
-                           <% } %>
-                        </div>
-                        <div class="form-group row">
-                           <label class="col-md-2 col-form-label" for="text-input">학교</label>
-                           <div class="col-md-9">
-                              <input class="form-control" id="userSchool" type="text" name="userSchool"
-                                 value="<%=result[0].userSchool%>">
-                           </div>
-                        </div>
-                        <div class="form-group row">
-                           <label class="col-md-2 col-form-label" for="text-input">포인트</label>
-                           <div class="col-md-9">
-                              <input class="form-control" id="userPoint" type="text" name="userPoint"
-                                 value="<%=result[0].userPoint%>">
-                           </div>
-                        </div>
-                        <div class="form-group row">
-                           <label class="col-md-2 col-form-label" for="text-input">계산점수</label>
-                           <div class="col-md-9">
-                              <input class="form-control" id="userScore" type="text" name="userScore"
-                                 value="<%=result[0].userScore%>">
-                           </div>
-                        </div>
-                        <div class="form-group row">
-                           <label class="col-md-2 col-form-label" for="text-input">나무등급</label>
-                           <div class="col-md-9">
-                              <input class="form-control" id="userTree" type="text" name="userTree" readonly
-                                 value="<%=result[0].userTree%>">
-                           </div>
-                        </div>
-                        <div class="form-group row">
-                           <label class="col-md-2 col-form-label" for="text-input">작성한 게시글 수</label>
-                           <div class="col-md-9">
-                              <input class="form-control" id="contentAll" type="text" name="contentAll" readonly
-                                 value="<%=result[0].contentAll%>개">
-                           </div>
-                        </div>
-                        <div class="form-group row">
-                           <label class="col-md-2 col-form-label" for="text-input">상태</label>
-                           <div class="col-md-9">
-                              <select class="dropdown" name="userStatus">
-                                 <option value="0" <%if(result[0].userStatus=="0"){%> selected="selected" <%}%>>활동중</option>
-                                 <option value="1" <%if(result[0].userStatus=="1"){%> selected="selected" <%}%>>탈퇴</option>
-                             </select>
-                           </div>
-                        </div>
-                        <div class="form-group row">
-                           <label class="col-md-2 col-form-label" for="text-input">개인정보 동의여부</label>
-                           <div class="col-md-9">
-                              <select class="dropdown" name="userAgree">
-                                 <option value="0" <%if(result[0].userAgree=="0"){%> selected="selected" <%}%>>동의</option>
-                                 <option value="1" <%if(result[0].userAgree=="1"){%> selected="selected" <%}%>>비동의</option>
-                             </select>
-                           </div>
-                        </div>
-                     </form>
-                     <!--option 버튼  -->
-                     <div class="option_button">
-                        <div>
-                           <button class="btn btn-block btn-outline-success" type="button" id="update_btn" onclick="userUpdate()">수정</button>
-                        </div>
-                        <div>
-                           <button class="btn btn-block btn-outline-danger" type="button"
-                              onclick="history.go(-1)">취소</button>
-                        </div>
-                     </div>
-                  </div>
+<div class="col-xs-6">
+   <!-- HTML5 Inputs -->
+   <div class="card mb-4">
+      <h5 class="card-header">회원 정보 수정</h5>
+      <div class="card-body">
+         <form name="udtForm" role="form">
+            <input type="hidden" name="page" value="<%=page%>">
+            <div class="mb-3 row">
+               <label for="html5-text-input" class="col-md-2 col-form-label">회원번호</label>
+               <div class="col-md-10">
+                  <input class="form-control" type="text" value="<%=result.uid%>" id="uid" name="uid" />
                </div>
             </div>
-         </div>
+            <div class="mb-3 row">
+               <label for="html5-text-input" class="col-md-2 col-form-label">회원명</label>
+               <div class="col-md-10">
+                  <input class="form-control" type="text" value="<%=result.userName%>" id="userName"
+                     name="userName" />
+               </div>
+            </div>
+            <div class="mb-3 row">
+               <label for="html5-text-input" class="col-md-2 col-form-label">휴대번호</label>
+               <div class="col-md-10">
+                  <input class="form-control" type="text" value="<%=result.userPhone%>" id="userPhone"
+                     name="userPhone" />
+               </div>
+            </div>
+            <div class="mb-3 row">
+               <label for="html5-text-input" class="col-md-2 col-form-label">이메일</label>
+               <div class="col-md-10">
+                  <input class="form-control" type="text" value="<%=result.userEmail%>" id="userEmail"
+                     name="userEmail" />
+               </div>
+            </div>
+            <div class="mb-3 row">
+               <label for="html5-text-input" class="col-md-2 col-form-label">전화번호</label>
+               <div class="col-md-10">
+                  <input class="form-control" type="text" value="<%=result.officePhone%>" id="officePhone"
+                     name="officePhone" />
+               </div>
+            </div>
+            <div class="mb-3 row">
+               <label for="html5-text-input" class="col-md-2 col-form-label">주소</label>
+               <div class="col-md-10">
+                  <input class="form-control" type="text"
+                     value="<%=result.userAdres1%> <%=result.userAdres2%> <%=result.userAdres3%>" id="" />
+               </div>
+            </div>
+            <div class="mb-3 row">
+               <label for="html5-text-input" class="col-md-2 col-form-label">기수</label>
+               <div class="col-md-10">
+                  <input class="form-control" type="text" value="<%=result.userNum%>" id="userNum" name="userNum" />
+               </div>
+            </div>
+            <div class="mb-3 row">
+               <label for="html5-text-input" class="col-md-2 col-form-label">직책</label>
+               <div class="col-md-10">
+                  <input class="form-control" type="text" value="<%=result.userAuth%>" id="userAuth"
+                     name="userAuth" />
+               </div>
+            </div>
+            <div class="mb-3 row">
+               <label for="html5-text-input" class="col-md-2 col-form-label">프로필</label>
+               <div class="col-md-10">
+                  <input class="form-control" type="text" value="<%=result.userImg%>" id="userImg" name="userImg" />
+               </div>
+            </div>
+            <div class="mb-3 row">
+               <label for="html5-text-input" class="col-md-2 col-form-label">병원사진</label>
+               <div class="col-md-10">
+                  <input class="form-control" type="text" value="<%=result.uid%>" id="" name="" />
+               </div>
+            </div>
+            <div class="mb-3 row">
+               <label for="html5-text-input" class="col-md-2 col-form-label">홈페이지</label>
+               <div class="col-md-10">
+                  <input class="form-control" type="text" value="<%=result.userUrl%>" id="userUrl" name="userUrl" />
+               </div>
+            </div>
+            <div class="mb-3 row">
+               <label for="html5-text-input" class="col-md-2 col-form-label">소속</label>
+               <div class="col-md-10">
+                  <input class="form-control" type="text" value="<%=result.userJob%>" id="userJob" name="userJob" />
+               </div>
+            </div>
+            <div class="mb-3 row">
+               <label for="html5-text-input" class="col-md-2 col-form-label">팩스</label>
+               <div class="col-md-10">
+                  <input class="form-control" type="text" value="<%=result.faxPhone%>" id="faxPhone"
+                     name="faxPhone" />
+               </div>
+            </div>
+            <div class="mb-3 row">
+               <label for="html5-text-input" class="col-md-2 col-form-label">동아리</label>
+               <div class="col-md-10">
+                  <input class="form-control" type="text" value="<%=result.userCrew%>" id="userCrew"
+                     name="userCrew" />
+               </div>
+            </div>
+            <div class="mb-3 row">
+               <label for="html5-text-input" class="col-md-2 col-form-label">역대직책</label>
+               <div class="col-md-10">
+                  <input class="form-control" type="text" value="<%=result.mtPosition%>, <%=result.gfPosition%>"
+                     id="" name="" />
+               </div>
+            </div>
+            <div class="mb-3 row">
+               <label for="html5-text-input" class="col-md-2 col-form-label">설치</label>
+               <div class="col-md-10">
+                  <input class="form-control" type="text" value="<%=result.userSocialDiv%>" id="userSocialDiv"
+                     name="userSocialDiv" />
+               </div>
+            </div>
+            <div class="demo-inline-spacing">
+               <button type="button" class="btn btn-outline-info" id="update_btn">수정</button>
+               <button type="button" class="btn btn-outline-primary"
+                  onclick="location.href=''">취소</button>
+            </div>
+         </form>
       </div>
    </div>
-</main>
 
 <script type="text/javascript">
    //수정
  $("#update_btn").click(function () {
-      var userNick = $("#userNick").val();
-      var userEmail = $("#userEmail").val();
-      var userPwd = $("#userPwd").val();
+      var userName = $("#userName").val();
+      var userPhone = $("#userPhone").val();
 
       if (userEmail == '') {
          alert("이메일을 입력해주세요.");
@@ -236,7 +196,7 @@
       }
    }
 
-   // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 '[0] = 회원관리'
+   // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 ' = 회원관리'
    var navDropdown = document.getElementsByClassName("nav-dropdown");
-      navDropdown[0].className += 'open';
+      navDropdown.className += 'open';
 </script>

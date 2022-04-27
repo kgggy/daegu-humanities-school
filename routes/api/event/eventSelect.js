@@ -5,11 +5,8 @@ var connection = require('../../../config/db').conn;
 //행사 목록
 router.get('/', async (req, res) => {
     try {
-        const sql = "select *,\
-                           (select choose from vote v where e.eventId = v.eventId and uid = ?) as voteyn\
-                       from event e\
-                   order by eventId desc"
-        connection.query(sql, req.query.uid, (err, result) => {
+        const sql = "call selectEvent(?, ?)"
+        connection.query(sql, [req.query.uid, req.query.crewDiv], (err, result) => {
             if (err) {
                 console.log(err);
                 res.json({

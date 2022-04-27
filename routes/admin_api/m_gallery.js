@@ -13,7 +13,7 @@ var upload = multer({ //multer안에 storage정보
         destination: (req, file, callback) => {
             fs.mkdir('uploads/gallery', function (err) {
                 if (err && err.code != 'EEXIST') {
-                    console.log("already exist")
+                    // console.log("already exist")
                 } else {
                     callback(null, 'uploads/gallery');
                 }

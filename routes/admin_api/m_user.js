@@ -16,7 +16,7 @@ var upload = multer({ //multer안에 storage정보
     destination: (req, file, callback) => {
       fs.mkdir('uploads/userProfile', function (err) {
         if (err && err.code != 'EEXIST') {
-          console.log("already exist")
+          // console.log("already exist")
         } else {
           callback(null, 'uploads/userProfile');
         }
@@ -205,12 +205,9 @@ router.post('/userInsert', upload.fields([{ name: 'userImg' }, { name: 'hosImg' 
 
 //사용자 정보 수정 페이지 이동
 router.post('/userUdtForm', async (req, res) => {
-  let route = req.app.get('views') + '/m_user/orgm_udtForm';
+  let route = req.app.get('views') + '/user/user_udtForm';
   res.render(route, {
     result: req.body,
-    userImg: req.body.userImg,
-    hosImg: req.body.hosImg,
-    infoImg: req.body.infoImg,
     page: req.body.page
   });
 });
