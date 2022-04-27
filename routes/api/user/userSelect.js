@@ -22,7 +22,6 @@ router.get('/', async (req, res) => {
 //회원 검색
 router.get('/search', async (req, res) => {
   const page = parseInt(req.query.page);
-  console.log(req.query);
   var userNum = req.query.userNum == undefined ? "" : req.query.userNum;
   var userAuth = req.query.userAuth == undefined ? "" : req.query.userAuth;
   var userCrew = req.query.userCrew == undefined ? "" : req.query.userCrew;

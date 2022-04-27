@@ -17,7 +17,7 @@ var upload = multer({ //multer안에 storage정보
                 // console.log("이미지 파일입니다.");
                 fs.mkdir('uploads/boardImgs', function (err) {
                     if (err && err.code != 'EEXIST') {
-                        console.log("already exist")
+                        // console.log("already exist")
                     } else {
                         callback(null, 'uploads/boardImgs');
                     }
@@ -27,7 +27,7 @@ var upload = multer({ //multer안에 storage정보
                 // console.log("텍스트 파일입니다.");
                 fs.mkdir('uploads/boardTexts', function (err) {
                     if (err && err.code != 'EEXIST') {
-                        console.log("already exist")
+                        // console.log("already exist")
                     } else {
                         callback(null, 'uploads/boardTexts');
                     }

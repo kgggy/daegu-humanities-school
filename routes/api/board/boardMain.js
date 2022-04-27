@@ -5,7 +5,7 @@ var connection = require('../../../config/db').conn;
 //게시판 메인
 router.get('/', async (req, res) => {
     try {
-        const param = req.query.boardLoc;
+        const param = req.query.crewDiv;
         let gallery;
         let notice;
         let refer;
@@ -59,7 +59,7 @@ router.get('/', async (req, res) => {
                                 order by eventId desc limit 1;\
                                   call checkvote(@yes, @nono, @undefine);\
                                   select @yes, @nono, @undefine;"
-                    connection.query(sql4, req.query.uid, (err, results) => {
+                    connection.query(sql4, [req.query.uid, param], (err, results) => {
                         if (err) {
                             console.log(err);
                             res.json({
