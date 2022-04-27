@@ -52,7 +52,7 @@ router.get('/', async (req, res) => {
                         });
                     }
                     refer = results;
-                    const sql4 = "call selectEvent(?, ?) limit 1;\
+                    const sql4 = "call selectEvent(?, ?);\
                                   call checkvote(@yes, @nono, @undefine);\
                                   select @yes, @nono, @undefine;"
                     connection.query(sql4, [req.query.uid, param], (err, results) => {
