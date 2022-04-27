@@ -1,273 +1,157 @@
-<style>
-    /* div.dataTables_wrapper div.dataTables_filter label {
-        display: block !important;
-    } */
-
-    .userTable thead tr .sorting:first-child::before,
-    .userTable thead tr .sorting_asc:first-child::before,
-    .userTable thead tr .sorting_asc:first-child::after,
-    .userTable thead .sorting_desc:first-child:after,
-    .userTable thead .sorting:first-child:after,
-    .userTable thead .sorting:first-child {
-        content: none !important;
-        cursor: unset
-        
-    }
-
-</style>
 <script>
     $(document).ready(function () {
         searchajax();
     });
 </script>
-<main class="main">
-    <!-- Breadcrumb-->
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">Home</li>
-        <li class="breadcrumb-item">
-            <a style="font-weight: bold;">게시판관리</a>
-        </li>
-        <li class="breadcrumb-item active"><%=community[0].boardName%></li>
-    </ol>
-    <div class="container-fluid">
-        <div class="animated fadeIn">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-header">
-                            <i class="fa fa-align-justify"></i> <%=community[0].boardName%>
+<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">게시판관리 /</span> <%=boardDiv[0].boardName%>관리</h4>
+<!-- Basic Bootstrap Table -->
+<div class="card">
+    <h5 class="card-header"><%=results[0].boardName%>관리</h5>
+    <div class="table-responsive text-nowrap">
+        <form name="searchForm" action="" method="get" class="easydropdown">
+            <input type="hidden" id="page" name="page" value="<%=page%>">
+            <input type="hidden" name="boardDivId" value="<%=results[0].boardDivId%>">
+            <input class="searchbox" type="text" name="searchText"
+                                            value="<%=searchText%>" />
+
+                                             <table class="table table-hove">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" name="chkAll" id="chkAll" /></th>
+                    <th>번호</th>
+                    <th>이름</th>
+                    <th>기수</th>
+                    <th>휴대폰</th>
+                    <th>직책</th>
+                    <th>소속</th>
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+                <% if(results.length > 0) { %>
+                    <% for(var i = (page * page_num) - page_num; i < (page * page_num); i++) { 
+                    if(i > length){
+                        i++;
+                    } else { %>
+                    <tr class="pointer"
+                        onclick="location.href='/admin/m_user/selectOne?uid=<%=results[i].uid%>&page=<%=page%><%= keepSearch %>'">
+                        <td onclick='event.cancelBubble=true;'><input type="checkbox" id="chk"
+                                name="chk" value="<%=results[i].uid %>"
+                                data-img="<%=results[i].userImg%>" />
+                        </td>
+                        <td>
+                            <%=results[i].boardId%>
+                        </td>
+                        <td>
+                            <i class="fab fa-angular fa-lg text-danger me-3"></i> <strong><%=results[i].userName%></strong>
+                        </td>
+                        <td>
+                            <%=results[i].boardTitle%>
+                        </td>
+                        <td>
+                            <%= results[i].boardDate %>
+                        </td>
+                        <td>
+                            <%= results[i].uid%>
+                        </td>
+                        <td>
+                            <%= results[i].userJob %>
+                        </td>
+                    </tr>
+                    <% } %>
+                    <% } %>
+                    <% } else { %>
+                    <tr>
+                        <td colspan="7">등록된 회원이 없습니다.</td>
+                    </tr>
+                    <% } %>
+     
                         </div>
-                        <div class="card-body">
-                            <form id="boardForm" name="boardForm" method="" action="">
-                                <div style="display: flex; justify-content: end; gap: 5px;">
-                                    <input type="hidden" id="page" name="page" value="<%=page%>">
-                                    <input type="hidden" name="boardId" value="<%=community[0].boardId%>">
-                                    <input class="searchbox" type="text" name="searchText" id="searchText"
-                                        <%if(searchText!=null){%>value="<%=searchText%>" <%}%> placeholder="작성자, 제목, 내용">
-                                    <!-- <button class="btn btn-block btn-outline-success" type="submit" id="searchAction"  style="margin-bottom: 10px;">검색</button> -->
-                                </div>
-                                <table id="exampleTable"
-                                    class="table userTable table-responsive-sm table-hover">
-                                    <colgroup>
-                                        <col width="5%" />
-                                        <col width="5%" />
-                                        <col width="8%" />
-                                        <col width="20%" />
-                                        <col width="30%" />
-                                        <col width="11%" />
-                                        <col width="11%" />
-                                        <col width="10%" />
-                                    </colgroup>
-                                    <thead>
-                                        <tr>
-                                            <th><input type="checkbox" name="chkAll" id="chkAll" /></th>
-                                            <th>번호</th>
-                                            <th>우선순위</th>
-                                            <th>작성자</th>
-                                            <th>제목</th>
-                                            <th>등록일</th>
-                                            <th>수정일</th>
-                                            <th>조회수</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tbody">
-                                        <% if(results.length > 0){ %> <% for(var i = (page * page_num) - page_num; i < (page * page_num); i++) { 
-                                    if(i > length){
-                                        i++;
-                                    } else { %> <tr
-                                        onclick="location.href='/admin/m_board/selectOne?writId=<%=results[i].writId%>&page=<%=page%>&searchText=<%=searchText%>'">
-                                    <td onclick='event.cancelBubble=true;'><input type="checkbox" id="chk" name="chk"
-                                            value="<%=results[i].writId %>" />
-                                    </td>
-                                    <td>
-                                        <%= results.length-i %></td>
-                                    <td>
-                                        <%=results[i].writRank%></td>
-                                    <td>
-                                        <%=results[i].userNick%><%=results[i].comNick%></td>
-                                    <td>
-                                        <%=results[i].writTitle%></td>
-                                    <td>
-                                        <%=results[i].writDatefmt%></td>
-                                    <td>
-                                        <%=results[i].writUpdDatefmt%></td>
-                                    <td>
-                                        <%=results[i].writHit %></td>
-                                    </tr>
-                                    <% } %>
-                                    <% } %>
-                                    <% } else { %>
-                                    <tr>
-                                        <td colspan="8">
-                                            데이터가 존재하지 않습니다.
-                                        </td>
-                                    </tr>
-                                    <% } %>
-                                    </tbody>
-                                    </table>
-                                    <div>
-                                        <input type="hidden" id="writId" name="writId" value="" />
-                                        <button id="enrollAction" class="btn btn-block btn-outline-success"
-                                            onclick="enroll()">등록</button>
-                                        <button class="btn btn-block btn-outline-danger" type="button"
-                                            id="delete_btn">삭제</button>
-                                    </div>
-                                    <div class="mt_20">
-                                        <div class="paging" id="page_navi">
-                                            <ul class="pagination customPaging">
-                                                <% if(results.length > 0){ %>
-                                                <li>
-                                                    <a href="/admin/m_board/all?boardId=<%= results[0].boardId %>&page=1&searchText=<%=searchText%>"
-                                                        class="num">
-                                                        << </a> </li> <li>
-                                                            <a <%if((page==1)){%><%} else {%>
-                                                                href="/admin/m_board/all?boardId=<%= results[0].boardId %>&page=<%= parseInt(page) - 1 %>&searchText=<%=searchText%>"
-                                                                class="num" <% } %>>
-                                                                < </a> </li>
-                                                                    <% for(var i = startPage; i < endPage; i++){  %>
-                                                                    <li class="paging_on">
-                                                                    <a href="/admin/m_board/all?boardId=<%= results[0].boardId %>&page=<%= i + 1 %>&searchText=<%=searchText%>"
-                                                                        <%if(page==i+1){%>class="selected"
-                                                                        <%}%> class="num"><%= i + 1 %></a> </li> <% } %>
-                                                                        <li> <a <%if(page>last-1){%><%} else {%>
-                                                                            href="/admin/m_board/all?boardId=<%= results[0].boardId %>&page=<%= parseInt(page) + 1 %>&searchText=<%=searchText%>"
-                                                                            class="num" <% } %>>></a></li>
-                                                <li><a href="/admin/m_board/all?boardId=<%= results[0].boardId %>&page=<%= last%>&searchText=<%=searchText%>"
-                                                        class="num">>></a></li>
-                                                <% } %>
-                                            </ul>
-                                        </div>
-                                    </div>
-                            </form>
-                        </div>
-                    </div>
+                    </td> -->
+            </tbody>
+        </table>
+        </form>
+       
+        <div>
+            <div class="mt_20">
+                <div class="paging" id="page_navi">
+                    <ul class="pagination customPaging">
+                        <li> <a href="/admin/m_user?page=1<%= keepSearch %>" class="num">
+                                <<</a> </li> <li> <a
+                                        <%if((page<startPage)||(page==1)){%><%} else {%>
+                                        href="/admin/m_user?page=<%= parseInt(page) - 1 %><%= keepSearch %>"
+                                        class="num" <% } %>>
+                                        <</a> </li>
+                                            <% for(var i = startPage; i < endPage ; i++){  %>
+                                            <li class="paging_on">
+                                            <a href="/admin/m_user?page=<%= i + 1 %><%= keepSearch %>"
+                                                <%if(page==i+1){%>class="selected"
+                                                <%}%> class="num"><%= i + 1 %></a> </li> <% } %>
+                                                <li> <a <%if(page>last-1){%><%} else {%>
+                                                    href="/admin/m_user?page=<%= parseInt(page) + 1 %><%= keepSearch %>"
+                                                    class="num" <% } %>>></a></li>
+                        <li><a href="/admin/m_user?page=<%= last %><%= keepSearch %>"
+                                class="num">>></a></li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
-</main>
+</div>
+<!--/ Basic Bootstrap Table -->
 
 <script>
-    const formObj = $("form[name='boardForm']");
-    //등록 
-    function enroll() {
-        formObj.attr("method", "get");
-        formObj.attr("action", "writForm");
-        formObj.submit();
-    }
-    // 삭제
-    $("#delete_btn").on("click", function () {
-        var chkArr = [];
-        $("input[name=chk]:checked").each(function () {
-            chkArr.push($(this).val());
-        });
-        $('#writId').val(chkArr);
-        if (chkArr == "") {
-            alert("삭제할 목록을 선택해주세요.");
-            return false;
-        }
-        // var chkImg = [];
-        // $("input[name=chk]:checked").each(function () {
-        //     chkImg.push($(this).attr('data-img'));
-        // });
-        // $('#userImg').val(chkImg);
-        formObj.attr("action", "boardsDelete");
-        formObj.attr("method", "get");
-        if (confirm("삭제하시겠습니까?") == true) {
-            formObj.submit();
-        } else {
-            return false;
-        }
-    })
-
-    // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 '[1] = 게시판관리'
-        var navDropdown = document.getElementsByClassName("nav-dropdown");
-            navDropdown[1].className += 'open';        
-
-    //검색
-    function searchajax() {
-        $("#searchText").keyup(function () {
-            var words = $("#searchText").val();
-            $.ajax({
-                type: 'get',
-                url: '/admin/m_board/boardSearch?boardId=<%=community[0].boardId%>&page=1',
-                data: {
-                    searchText: words
-                },
-                dataType: 'json',
-                success: function (data) {
-                    // console.log(ajaxSearch.page)
-                    // console.log("===========" + ajaxSearch.ajaxSearch[0].boardName);                     
-                    // console.log(page)
-                    // console.log(data)
-                    var str = ''
-                    $(".customPaging").empty();
-                    if (data.ajaxSearch.length > 0) {
-                        for (var i = (data.page * data.page_num) - data
-                                .page_num; i < (data.page * data.page_num); i++) {
-                            if (i > data.length) {
-                                i++;
-                            } else {
-                                $("#tbody").empty();
-                                str +=
-                                    '<tr onclick="location.href=\'/admin/m_board/selectOne?writId=' +
-                                    data.ajaxSearch[i].writId + '&page=' + data
-                                    .page + '&searchText=' + data.searchText +
-                                    '\'"> <td onclick="event.cancelBubble=true;"><input type="checkbox" id="chk" name="chk" value="' +
-                                    data.ajaxSearch[i].writId + '" /> </td>';
-                                str +=
-                                    '<td>' +
-                                    (data.ajaxSearch.length - i) + '</td>';
-                                str +=
-                                    '<td>' +
-                                    data.ajaxSearch[i].writRank + '</td>';
-                                str +=
-                                    '<td>' +
-                                    data.ajaxSearch[i].userNick + data.ajaxSearch[i]
-                                    .comNick + '</td>';
-                                str +=
-                                    '<td>' +
-                                    data.ajaxSearch[i].writTitle + '</td>';
-                                str +=
-                                    '<td>' +
-                                    data.ajaxSearch[i].writDatefmt + '</td>';
-
-                                    if(data.ajaxSearch[i].writUpdDatefmt){
-                                str +=
-                                    '<td>' +  data.ajaxSearch[i].writUpdDatefmt + '</td>'                       
-                                    }else{
-                                str += 
-                                    '<td></td>'
-                                    }
-                                str +=
-                                    '<td>' +
-                                    data.ajaxSearch[i].writHit + '</td></tr>'
-                            }
-                        }
-                        // console.log("str = " + str)
-                        $("#tbody").append(str);
-                    } else {
-                        var none = '<tr> <td colspan="8"> 데이터가 존재하지 않습니다. </td> </tr>'
-                        $("#tbody").empty();
-                        $("#tbody").append(none);
-                    } 
-                    paging(data);
-                },
-                error: function (e) {
-                    console.log('error:' + e.status);
-                }
+    $(document).ready(function () {
+        const formObj = $("form[name='userForm']");
+        // 삭제
+        $("#delete_btn").on("click", function () {
+            var chkArr = [];
+            $("input[name=chk]:checked").each(function () {
+                chkArr.push($(this).val());
             });
-        });
-    }
-    // //체크박스
-    // $("#chkAll").click(function () {
-    //     if ($("#chkAll").is(":checked"))
-    //         $("#tbody").children("tr").children("td").children('#chk').prop("checked", true);
-    //     else
-    //         $("#tbody").children("tr").children("td").children('#chk').prop("checked", false);
-    //         console.log($("#tbody").children("tr").children("td").children('#chk'));
-    // });
+            $('#uid').val(chkArr);
+            if (chkArr == "") {
+                alert("삭제할 목록을 선택해주세요.");
+                return false;
+            }
+            var chkImg = [];
+            $("input[name=chk]:checked").each(function () {
+                chkImg.push($(this).attr('data-img'));
+            });
+            $('#userImg').val(chkImg);
+            formObj.attr("action", "userDelete");
+            formObj.attr("method", "get");
+            if (confirm("삭제하시겠습니까?") == true) {
+                formObj.submit();
+            } else {
+                return false;
+            }
+        })
+        //쿼리스트링 페이지
+        function getUrlParams() {
+            var params = {};
+            window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (str, key, value) {
+                params[key] = value;
+            });
+            return params;
+        }
+        var param = getUrlParams();
+        var page = document.getElementById("page");
+        page.value = param.page;
+        const searchForm = $("form[name='searchForm']");
 
+    });
+
+    // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 '[0] = 회원관리'
+    var navDropdown = document.getElementsByClassName("nav-dropdown");
+    navDropdown[0].className += 'open';
+
+    // 선택
+    $("#chkAll").click(function () {
+        if ($("#chkAll").is(":checked"))
+            $("input[name=chk]").prop("checked", true);
+        else
+            $("input[name=chk]").prop("checked", false);
+    });
     $("input[name=chk]").click(function () {
         var total = $("input[name=chk]").length;
         var checked = $("input[name=chk]:checked").length;
@@ -276,70 +160,4 @@
         else
             $("#chkAll").prop("checked", true);
     });
-
-    //쿼리스트링 페이지
-    function getUrlParams() {
-        var params = {};
-        window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (str, key, value) {
-            params[key] = value;
-        });
-        return params;
-    }
-    var param = getUrlParams();
-    var page = document.getElementById("page");
-    page.value = param.page;
-    
-    // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 '[1] = 게시판관리'
-    var navDropdown = document.getElementsByClassName("nav-dropdown");
-        navDropdown[1].className += 'open';        
-
-</script>
-
-<script language="javaScript">
-    function paging(data){
-        var datas = data;
-        var dataLength = datas.length;
-        var dataPageNum = datas.page_num;
-        var boardId = datas.ajaxSearch[0].boardId;
-        var datasPage = Number(datas.page);
-        var datasLast = Number(datas.last);
-        var startPage = Number(datas.startPage);
-        var endPage = Number(datas.endPage);
-        var temp ='';
-        temp = `<li>
-                <a href="/admin/m_board/all?boardId=${boardId}&page=1&searchText=${datas.searchText}"
-                class="num">
-                << </a> </li> <li>
-                <a `
-        if(datasPage==1){
-            temp += `><</a></li>`
-        }else{
-            temp += `href="/admin/m_board/all?boardId=${boardId}&page=${datasPage - 1}&searchText=${datas.searchText}"
-                class="num">
-                < </a> </li>`
-        }
-        for(var i = datas.startPage; i < datas.endPage; i++){ 
-            temp += `<li class="paging_on">
-                    <a href="/admin/m_board/all?boardId=${boardId}&page=${i + 1}&searchText=${datas.searchText}"`
-        if(i!=0){
-            temp += `class="num">${i + 1}</a> </li>`
-        }else{
-            temp += `class="selected" style="background-color:#FC8B5F;><span style="color:white;">${i + 1}</span></a> </li>`
-        } 
-    }
-        temp +=`<li> <a `
-        if(datasPage==datasLast){
-            temp += `> > </a></li> <li><a href="/admin/m_board/all?boardId=${boardId}&page=${datasPage}&searchText=${datas.searchText}</a></li>
-                         <li><a href="/admin/m_board/all?boardId=${boardId}&page=${datasPage}&searchText=${datas.searchText}"
-                    class="num">>></a></li>`
-        }else{
-            temp += `href="/admin/m_board/all?boardId=${boardId}&page=${datasPage + 1}&searchText=${datas.searchText}"
-                    class="num">></a></li>
-                    <li><a href="/admin/m_board/all?boardId=${boardId}&page=${datasLast}&searchText=${datas.searchText}"
-                    class="num">>></a></li>`
-        }
-            
-         $(".customPaging").html(temp);            
-    }
-
 </script>

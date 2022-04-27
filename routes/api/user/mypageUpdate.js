@@ -77,17 +77,16 @@ router.patch('/:uid', upload.fields([{ name: 'userImg' }, { name: 'detailImg' }]
             await models.user.update({ detailImg: paths[0] }, { where: { uid: uid } })
         }
 
-        const param = [req.body.userName, req.body.userPosition, req.body.userType,
-        req.body.userAdres1, req.body.userAdres2, req.body.userAdres3,
-        req.body.hosName, req.body.userUrl, req.body.userEmail, req.body.hosPost,
-        req.body.userPhone1, req.body.userPhone2, req.body.userPhone3,
-        req.body.hosPhone1, req.body.hosPhone2, req.body.hosPhone3, req.params.uid
+        const param = [req.body.userName, req.body.userPhone, req.body.userEmail, req.body.officePhone,
+            req.body.userAdres1, req.body.userAdres2, req.body.userAdres3, req.body.userAdres4, req.body.userAuth, req.body.userUrl,
+            req.body.userImg, req.body.detailImg, req.body.userNum, req.body.userJob, req.body.faxPhone, req.params.uid
         ];
         const sql = "update user set userName = ?, userPhone = ?, userEmail = ?,\
-                                 officePhone = ?, userAdres1 = ?, userAdres2 = ?, userAdres3 = ?,\
+                                 officePhone = ?, userAdres1 = ?, userAdres2 = ?, userAdres3 = ?, userAdres4 = ?,\
                                  userAuth = ?, userUrl = ?, userImg = ?, detailImg = ?,\
                                  userNum = ?, userJob = ?, faxPhone = ?\
                   where uid = ?";
+        
         connection.query(sql, param, async (err) => {
             if (err) {
                 console.error(err);
