@@ -8,7 +8,7 @@ router.post('/', async (req, res) => {
         const sql = "select * from user where userName = ? and userPhone = ?";
         const param = [req.body.userName, req.body.userPhone];
         connection.query(sql, param, (err, results) => {
-            console.log(results);
+            // console.log(results);
             if (err) {
                 console.log(err);
             }

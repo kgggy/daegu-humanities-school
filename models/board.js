@@ -45,6 +45,16 @@ module.exports = function(sequelize, DataTypes) {
         model: 'user',
         key: 'uid'
       }
+    },
+    boardFix: {
+      type: DataTypes.STRING(1),
+      allowNull: false,
+      defaultValue: "0"
+    },
+    crewDiv: {
+      type: DataTypes.STRING(5),
+      allowNull: false,
+      comment: "총동창회 : all,\\n골프회 : gf,\\n산악회: mt"
     }
   }, {
     sequelize,

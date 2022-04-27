@@ -40,6 +40,11 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(10),
       allowNull: true,
       comment: "파일타입"
+    },
+    bannerId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      comment: "배너 일련번호"
     }
   }, {
     sequelize,

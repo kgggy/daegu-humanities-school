@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
                     msg: "query error"
                 });
             }
-            res.status(200).json(result);
+            res.status(200).json(result[0]);
         });
     } catch (error) {
         res.status(500).send(error.message);

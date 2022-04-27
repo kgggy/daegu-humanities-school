@@ -52,7 +52,7 @@ router.get('/', async (req, res) => {
                         });
                     }
                     refer = results;
-                    const sql4 = "call selectEvent(?, ?) limit 1;\
+                    const sql4 = "call selectEvent(?, ?);\
                                   call checkvote(@yes, @nono, @undefine);\
                                   select @yes, @nono, @undefine;"
                     connection.query(sql4, [req.query.uid, param], (err, results) => {
@@ -62,13 +62,13 @@ router.get('/', async (req, res) => {
                                 msg: "query3 error"
                             });
                         }
-                        event = results[0];
-                        voteCount = results[2];
+                        event = results[0][0];
+                        voteCount = results[3];
                         res.status(200).json([{
                             notice: notice,
                             gallery: gallery,
                             refer: refer,
-                            event: event,
+                            event: [event],
                             voteCount: voteCount
                         }]);
                     });

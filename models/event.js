@@ -42,6 +42,26 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(100),
       allowNull: true,
       comment: "행사세부장소"
+    },
+    crewDiv: {
+      type: DataTypes.STRING(5),
+      allowNull: false,
+      comment: "골프 : gf\/산악회 : mt\/총동창회 : all"
+    },
+    eventTarget1: {
+      type: DataTypes.STRING(10),
+      allowNull: true,
+      comment: "투표 조건(전체, 임원)"
+    },
+    eventTarget2: {
+      type: DataTypes.STRING(15),
+      allowNull: true,
+      comment: "투표 조건(구)"
+    },
+    eventStatus: {
+      type: DataTypes.STRING(1),
+      allowNull: true,
+      comment: "0 : 진행중, 1 : 마감"
     }
   }, {
     sequelize,

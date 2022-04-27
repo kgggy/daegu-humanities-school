@@ -6,7 +6,7 @@ const multer = require("multer");
 const path = require('path');
 const fs = require('fs');
 
-//var models = require('../../models');
+var models = require('../../../models');
 var connection = require('../../../config/db').conn;
 
 //파일업로드 모듈
@@ -72,7 +72,6 @@ router.patch('/:uid', upload.fields([{ name: 'userImg' }, { name: 'detailImg' }]
         if (req.files['userImg'] != null && req.files['userImg'] != undefined) {
             const paths = req.files['userImg'].map(data => data.path);
             await models.user.update({ userImg: paths[0] }, { where: { uid: uid } })
-            console.log(paths)
         }
         if (req.files['detailImg'] != null && req.files['detailImg'] != undefined) {
             const paths = req.files['detailImg'].map(data => data.path);
@@ -81,12 +80,12 @@ router.patch('/:uid', upload.fields([{ name: 'userImg' }, { name: 'detailImg' }]
 
         const param = [req.body.userName, req.body.userPhone, req.body.userEmail, req.body.officePhone,
             req.body.userAdres1, req.body.userAdres2, req.body.userAdres3, req.body.userAdres4, req.body.userAuth, req.body.userUrl,
-            req.body.userImg, req.body.detailImg, req.body.userNum, req.body.userJob, req.body.faxPhone, req.params.uid
+            req.body.userNum, req.body.userJob, req.body.faxPhone, req.params.uid
         ];
         console.log(param)
         const sql = "update user set userName = ?, userPhone = ?, userEmail = ?,\
                                  officePhone = ?, userAdres1 = ?, userAdres2 = ?, userAdres3 = ?, userAdres4 = ?,\
-                                 userAuth = ?, userUrl = ?, userImg = ?, detailImg = ?,\
+                                 userAuth = ?, userUrl = ?,\
                                  userNum = ?, userJob = ?, faxPhone = ?\
                   where uid = ?";
         connection.query(sql, param, async (err) => {

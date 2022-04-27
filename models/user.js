@@ -39,9 +39,9 @@ module.exports = function(sequelize, DataTypes) {
       comment: "주소2(구)"
     },
     userAdres3: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING(50),
       allowNull: true,
-      comment: "상세주소"
+      comment: "도로명"
     },
     userAuth: {
       type: DataTypes.STRING(20),
@@ -79,9 +79,9 @@ module.exports = function(sequelize, DataTypes) {
       comment: "팩스번호"
     },
     userCrew: {
-      type: DataTypes.STRING(1),
+      type: DataTypes.STRING(5),
       allowNull: true,
-      comment: "0 : 산악회, 1 : 골프회"
+      comment: "골프 : gf\/산악회 : mt\/총동창회 : all"
     },
     mtPostion: {
       type: DataTypes.STRING(20),
@@ -102,6 +102,11 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(7),
       allowNull: true,
       comment: "소셜로그인 종류"
+    },
+    userAdres4: {
+      type: DataTypes.STRING(100),
+      allowNull: true,
+      comment: "상세주소"
     }
   }, {
     sequelize,

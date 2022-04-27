@@ -9,14 +9,10 @@ module.exports = function(sequelize, DataTypes) {
       comment: "배너번호"
     },
     bannerDiv: {
-      type: DataTypes.STRING(1),
+      type: DataTypes.STRING(5),
       allowNull: true,
-      comment: "n산악회 : 0\\n골프회 : 1\n회원홍보배너 : null "
-    },
-    bannerImg: {
-      type: DataTypes.STRING(200),
-      allowNull: true,
-      comment: "이미지경로"
+      defaultValue: "all",
+      comment: "전체배너: all 산악회 : mt 골프회 : gt"
     },
     bannerUrl: {
       type: DataTypes.STRING(200),

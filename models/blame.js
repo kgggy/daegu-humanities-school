@@ -28,7 +28,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       comment: "내용"
     },
-    boardId: {
+    targetContentId: {
       type: DataTypes.INTEGER,
       allowNull: true,
       comment: "신고한게시글\/댓글번호"
