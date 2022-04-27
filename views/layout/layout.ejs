@@ -66,21 +66,30 @@
 
     /* 드롭다운 스타일 */
     /* form => easydropdown, 검색 input => searchbox */
-    .easydropdown {
-        text-align: right;
-        display: flex;
-        justify-content: end;
-        margin-bottom: 7px;
-        gap: 8px;
+    @media (min-width:768px) {
+        .easydropdown {
+            text-align: right;
+            display: flex;
+            justify-content: end;
+            margin-bottom: 7px;
+            gap: 8px;
     }
-
-    .dropdown {
-        display: inline-block;
-        text-align: left;
-        width: 120px !important;
-        height: 34px !important;
+        .dropdown {
+            display: inline-block;
+            text-align: left;
+            height: 40px;
+        }
     }
-
+    @media (max-width:767px) {
+        .easydropdown{
+            display: grid;
+        } 
+        .dropdown{
+            text-align: center;
+            height: 50px;
+            margin-bottom: 10px;
+        }
+    }
     .certidropdown {
         width: 200px !important;
     }

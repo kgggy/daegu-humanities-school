@@ -250,6 +250,7 @@
 [31m    at Parser.write (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\protocol\Parser.js:43:10)[39m
 [31m    at Protocol.write (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\protocol\Protocol.js:38:16)[39m
 [31m    at Socket.<anonymous> (C:\Users\flash106\Desktop\프로젝트\Daegu-inmun-server-app\node_modules\mysql\lib\Connection.js:88:28)[39m
+
  2022-04-26 16:04:43 || [ [31merror[39m ] ▶ [31muncaughtException: result is not defined[39m
 [31mReferenceError: result is not defined[39m
 [31m    at C:\Users\flash51\Desktop\daegu-humanity-app\routes\admin_api\m_user.js:216:15[39m

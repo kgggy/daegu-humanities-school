@@ -22,7 +22,6 @@ router.get('/', async (req, res) => {
                 attributes: ["fileRoute", "fileOrgName", "fileType"],
                 raw: true
             });
-            // console.log(bannerAll)
             banner[i]['fileRoute'] = bannerAll;
             all[i] = banner[i];
         }
