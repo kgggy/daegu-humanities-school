@@ -89,6 +89,7 @@ router.patch('/:uid', upload.fields([{ name: 'userImg' }, { name: 'detailImg' }]
                                  userAuth = ?, userUrl = ?, userImg = ?, detailImg = ?,\
                                  userNum = ?, userJob = ?, faxPhone = ?\
                   where uid = ?";
+        
         connection.query(sql, param, async (err) => {
             if (err) {
                 console.error(err);
