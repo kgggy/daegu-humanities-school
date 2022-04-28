@@ -50,5 +50,9 @@ router.use('/rcmdSelect', rcmdSelect);
 router.use('/blame', blame);
 router.use('/infoUpdate', infoUpdate);
 router.use('/curriculum', curriculum);
+router.use('/privacypolicy', router.get('/', async (req, res) => {
+                                            let route = req.app.get('views') + '/privacypolicy';
+    res.render(route, { layout: false });
+                                        }));
 
 module.exports = router;
