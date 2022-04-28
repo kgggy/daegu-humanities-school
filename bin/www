@@ -14,6 +14,7 @@ var http = require('http');
  */
 
 var port = normalizePort(process.env.PORT || '7010'); //process.env.PORT 객체에 값이 있다면 그 값을 사용하고, 없다면 3000번 포트를 이용
+console.log("========================== port is 7010!!!! ==================================")
 app.set('port', port); //app.set(key, value)데이터 저장 --- app.get(key)로 가져오기 가능.
 
 /**

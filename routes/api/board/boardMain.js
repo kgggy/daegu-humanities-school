@@ -52,8 +52,7 @@ router.get('/', async (req, res) => {
                         });
                     }
                     refer = results;
-                    const sql4 = "call selectEvent(?, ?);\
-                                  call checkvote(@yes, @nono, @undefine);\
+                    const sql4 = "call selectEvent(?, ?, @yes, @nono, @undefine);\
                                   select @yes, @nono, @undefine;"
                     connection.query(sql4, [req.query.uid, param], (err, results) => {
                         if (err) {
@@ -63,7 +62,8 @@ router.get('/', async (req, res) => {
                             });
                         }
                         event = results[0][0];
-                        voteCount = results[3];
+                        voteCount = results[2];
+                        console.log(voteCount)
                         res.status(200).json([{
                             notice: notice,
                             gallery: gallery,
