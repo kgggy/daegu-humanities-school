@@ -6,7 +6,7 @@ const morgan = require('morgan');
 const expressLayouts = require('express-ejs-layouts');
 const ejs = require('ejs');
 const session = require('express-session');
-const winston = require('./config/winston'); 
+// const winston = require('./config/winston'); 
 const app = express(); //express 패키지 호출, app변수 객체 생성. => app객체에 기능 하나씩 연결.
 
 const routes = require('./routes/api');
