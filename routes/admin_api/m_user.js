@@ -140,7 +140,7 @@ router.get('/selectOne', async (req, res) => {
 
 //사용자 등록 페이지 이동
 router.get('/userInsertForm', (req, res) => {
-  let route = req.app.get('views') + '/m_user/orgm_writForm';
+  let route = req.app.get('views') + '/user/user_writForm';
   res.render(route);
 });
 

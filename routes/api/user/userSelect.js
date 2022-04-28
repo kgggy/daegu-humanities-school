@@ -24,18 +24,19 @@ router.get('/', async (req, res) => {
         console.log(err);
       }
       user = results;
-      const userNumSql = "select distinct userNum from user where userNum is not null and userNum != '' order by userNum asc;";
+      const userNumSql = "select distinct userNum from user where userNum is not null and userNum != ''  order by field(userNum, '기수') desc, userNum asc;";
       connection.query(userNumSql, (err, results) => {
         if (err) {
           console.log(err);
         }
         userNum = results;
-        const userAuthSql = "select distinct userAuth from user where userAuth is not null and userAuth != '' order by userAuth asc;";
+        const userAuthSql = "select distinct userAuth from user where userAuth is not null and userAuth != '' order by field(userAuth,'부회장','회장','전체') desc, userAuth asc;";
         connection.query(userAuthSql, (err, results) => {
           if (err) {
             console.log(err);
           }
           userAuth = results;
+          console.log(userAuth)
           res.status(200).json({
             user: user,
             userNum: userNum,
