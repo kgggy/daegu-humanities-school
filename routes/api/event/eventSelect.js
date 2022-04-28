@@ -5,7 +5,7 @@ var connection = require('../../../config/db').conn;
 //행사 목록
 router.get('/', async (req, res) => {
     try {
-        const sql = "call selectEvent(?, ?)"
+        const sql = "call selectEvent(?, ?, @yes, @nono, @undefine);"
         connection.query(sql, [req.query.uid, req.query.crewDiv], (err, result) => {
             if (err) {
                 console.log(err);

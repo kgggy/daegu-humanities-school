@@ -27,6 +27,10 @@
       href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
       rel="stylesheet"
     />
+    <!--드롭다운-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.easydropdown/2.1.4/themes/easydropdown.css">
+    <script type='text/javascript' src="https://cdn.jsdelivr.net/jquery.easydropdown/2.1.4/jquery.easydropdown.js">
+    </script>
 
     <!-- Icons. Uncomment required icon fonts -->
     <link rel="stylesheet" href="../../public/sneat/assets/vendor/fonts/boxicons.css" />
@@ -49,7 +53,7 @@
     <script src="../../public/sneat/assets/js/config.js"></script>
   </head>
 <style>
-    table.dataTable td,
+    /* table.dataTable td,
     table.dataTable th {
         padding: 0.75rem !important;
     }
@@ -62,7 +66,7 @@
     table.dataTable thead .sorting_asc,
     table.dataTable thead .sorting_desc {
         background-image: none !important;
-    }
+    } */
 
     /* 드롭다운 스타일 */
     /* form => easydropdown, 검색 input => searchbox */
@@ -88,9 +92,15 @@
             text-align: center;
             height: 50px;
             margin-bottom: 10px;
+            width: auto;
         }
     }
-    .certidropdown {
+    .searchbox {
+        height: 34px !important;
+        border: 1px solid darkgray;
+        border-radius: 7%;
+    }
+    /* .certidropdown {
         width: 200px !important;
     }
 
@@ -108,11 +118,7 @@
         padding: 0;
     }
 
-    .searchbox {
-        height: 34px !important;
-        border: 1px solid darkgray;
-        border-radius: 7%;
-    }
+    
 
     input::-webkit-input-placeholder {
         color: darkgray;
@@ -120,7 +126,7 @@
 
     .dropdown li.focus {
         background-color: rgb(252, 139, 95);
-    }
+    } */
 
     /* 검색, 등록, 삭제 버튼 style */
     /* #searchAction,
@@ -171,7 +177,7 @@
     .last:hover,
     .left:hover,
     .right:hover {
-        color: #FC8B5F;
+        color: #696cff;
     }
 
     .pagination a.active {
@@ -199,18 +205,18 @@
         width: 30px;
         height: 30px;
         line-height: 30px;
-        background-color: #FC8B5F;
+        background-color: #696cff;
         color: #ffffff;
     }
 
     .customPaging .num:hover {
-        background-color: #FC8B5F;
+        background-color: #696cff;
         color: #ffffff;
     }
 
     .customPaging .num.active,
     .customPaging .num:active {
-        background-color: #FC8B5F;
+        background-color: #696cff;
         cursor: pointer;
     }
 
@@ -226,7 +232,7 @@
         border-right: 10px solid blue;
     }
 
-    div.dataTables_wrapper div.dataTables_info {
+    /* div.dataTables_wrapper div.dataTables_info {
         display: none !important;
     }
 
@@ -240,10 +246,10 @@
 
     div.dataTables_wrapper div.dataTables_filter label {
         display: none;
-    }
+    } */
 
     /* 첨부파일삭제버튼 */
-    .fileDelete {
+    /* .fileDelete {
         display: inline;
         width: 55px;
         margin-left: 10px;
@@ -251,6 +257,9 @@
 
     tr {
         cursor: pointer;
+    } */
+    table {
+        min-width: 880px;
     }
 </style>
 <body>
