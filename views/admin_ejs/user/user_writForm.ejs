@@ -1,199 +1,145 @@
-<main class="main">
-   <!-- Breadcrumb-->
-   <ol class="breadcrumb">
-      <li class="breadcrumb-item">Home</li>
-      <li class="breadcrumb-item">
-         <a style="font-weight: bold;">회원관리</a>
-      </li>
-      <li class="breadcrumb-item active">회원정보</li>
-      <!-- Breadcrumb Menu-->
-   </ol>
-
-   <div class="container-fluid">
-      <div class="animated fadeIn">
-         <div class="row">
-            <div class="col-lg-6">
-               <div class="card">
-                  <div class="card-header">
-                     <i class="fa fa-align-justify"></i> 회원 등록</div>
-                  <form action="" id="userEnrollForm" method="post" enctype="multipart/form-data">
-                     <div class="card-body">
-                        <!-- 컨텐츠 -->
-                        <div class="form-group row">
-                           <label class="col-md-2 col-form-label" for="text-input">프로필사진</label>
-                           <div class="col-md-9">
-                              <input type="file" id="file" name="file" />
-                           </div>
-                        </div>
-                        <div class="form-group row">
-                           <label class="col-md-2 col-form-label" for="text-input" style="color: crimson;">이메일</label>
-                           <div class="col-md-9">
-                              <input class="form-control" id="userEmail" type="text" name="userEmail" value="">
-                           </div>
-                        </div>
-                        <div class="form-group row">
-                           <label class="col-md-2 col-form-label" for="text-input" style="color: crimson;">닉네임</label>
-                           <div class="col-md-9">
-                              <input class="form-control" id="userNick" type="text" name="userNick" value="">
-                           </div>
-                        </div>
-                        <div class="form-group row">
-                           <label class="col-md-2 col-form-label" for="text-input" style="color: crimson;">패스워드</label>
-                           <div class="col-md-9">
-                              <input class="form-control" id="userPwd" type="text" name="userPwd" value="">
-                           </div>
-                        </div>
-                        <div class="form-group row">
-                           <label class="col-md-2 col-form-label" for="text-input">나이</label>
-                           <div class="col-md-9">
-                              <input class="form-control" id="userAge" type="number" name="userAge" value="">
-                           </div>
-                        </div>
-                        <div class="form-group row">
-                           <label class="col-md-2 col-form-label" for="text-input">주소</label>
-                           <div class="col-md-9">
-                              <input class="form-control" id="userAdres1" type="text" name="userAdres1"
-                                 placeholder="시 / 도 (ex.대구광역시)">
-                           </div>
-                           <label class="col-md-2 col-form-label" for="text-input"></label>
-                           <div class="col-md-9">
-                              <input class="form-control" id="userAdres2" type="text" name="userAdres2"
-                                 placeholder="시 / 군 / 구 (ex.달서구)">
-                           </div>
-                        </div>
-                        <div class="form-group row">
-                           <label class="col-md-2 col-form-label" for="text-input">학교</label>
-                           <div class="col-md-9">
-                              <input class="form-control" id="userSchool" type="text" name="userSchool" value="">
-                           </div>
-                        </div>
-                        <div class="form-group row">
-                           <label class="col-md-2 col-form-label" for="text-input">포인트</label>
-                           <div class="col-md-9">
-                              <input class="form-control" id="userPoint" type="text" name="userPoint" value="">
-                           </div>
-                        </div>
-                        <div class="form-group row">
-                           <label class="col-md-2 col-form-label" for="text-input">계산점수</label>
-                           <div class="col-md-9">
-                              <input class="form-control" id="userScore" type="text" name="userScore" value="">
-                           </div>
-                        </div>
-                        <div class="form-group row">
-                           <label class="col-md-2 col-form-label" for="text-input">상태</label>
-                           <div class="col-md-9">
-                              <select class="dropdown" name="userStatus">
-                                 <option value="0">활동중</option>
-                                 <option value="1">탈퇴</option>
-                              </select>
-                           </div>
-                        </div>
-                        <div class="form-group row">
-                           <label class="col-md-2 col-form-label" for="text-input">개인정보 동의여부</label>
-                           <div class="col-md-9">
-                              <select class="dropdown" name="userAgree">
-                                 <option value="0">동의</option>
-                                 <option value="1">비동의</option>
-                              </select>
-                           </div>
-                        </div>
-                        <!--option 버튼  -->
-                        <div class="option_button">
-                           <div>
-                              <button class="btn btn-block btn-outline-success" type="button"
-                                 id="update_btn">등록</button>
-                           </div>
-                           <div>
-                              <button class="btn btn-block btn-outline-danger" type="button"
-                                 onclick="location.href='/admin/m_user/page?page=1'"
-                                 style="margin-bottom: 10px;">취소</button>
-                           </div>
-                        </div>
-                     </div>
-                  </form>
+<div class="col-xs-6">
+   <!-- HTML5 Inputs -->
+   <div class="card mb-4">
+      <h5 class="card-header">회원 등록</h5>
+      <div class="card-body">
+         <form name="enrollForm" role="form">
+            <div class="mb-3 row">
+               <label for="html5-text-input" class="col-md-2 col-form-label">프로필</label>
+               <div class="col-md-10">
+                  <input class="form-control" type="file" />
                </div>
             </div>
-         </div>
+            <div class="mb-3 row">
+               <label for="html5-text-input" class="col-md-2 col-form-label">첨부파일</label>
+               <div class="col-md-10">
+                  <input class="form-control" type="file" />
+               </div>
+            </div>
+            <div class="mb-3 row">
+               <label for="html5-text-input" class="col-md-2 col-form-label">회원명</label>
+               <div class="col-md-10">
+                  <input class="form-control" type="text" value="" id="userName" name="userName" placeholder="ex) 홍길동" />
+               </div>
+            </div>
+            <div class="mb-3 row">
+               <label for="html5-text-input" class="col-md-2 col-form-label">휴대번호</label>
+               <div class="col-md-10">
+                  <input class="form-control" type="text" value="" id="userPhone" name="userPhone" placeholder="ex) 01011112222" />
+               </div>
+            </div>
+            <div class="mb-3 row">
+               <label for="html5-text-input" class="col-md-2 col-form-label">이메일</label>
+               <div class="col-md-10">
+                  <input class="form-control" type="text" value="" id="userEmail" name="userEmail" placeholder="ex) abcd@naver.com" />
+               </div>
+            </div>
+            <div class="mb-3 row">
+               <label for="html5-text-input" class="col-md-2 col-form-label">전화번호</label>
+               <div class="col-md-10">
+                  <input class="form-control" type="text" value="" id="officePhone" name="officePhone" placeholder="ex) 01011112222" />
+               </div>
+            </div>
+            <div class="mb-3 row">
+               <label for="html5-text-input" class="col-md-2 col-form-label">주소</label>
+               <div class="col-md-10">
+                  <input class="form-control" type="text" value="" id="userAdres" name="userAdres" />
+               </div>
+            </div>
+            <div class="mb-3 row">
+               <label for="html5-text-input" class="col-md-2 col-form-label">상세주소</label>
+               <div class="col-md-10">
+                  <input class="form-control" type="text" value="" id="userAdres4" name="userAdres4" />
+               </div>
+            </div>
+            <div class="mb-3 row">
+               <label for="html5-text-input" class="col-md-2 col-form-label">기수</label>
+               <div class="col-md-10">
+                  <input class="form-control" type="text" value="" id="userNum" name="userNum" placeholder="ex) 06기" />
+               </div>
+            </div>
+            <div class="mb-3 row">
+               <label for="html5-text-input" class="col-md-2 col-form-label">직책</label>
+               <div class="col-md-10">
+                  <input class="form-control" type="text" value="" id="userAuth" name="userAuth" placeholder="ex) 회장, 상임부회장, 이사..." />
+               </div>
+            </div>
+            
+            <div class="mb-3 row">
+               <label for="html5-text-input" class="col-md-2 col-form-label">홈페이지</label>
+               <div class="col-md-10">
+                  <input class="form-control" type="text" value="" id="userUrl" name="userUrl" placeholder="ex) https://www.naver.com" />
+               </div>
+            </div>
+            <div class="mb-3 row">
+               <label for="html5-text-input" class="col-md-2 col-form-label">소속</label>
+               <div class="col-md-10">
+                  <input class="form-control" type="text" value="" id="userJob" name="userJob" placeholder="ex) XX 회사 대표" />
+               </div>
+            </div>
+            <div class="mb-3 row">
+               <label for="html5-text-input" class="col-md-2 col-form-label">팩스</label>
+               <div class="col-md-10">
+                  <input class="form-control" type="text" value="" id="faxPhone" name="faxPhone" />
+               </div>
+            </div>
+            <div class="mb-3 row">
+               <label for="html5-text-input" class="col-md-2 col-form-label">동아리</label>
+               <div class="col-md-10">
+                  <div class="col-md">
+                     <div class="form-check form-check-inline mt-3">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" />
+                        <label class="form-check-label" for="inlineCheckbox1">골프회</label>
+                     </div>
+                     <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2" />
+                        <label class="form-check-label" for="inlineCheckbox2">산악회</label>
+                     </div>
+                     <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2" />
+                        <label class="form-check-label" for="inlineCheckbox2">골프회 및 산악회</label>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="mb-3 row">
+               <label for="html5-text-input" class="col-md-2 col-form-label">골프회 직책</label>
+               <div class="col-md-10">
+                  <input class="form-control" type="text" value="" id="" name="" placeholder="ex) 회장, 사무국장..." />
+               </div>
+            </div>
+            <div class="mb-3 row">
+               <label for="html5-text-input" class="col-md-2 col-form-label">산악회 직책</label>
+               <div class="col-md-10">
+                  <input class="form-control" type="text" value="" id="" name="" placeholder="ex) 회장, 사무국장..." />
+               </div>
+            </div>
+            <div class="demo-inline-spacing">
+               <button type="button" class="btn btn-outline-info" id="update_btn">등록</button>
+               <button type="button" class="btn btn-outline-primary" onclick="history.go(-1)">취소</button>
+            </div>
+         </form>
       </div>
    </div>
-</main>
 
-<script type="text/javascript">
-   function file_del(route) {
-      if (confirm("실제 파일이 삭제됩니다 \n정말 삭제하시겠습니까?")) {
-         $("#boardWrit").attr("action", "imgDelete");
-         $("#boardWrit").attr("method", "get");
-         $("#boardWrit").submit();
-      }
-   }
-
-   $("#update_btn").click(function () {
-      var userNick = $("#userNick").val();
-      var userEmail = $("#userEmail").val();
-      var userPwd = $("#userPwd").val();
-
-      if (userEmail == '') {
-         alert("이메일을 입력해주세요.");
-         $("#userEmail").focus();
-         return false;
-      }
-
-      if (userNick == '') {
-         alert("닉네임을 입력해주세요.");
-         $("#userNick").focus();
-         return false;
-      }
-
-      if (userPwd == '') {
-         alert("패스워드를 입력해주세요.");
-         $("#userPwd").focus();
-         return false;
-      }
-
-      if(checkNickName(userNick) == false){
-         return false;
-      }
-
-      if (confirm("등록하시겠습니까?") == true) {
-         $("#userEnrollForm").attr("action", "userInsert");
-         $("#userEnrollForm").submit();
-      } else {
-         return;
-      }
-   });   
-
-   //닉네임 체크 [S] 
-   function checkNickName(userNick) { 
-      //var nickname = document.getElementById('nickNm').value; 
-      //닉네임 입력값 받아오기 
-      var nickLength = 0;
-       var engCheck = /[a-z]/; 
-       var numCheck = /[0-9]/; 
-       var specialCheck = /[`~!@#$%^&*|\\\'\";:\/?]/gi; 
-       //한글, 영문 길이 2,1로 바꾸기 
-       for(var i=0; i<userNick.length; i++){ 
-          //한글은 2, 영문은 1로 치환 
-          nick = userNick.charAt(i); 
-          if(escape(nick).length >4){ 
-             nickLength += 2; 
-         }else{ 
-            nickLength += 1; 
-         } 
-      } //닉네임 필수 입력 
-             if (nickLength<2 || nickLength>20) {
-                  alert("닉네임은 한글 1~10자, 영문 및 숫자 2~20자 입니다."); 
-                  return false;
-                  //닉네임 특수문자 포함 안됨 
-               } else if (specialCheck.test(userNick)) {
-                  alert("닉네임은 특수문자를 포함 할 수 없습니다.");
-                  return false;
-                  //닉네임 중복확인 
-               } else { 
-                  return true;
-                        }
-         } //닉네임 체크 [E]
-
-      // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 '[0] = 회원관리'
-      var navDropdown = document.getElementsByClassName("nav-dropdown");
-         navDropdown[0].className += 'open';
-</script>
+   <script type="text/javascript">
+      var formObj = $("form[name='udtForm']");
+      $(document).ready(function () {
+         // 수정 폼 연결
+         $("#update_btn").on("click", function () {
+            formObj.attr("action", "userUdtForm");
+            formObj.attr("method", "post");
+            formObj.submit();
+         });
+         // 삭제
+         $("#delete_btn").on("click", function () {
+            formObj.attr("action", "oneUserDelete");
+            formObj.attr("method", "get");
+            if (confirm("회원을 삭제하시겠습니까?") == true) {
+               formObj.submit();
+            } else {
+               return;
+            }
+         });
+      })
+   </script>

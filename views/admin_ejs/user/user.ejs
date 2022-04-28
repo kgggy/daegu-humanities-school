@@ -50,7 +50,7 @@
             <% } else {%>
             <input class="searchbox" type="text" name="searchText" placeholder=" 회원명, 소속명" />
             <% } %>
-            <button class="btn btn-block btn-outline-success" type="submit" id="searchAction"
+            <button class="btn btn-primary" type="submit" id="searchAction"
                 style="margin-bottom: 10px;">검색</button>
     </form>
     <!-- Basic Bootstrap Table -->
@@ -132,10 +132,10 @@
             <form>
                 <input type="hidden" id="userImg" name="userImg" value="" />
                 <input type="hidden" id="uid" name="uid" value="" />
-                <button type="button" class="btn btn-outline-info" id="enrollAction"
+                <button type="button" class="btn btn-outline-primary" id="enrollAction"
                     onclick="location.href='/admin/m_user/userInsertForm'">등록</button>
                 <button type="button" class="btn btn-outline-danger" id="delete_btn">삭제</button>
-                <button type="button" class="btn btn-outline-info" id="excelFileExport">엑셀 다운로드</button>
+                <button type="button" class="btn btn-outline-dark" id="excelFileExport">엑셀 다운로드</button>
                 <!-- <input class="btn btn-block btn-outline-success" type="button" id="excelFileExport" value="엑셀 다운로드"
                 style="margin-bottom: 15px; width: 140px; display: inline-block;" /> -->
             </form>
