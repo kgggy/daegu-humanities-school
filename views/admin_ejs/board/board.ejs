@@ -1,19 +1,14 @@
-<script>
-    $(document).ready(function () {
-        searchajax();
-    });
-</script>
-<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">게시판관리 /</span> <%=boardDiv[0].boardName%>관리</h4>
+<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">게시판관리 /</span> <%=community[0].boardName%>관리</h4>
 <!-- Basic Bootstrap Table -->
 <div class="card">
-    <h5 class="card-header"><%=results[0].boardName%>관리</h5>
+    <h5 class="card-header"><%=community[0].boardName%>관리</h5>
     <div class="table-responsive text-nowrap">
         <form name="searchForm" action="" method="get" class="easydropdown">
             <input type="hidden" id="page" name="page" value="<%=page%>">
             <input type="hidden" name="boardDivId" value="<%=results[0].boardDivId%>">
             <input class="searchbox" type="text" name="searchText"
-                                            value="<%=searchText%>" />
-
+                            <%if(searchText!=null){%>value="<%=searchText%>" <%}%> placeholder="작성자, 제목, 내용">
+        </form>
             <table class="table table-hove">
             <thead>
                 <tr>
@@ -21,7 +16,6 @@
                     <th>번호</th>
                     <th>이름</th>
                     <th>기수</th>
-                    <th>휴대폰</th>
                 </tr>
             </thead>
             <tbody class="table-border-bottom-0">
@@ -31,22 +25,18 @@
                         i++;
                     } else { %>
                     <tr class="pointer"
-                        onclick="location.href='/admin/m_user/selectOne?uid=<%=results[i].uid%>&page=<%=page%><%= keepSearch %>'">
+                        onclick="location.href='/admin/board/selectOne?boardId=<%=results[i].boardId%>&page=<%=page%>&searchText<%=searchText%>'">
                         <td onclick='event.cancelBubble=true;'><input type="checkbox" id="chk"
-                                name="chk" value="<%=results[i].uid %>"
-                                data-img="<%=results[i].userImg%>" />
+                                name="chk" value="<%=results[i].boardId %>" />
                         </td>
                         <td>
                             <%=results[i].boardId%>
                         </td>
                         <td>
-                            <i class="fab fa-angular fa-lg text-danger me-3"></i> <strong><%=results[i].userName%></strong>
-                        </td>
-                        <td>
                             <%=results[i].boardTitle%>
                         </td>
                         <td>
-                            <%= results[i].boardDate %>
+                            <%= results[i].boardDatefmt %>
                         </td>
                     </tr>
                     <% } %>
@@ -58,30 +48,30 @@
                     <% } %>
      
                         </div>
-                    </td> -->
+                    </td>
             </tbody>
         </table>
-        </form>
+        
        
         <div>
             <div class="mt_20">
                 <div class="paging" id="page_navi">
                     <ul class="pagination customPaging">
-                        <li> <a href="/admin/m_user?page=1<%= keepSearch %>" class="num">
+                        <li> <a href="/admin/board?page=1&searchText<%=searchText%>" class="num">
                                 <<</a> </li> <li> <a
                                         <%if((page<startPage)||(page==1)){%><%} else {%>
-                                        href="/admin/m_user?page=<%= parseInt(page) - 1 %><%= keepSearch %>"
+                                        href="/admin/board?page=<%= parseInt(page) - 1 %>&searchText<%=searchText%>"
                                         class="num" <% } %>>
                                         <</a> </li>
                                             <% for(var i = startPage; i < endPage ; i++){  %>
                                             <li class="paging_on">
-                                            <a href="/admin/m_user?page=<%= i + 1 %><%= keepSearch %>"
+                                            <a href="/admin/board?page=<%= i + 1 %>&searchText<%=searchText%>"
                                                 <%if(page==i+1){%>class="selected"
                                                 <%}%> class="num"><%= i + 1 %></a> </li> <% } %>
                                                 <li> <a <%if(page>last-1){%><%} else {%>
-                                                    href="/admin/m_user?page=<%= parseInt(page) + 1 %><%= keepSearch %>"
+                                                    href="/admin/board?page=<%= parseInt(page) + 1 %>&searchText<%=searchText%>"
                                                     class="num" <% } %>>></a></li>
-                        <li><a href="/admin/m_user?page=<%= last %><%= keepSearch %>"
+                        <li><a href="/admin/board?page=<%= last %>&searchText<%=searchText%>"
                                 class="num">>></a></li>
                     </ul>
                 </div>
@@ -93,6 +83,8 @@
 
 <script>
     $(document).ready(function () {
+        searchajax(); 
+
         const formObj = $("form[name='userForm']");
         // 삭제
         $("#delete_btn").on("click", function () {
@@ -152,4 +144,72 @@
         else
             $("#chkAll").prop("checked", true);
     });
+
+    //검색
+    function searchajax() {
+        $("#searchText").keyup(function () {
+            var words = $("#searchText").val();
+            $.ajax({
+                type: 'get',
+                url: '/admin/m_board/boardSearch?boardId=<%=community[0].boardId%>&page=1',
+                data: {
+                    searchText: words
+                },
+                dataType: 'json',
+                success: function (data) {
+                    // console.log(ajaxSearch.page)
+                    // console.log("===========" + ajaxSearch.ajaxSearch[0].boardName);                     
+                    // console.log(page)
+                    // console.log(data)
+                    var str = ''
+                    $(".customPaging").empty();
+                    if (data.ajaxSearch.length > 0) {
+                        for (var i = (data.page * data.page_num) - data
+                                .page_num; i < (data.page * data.page_num); i++) {
+                            if (i > data.length) {
+                                i++;
+                            } else {
+                                $("#tbody").empty();
+                                str +=
+                                    '<tr onclick="location.href=\'/admin/m_board/selectOne?boardId=' +
+                                    data.ajaxSearch[i].boardId + '&page=' + data
+                                    .page + '&searchText=' + data.searchText +
+                                    '\'"> <td onclick="event.cancelBubble=true;"><input type="checkbox" id="chk" name="chk" value="' +
+                                    data.ajaxSearch[i].boardId + '" /> </td>';
+                                str +=
+                                    '<td>' +
+                                    (data.ajaxSearch.length - i) + '</td>';
+                                str +=
+                                    '<td>' +
+                                    data.ajaxSearch[i].writRank + '</td>';
+                                str +=
+                                    '<td>' +
+                                    data.ajaxSearch[i].userNick + data.ajaxSearch[i]
+                                    .comNick + '</td>';
+                                str +=
+                                    '<td>' +
+                                    data.ajaxSearch[i].boardTitle + '</td>';
+                                str +=
+                                    '<td>' +
+                                    data.ajaxSearch[i].boardDatefmt + '</td>';
+                                // str +=
+                                //     '<td>' +
+                                //     data.ajaxSearch[i].writHit + '</td></tr>'
+                            }
+                        }
+                        // console.log("str = " + str)
+                        $("#tbody").append(str);
+                    } else {
+                        var none = '<tr> <td colspan="8"> 데이터가 존재하지 않습니다. </td> </tr>'
+                        $("#tbody").empty();
+                        $("#tbody").append(none);
+                    } 
+                    paging(data);
+                },
+                error: function (e) {
+                    console.log('error:' + e.status);
+                }
+            });
+        });
+    }
 </script>

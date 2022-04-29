@@ -50,11 +50,11 @@ var upload = multer({ //multer안에 storage정보
 });
 
 //카테고리별 글 전체조회
-router.get('/all', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         //카테고리 명 조회
         const param = req.query.boardDivId;
-        const sql1 = "select * from boardDiv where boardDivId = ?";
+        const sql1 = "select * from board where boardDivId = ?";
         let community = "";
         connection.query(sql1, param, (err, results) => {
             if (err) {
@@ -86,8 +86,9 @@ router.get('/all', async (req, res) => {
             if (last < endPage) {
                 endPage = last
             };
-            let route = req.app.get('views') + '/m_board/board';
+            let route = req.app.get('views') + '/board/board';
             res.render(route, {
+                community: community,
                 searchText: searchText,
                 results: results,
                 page: page, //현재 페이지
