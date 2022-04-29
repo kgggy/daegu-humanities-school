@@ -63,7 +63,6 @@ router.get('/', async (req, res) => {
                         }
                         event = results[0][0];
                         voteCount = results[2];
-                        console.log(voteCount)
                         res.status(200).json([{
                             notice: notice,
                             gallery: gallery,

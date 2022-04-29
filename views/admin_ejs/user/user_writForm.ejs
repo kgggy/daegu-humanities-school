@@ -1,55 +1,75 @@
+<!--주소api-->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+   window.onload = function () {
+      document.getElementById("address_kakao").addEventListener("click", function () {
+         new daum.Postcode({
+            oncomplete: function (data) {
+               // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+               // 예제를 참고하여 다양한 활용법을 확인해 보세요.
+               document.getElementById("address_kakao").value = data.address; // 주소 넣기
+               document.querySelector("input[id=address_detail]").focus(); //상세입력 포커싱
+            }
+         }).open();
+      });
+   }
+</script>
 <div class="col-xs-6">
    <!-- HTML5 Inputs -->
    <div class="card mb-4">
       <h5 class="card-header">회원 등록</h5>
       <div class="card-body">
-         <form name="enrollForm" role="form">
+         <form id="userEnrollForm" name="userEnrollForm" role="form">
             <div class="mb-3 row">
                <label for="html5-text-input" class="col-md-2 col-form-label">프로필</label>
                <div class="col-md-10">
-                  <input class="form-control" type="file" />
+                  <input class="form-control" type="file" id="userImg" name="userImg" />
                </div>
             </div>
             <div class="mb-3 row">
                <label for="html5-text-input" class="col-md-2 col-form-label">첨부파일</label>
                <div class="col-md-10">
-                  <input class="form-control" type="file" />
+                  <input class="form-control" type="file" id="detailImg" name="detailImg" />
                </div>
             </div>
             <div class="mb-3 row">
                <label for="html5-text-input" class="col-md-2 col-form-label">회원명</label>
                <div class="col-md-10">
-                  <input class="form-control" type="text" value="" id="userName" name="userName" placeholder="ex) 홍길동" />
+                  <input class="form-control" type="text" value="" id="userName" name="userName"
+                     placeholder="ex) 홍길동" />
                </div>
             </div>
             <div class="mb-3 row">
                <label for="html5-text-input" class="col-md-2 col-form-label">휴대번호</label>
                <div class="col-md-10">
-                  <input class="form-control" type="text" value="" id="userPhone" name="userPhone" placeholder="ex) 01011112222" />
+                  <input class="form-control" type="text" value="" id="userPhone" name="userPhone"
+                     placeholder="ex) 01011112222" />
                </div>
             </div>
             <div class="mb-3 row">
                <label for="html5-text-input" class="col-md-2 col-form-label">이메일</label>
                <div class="col-md-10">
-                  <input class="form-control" type="text" value="" id="userEmail" name="userEmail" placeholder="ex) abcd@naver.com" />
+                  <input class="form-control" type="text" value="" id="userEmail" name="userEmail"
+                     placeholder="ex) abcd@naver.com" />
                </div>
             </div>
             <div class="mb-3 row">
                <label for="html5-text-input" class="col-md-2 col-form-label">전화번호</label>
                <div class="col-md-10">
-                  <input class="form-control" type="text" value="" id="officePhone" name="officePhone" placeholder="ex) 01011112222" />
+                  <input class="form-control" type="text" value="" id="officePhone" name="officePhone"
+                     placeholder="ex) 01011112222" />
                </div>
             </div>
             <div class="mb-3 row">
                <label for="html5-text-input" class="col-md-2 col-form-label">주소</label>
                <div class="col-md-10">
-                  <input class="form-control" type="text" value="" id="userAdres" name="userAdres" />
+                  <input class="form-control" type="text" value="" id="address_kakao" name="userAdres" />
                </div>
             </div>
             <div class="mb-3 row">
                <label for="html5-text-input" class="col-md-2 col-form-label">상세주소</label>
                <div class="col-md-10">
-                  <input class="form-control" type="text" value="" id="userAdres4" name="userAdres4" />
+                  <input class="form-control" type="text" value="" id="address_detail" name="userAdres4" placeholder="상세주소를 입력해주세요" />
                </div>
             </div>
             <div class="mb-3 row">
@@ -61,20 +81,23 @@
             <div class="mb-3 row">
                <label for="html5-text-input" class="col-md-2 col-form-label">직책</label>
                <div class="col-md-10">
-                  <input class="form-control" type="text" value="" id="userAuth" name="userAuth" placeholder="ex) 회장, 상임부회장, 이사..." />
+                  <input class="form-control" type="text" value="" id="userAuth" name="userAuth"
+                     placeholder="ex) 회장, 상임부회장, 이사..." />
                </div>
             </div>
-            
+
             <div class="mb-3 row">
                <label for="html5-text-input" class="col-md-2 col-form-label">홈페이지</label>
                <div class="col-md-10">
-                  <input class="form-control" type="text" value="" id="userUrl" name="userUrl" placeholder="ex) https://www.naver.com" />
+                  <input class="form-control" type="text" value="" id="userUrl" name="userUrl"
+                     placeholder="ex) https://www.naver.com" />
                </div>
             </div>
             <div class="mb-3 row">
                <label for="html5-text-input" class="col-md-2 col-form-label">소속</label>
                <div class="col-md-10">
-                  <input class="form-control" type="text" value="" id="userJob" name="userJob" placeholder="ex) XX 회사 대표" />
+                  <input class="form-control" type="text" value="" id="userJob" name="userJob"
+                     placeholder="ex) XX 회사 대표" />
                </div>
             </div>
             <div class="mb-3 row">
@@ -87,17 +110,20 @@
                <label for="html5-text-input" class="col-md-2 col-form-label">동아리</label>
                <div class="col-md-10">
                   <div class="col-md">
-                     <div class="form-check form-check-inline mt-3">
-                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" />
-                        <label class="form-check-label" for="inlineCheckbox1">골프회</label>
+                     <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="userCrew" name="userCrew"
+                           value="option2" ondblclick="this.checked = false" />
+                        <label class="form-check-label" for="inlineRadio2">골프회</label>
                      </div>
                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2" />
-                        <label class="form-check-label" for="inlineCheckbox2">산악회</label>
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="userCrew" name="userCrew"
+                           value="option2" ondblclick="this.checked = false" />
+                        <label class="form-check-label" for="inlineRadio2">산악회</label>
                      </div>
                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2" />
-                        <label class="form-check-label" for="inlineCheckbox2">골프회 및 산악회</label>
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="userCrew" name="userCrew"
+                           value="option2" ondblclick="this.checked = false" />
+                        <label class="form-check-label" for="inlineRadio2">골프회 및 산악회</label>
                      </div>
                   </div>
                </div>
@@ -105,13 +131,13 @@
             <div class="mb-3 row">
                <label for="html5-text-input" class="col-md-2 col-form-label">골프회 직책</label>
                <div class="col-md-10">
-                  <input class="form-control" type="text" value="" id="" name="" placeholder="ex) 회장, 사무국장..." />
+                  <input class="form-control" type="text" value="" id="gfPosition" name="gfPosition" placeholder="ex) 회장, 사무국장..." />
                </div>
             </div>
             <div class="mb-3 row">
                <label for="html5-text-input" class="col-md-2 col-form-label">산악회 직책</label>
                <div class="col-md-10">
-                  <input class="form-control" type="text" value="" id="" name="" placeholder="ex) 회장, 사무국장..." />
+                  <input class="form-control" type="text" value="" id="mtPosition" name="mtPosition" placeholder="ex) 회장, 사무국장..." />
                </div>
             </div>
             <div class="demo-inline-spacing">
@@ -123,23 +149,35 @@
    </div>
 
    <script type="text/javascript">
-      var formObj = $("form[name='udtForm']");
-      $(document).ready(function () {
-         // 수정 폼 연결
-         $("#update_btn").on("click", function () {
-            formObj.attr("action", "userUdtForm");
-            formObj.attr("method", "post");
-            formObj.submit();
-         });
-         // 삭제
-         $("#delete_btn").on("click", function () {
-            formObj.attr("action", "oneUserDelete");
-            formObj.attr("method", "get");
-            if (confirm("회원을 삭제하시겠습니까?") == true) {
-               formObj.submit();
-            } else {
-               return;
-            }
-         });
-      })
+      $("#update_btn").click(function () {
+      var userName = $("#userName").val();
+      var userPhone = $("#userPhone").val();
+      var userNum = $("#userNum").val();
+
+      if (userName == '') {
+         alert("회원명을 입력해주세요.");
+         $("#userName").focus();
+         return false;
+      }
+
+      if (userPhone == '') {
+         alert("휴대번호를 입력해주세요.");
+         $("#userPhone").focus();
+         return false;
+      }
+
+      if (userNum == '') {
+         alert("기수를 입력해주세요.");
+         $("#userNum").focus();
+         return false;
+      }
+
+      if (confirm("등록하시겠습니까?") == true) {
+         $("#userEnrollForm").attr("action", "/admin/m_user/userInsert");
+         $("#userEnrollForm").attr("method", "post");
+         $("#userEnrollForm").submit();
+      } else {
+         return;
+      }
+   });  
    </script>
