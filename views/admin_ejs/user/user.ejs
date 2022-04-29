@@ -214,10 +214,6 @@
 
     });
 
-    // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 '[0] = 회원관리'
-    var navDropdown = document.getElementsByClassName("nav-dropdown");
-    navDropdown[0].className += 'open';
-
     // 선택
     $("#chkAll").click(function () {
         if ($("#chkAll").is(":checked"))
@@ -233,4 +229,13 @@
         else
             $("#chkAll").prop("checked", true);
     });
+
+    // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 
+    var menuItem = document.getElementsByClassName("menu-item");
+        //초기화
+        menuItem.className = 'menu-item';
+        //'[0] = 회원 관리' '[1] = 일반회원관리' if문 걸어주기.
+        menuItem[0].className += ' open active';
+        menuItem[1].className += ' active';
+
 </script>

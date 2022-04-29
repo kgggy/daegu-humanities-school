@@ -54,13 +54,14 @@ router.get('/', async (req, res) => {
     try {
         //카테고리 명 조회
         const param = req.query.boardDivId;
-        const sql1 = "select * from board where boardDivId = ?";
+        const sql1 = "select * from boardDiv where boardDivId = ?";
         let community = "";
         connection.query(sql1, param, (err, results) => {
             if (err) {
                 console.log(err);
             }
             community = results;
+            console.log(community);
         });
         
         var page = req.query.page;
@@ -71,7 +72,7 @@ router.get('/', async (req, res) => {
                     left join user u  on u.uid = b.uid\
                     where b.boardDivId = ?";
         if (searchText != '') {
-            sql += " and (u.userName like '%" + searchText + "%' or p.boardTitle like '%" + searchText + "%' or p.boardContent like '%" + searchText + "%')";
+            sql += " and (u.userName like '%" + searchText + "%' or b.boardTitle like '%" + searchText + "%' or b.boardContent like '%" + searchText + "%')";
         }
         sql += " order by b.boardFix, b.boardDate desc";
         connection.query(sql, param, (err, results) => {
@@ -117,7 +118,7 @@ router.get('/boardSearch', async (req, res) => {
                     left join user u  on u.uid = b.uid\
                     where b.boardDivId = ?";
     if (searchText != '') {
-        sql += " and (u.userName like '%" + searchText + "%' or p.boardTitle like '%" + searchText + "%' or p.boardContent like '%" + searchText + "%')";
+        sql += " and (u.userName like '%" + searchText + "%' or b.boardTitle like '%" + searchText + "%' or b.boardContent like '%" + searchText + "%')";
     }
     sql += " order by 1 desc";
     connection.query(sql, param, (err, results) => {
