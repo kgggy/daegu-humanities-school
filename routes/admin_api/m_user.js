@@ -145,10 +145,14 @@ router.get('/userInsertForm', (req, res) => {
 });
 
 //사용자 등록
-router.post('/userInsert', upload.fields([{ name: 'userImg' }, { name: 'hosImg' }, { name: 'infoImg' }]), async (req, res) => {
+router.post('/userInsert', upload.fields([{ name: 'userImg' }, { name: 'detailImg' }]), async (req, res) => {
   const {
-    userName, hosName, hosPost, userAdres1, userAdres2, userAdres3, hosPhone1, hosPhone2, hosPhone3, userPhone1, userPhone2, userPhone3, userType, userPosition, pushYn
+    userName, userPhone, userEmail, officePhone, userAdres, userAdres4, userNum, userAuth, userUrl, userJob, faxPhone, userCrew, gfPosition, mtPosition
   } = req.body;
+  const userAddress = userAdres.split(' ');
+  const join = userAddress.slice(2).join(' ');
+  let userImg;
+  let detailImg;
   if (req.files != null) {
     var obj = req.files;
     for (value in obj) {
@@ -173,34 +177,22 @@ router.post('/userInsert', upload.fields([{ name: 'userImg' }, { name: 'hosImg' 
       }
       await test();
     }
-
-    let userImg;
-    let hosImg;
-    let infoImg;
-    // for (value in obj) {
-    //   if(value == 'userImg') {
-    //     userImg = req.files.userImg[0].path
-    //   }
-
-    // }
     if (req.files.userImg != null) {
       userImg = req.files.userImg[0].path;
     }
-    if (req.files.hosImg != null) {
-      hosImg = req.files.hosImg[0].path;
+    if (req.files.detailImg != null) {
+      detailImg = req.files.detailImg[0].path;
     }
-    if (req.files.infoImg != null) {
-      infoImg = req.files.infoImg[0].path;
+  } 
+  const sql = "call insertUser(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+  const param = [userName, userPhone, userEmail, officePhone, userAddress[0], userAddress[1], join, userAdres4,
+                 userNum, userAuth, userUrl, userJob, faxPhone, userCrew, gfPosition, mtPosition, userImg, detailImg];
+  connection.query(sql, param, (err, row) => {
+    if (err) {
+      console.log(err)
     }
-    await models.user.create({
-      userName, hosName, hosPost, userAdres1, userAdres2, userAdres3, hosPhone1, hosPhone2, hosPhone3, userPhone1, userPhone2, userPhone3, userType, userPosition, pushYn, userImg, hosImg, infoImg
-    });
-  } else {
-    await models.user.create({
-      userName, hosName, hosPost, userAdres1, userAdres2, userAdres3, hosPhone1, hosPhone2, hosPhone3, userPhone1, userPhone2, userPhone3, userType, userPosition, pushYn
-    });
-  }
-  res.send('<script>alert("회원 등록이 완료되었습니다."); location.href="/admin/m_user/page?page=1";</script>');
+    res.send('<script>alert("회원 등록이 완료되었습니다."); location.href="/admin/m_user?page=1";</script>');
+  });
 });
 
 //사용자 정보 수정 페이지 이동
