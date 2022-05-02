@@ -4,7 +4,7 @@ const fs = require('fs');
 const multer = require("multer");
 const sharp = require('sharp');
 const path = require('path');
-//const models = require('../../models');
+const models = require('../../models');
 //엑셀파일 생성
 var nodeExcel = require('excel-export');
 // DB 커넥션 생성                
@@ -153,6 +153,7 @@ router.post('/userInsert', upload.fields([{ name: 'userImg' }, { name: 'detailIm
   const join = userAddress.slice(2).join(' ');
   let userImg;
   let detailImg;
+  // console.log(req.body)
   if (req.files != null) {
     var obj = req.files;
     for (value in obj) {
@@ -179,6 +180,7 @@ router.post('/userInsert', upload.fields([{ name: 'userImg' }, { name: 'detailIm
     }
     if (req.files.userImg != null) {
       userImg = req.files.userImg[0].path;
+      console.log(userImg)
     }
     if (req.files.detailImg != null) {
       detailImg = req.files.detailImg[0].path;
@@ -187,6 +189,7 @@ router.post('/userInsert', upload.fields([{ name: 'userImg' }, { name: 'detailIm
   const sql = "call insertUser(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
   const param = [userName, userPhone, userEmail, officePhone, userAddress[0], userAddress[1], join, userAdres4,
                  userNum, userAuth, userUrl, userJob, faxPhone, userCrew, gfPosition, mtPosition, userImg, detailImg];
+  console.log(param);
   connection.query(sql, param, (err, row) => {
     if (err) {
       console.log(err)
@@ -198,46 +201,15 @@ router.post('/userInsert', upload.fields([{ name: 'userImg' }, { name: 'detailIm
 //사용자 정보 수정 페이지 이동
 router.post('/userUdtForm', async (req, res) => {
   let route = req.app.get('views') + '/user/user_udtForm';
+  console.log(req.body)
   res.render(route, {
     result: req.body,
     page: req.body.page
   });
 });
 
-// //사용자 정보 수정
-// router.post('/userUpdate', upload.fields([{ name: 'userImg' }, { name: 'hosImg' }, { name: 'infoImg' }]), async (req, res) => {
-//   var path = "";
-//   var param = "";
-//   if (req.file != null) {
-//     path = req.file.path;
-//     param = [path, req.body.userName, req.body.hosName,
-//       req.body.hosPost, req.body.userAdres1, req.body.userAdres2, req.body.userAdres3,
-//       req.body.hosPhone1, req.body.hosPhone2, req.body.hosPhone3,
-//       req.body.userPhone1, req.body.userPhone2, req.body.userPhone3,
-//       req.body.userType, req.body.userPosition, req.body.uid
-//     ];
-//   } else {
-//     param = [req.body.userImg, req.body.userName, req.body.hosName,
-//       req.body.hosPost, req.body.userAdres1, req.body.userAdres2, req.body.userAdres3,
-//       req.body.hosPhone1, req.body.hosPhone2, req.body.hosPhone3,
-//       req.body.userPhone1, req.body.userPhone2, req.body.userPhone3,
-//       req.body.userType, req.body.userPosition, req.body.uid
-//     ];
-//   }
-//   const sql = "update user set userImg = ?, userName = ?, hosName = ?, hosPost = ?, userAdres1 = ?, userAdres2 = ?,\
-//                                userAdres3 = ?, hosPhone1 = ?, hosPhone2 = ?, hosPhone3 = ?,\
-//                                userPhone1 = ?, userPhone2 = ?, userPhone3 = ?, userType = ? , userPosition = ?\
-//                 where uid = ?";
-//   connection.query(sql, param, (err) => {
-//     if (err) {
-//       console.error(err);
-//     }
-//     res.redirect('selectOne?uid=' + req.body.uid + '&page=' + req.body.page);
-//   });
-// });
-
 //사용자 정보 수정
-router.post('/userUpdate', upload.fields([{ name: 'userImg' }, { name: 'hosImg' }, { name: 'infoImg' }]), async (req, res) => {
+router.post('/userUpdate', upload.fields([{ name: 'userImg' }, { name: 'detailImg' }]), async (req, res) => {
   var { deleteFileId } = req.body;
   var obj = req.files;
   for (value in obj) {
@@ -262,27 +234,26 @@ router.post('/userUpdate', upload.fields([{ name: 'userImg' }, { name: 'hosImg' 
     }
     await test();
   }
-  var { userName, hosName, hosPost, userAdres1, userAdres2, userAdres3, hosPhone1, hosPhone2,
-    hosPhone3, userPhone1, userPhone2, userPhone3, userType, userPosition, uid } = req.body;
+  
+  var { userName, userPhone, userEmail, officePhone, userAdres, userAdres4, userNum, userUrl,
+    userJob, faxPhone, userCrew, userAuth, gfPosition, mtPosition, uid } = req.body;
+
+  const userAddress = userAdres.split(' ');
+  const join = userAddress.slice(2).join(' ');
 
   if (req.files['userImg'] != null) {
     const paths = req.files['userImg'].map(data => data.path);
     await models.user.update({ userImg: paths[0] }, { where: { uid: uid } })
   }
-  if (req.files['hosImg'] != null) {
-    const paths = req.files['hosImg'].map(data => data.path);
-    await models.user.update({ hosImg: paths[0] }, { where: { uid: uid } })
-  }
-  if (req.files['infoImg'] != null) {
-    const paths = req.files['infoImg'].map(data => data.path);
-    await models.user.update({ infoImg: paths[0] }, { where: { uid: uid } })
+  if (req.files['detailImg'] != null) {
+    const paths = req.files['detailImg'].map(data => data.path);
+    await models.user.update({ detailImg: paths[0] }, { where: { uid: uid } })
   }
 
   await models.user.update({
-    userName: userName, hosName: hosName, hosPost: hosPost, userAdres1: userAdres1, userAdres2: userAdres2,
-    userAdres3: userAdres3, hosPhone1: hosPhone1, hosPhone2: hosPhone2,
-    hosPhone3: hosPhone3, userPhone1: userPhone1,
-    userPhone2: userPhone2, userPhone3: userPhone3, userType: userType, userPosition: userPosition
+    userName: userName, userPhone: userPhone, userEmail: userEmail, officePhone:officePhone, userAdres1: userAddress[0], userAdres2: userAddress[1],
+    userAdres3: join, userAdres4: userAdres4, userNum: userNum, userUrl: userUrl, userJob: userJob, faxPhone: faxPhone,
+    userCrew: userCrew, userAuth: userAuth, gfPosition: gfPosition, mtPosition: mtPosition
   }, {
     where: { uid: uid }
   })
@@ -294,12 +265,12 @@ router.post('/userUpdate', upload.fields([{ name: 'userImg' }, { name: 'hosImg' 
 
     var fileRoutes = await models.user.findOne({
       where: { uid: uid },
-      attributes: ['userImg', 'hosImg', 'infoImg'],
+      attributes: ['userImg', 'detailImg'],
       raw: true
     })
 
     var arr = [];
-    arr.push(fileRoutes['userImg'], fileRoutes['hosImg'], fileRoutes['infoImg'])
+    arr.push(fileRoutes['userImg'], fileRoutes['detailImg'])
 
     for (var i = 0; i < arr.length; i++) {
       // console.log("arr ============== " + arr)
@@ -311,10 +282,8 @@ router.post('/userUpdate', upload.fields([{ name: 'userImg' }, { name: 'hosImg' 
           if (i == 0) {
             await models.user.update({ userImg: arr[0] }, { where: { uid: uid } })
           } if (i == 1) {
-            await models.user.update({ hosImg: arr[1] }, { where: { uid: uid } })
-          } if (i == 2) {
-            await models.user.update({ infoImg: arr[2] }, { where: { uid: uid } })
-          }
+            await models.user.update({ detailImg: arr[1] }, { where: { uid: uid } })
+          } 
         }
       }
     }
@@ -367,10 +336,10 @@ router.get('/userDelete', (req, res) => {
 router.get('/oneUserDelete', (req, res) => {
   const param = req.query.uid;
   var img1 = req.query.userImg;
-  var img2 = req.query.hosImg;
-  var img3 = req.query.infoImg;
-  var arr = img1 + ',' + img2 + ',' + img3;
+  var img2 = req.query.detailImg;
+  var arr = img1 + ',' + img2;
   var img = arr.split(',');
+  console.log(img)
   const sql = "delete from user where uid = ?";
   connection.query(sql, param, (err, row) => {
     if (err) {
@@ -387,38 +356,38 @@ router.get('/oneUserDelete', (req, res) => {
       }
     }
   });
-  res.send('<script>alert("삭제되었습니다."); location.href="/admin/m_user/page?page=1";</script>');
+  res.send('<script>alert("삭제되었습니다."); location.href="/admin/m_user?page=1";</script>');
 });
 
 //프로필 삭제
-router.get('/imgDelete', async (req, res) => {
-  const param = req.query.userImg;
-  const page = req.query.page;
-  try {
-    const sql = "update user set userImg = null where uid = ?";
-    connection.query(sql, req.query.uid, (err) => {
-      if (err) {
-        console.log(err)
-      }
-      fs.unlinkSync(param, (err) => {
-        if (err) {
-          console.log(err);
-        }
-        return;
-      });
-    })
-  } catch (error) {
-    if (error.code == "ENOENT") {
-      console.log("프로필 삭제 에러 발생");
-    }
-  }
-  let route = req.app.get('views') + '/m_user/orgm_udtForm';
-  res.render(route, {
-    result: req.query,
-    userImg: '',
-    page: page
-  });
-});
+// router.get('/imgDelete', async (req, res) => {
+//   const param = req.query.userImg;
+//   const page = req.query.page;
+//   try {
+//     const sql = "update user set userImg = null where uid = ?";
+//     connection.query(sql, req.query.uid, (err) => {
+//       if (err) {
+//         console.log(err)
+//       }
+//       fs.unlinkSync(param, (err) => {
+//         if (err) {
+//           console.log(err);
+//         }
+//         return;
+//       });
+//     })
+//   } catch (error) {
+//     if (error.code == "ENOENT") {
+//       console.log("프로필 삭제 에러 발생");
+//     }
+//   }
+//   let route = req.app.get('views') + '/m_user/orgm_udtForm';
+//   res.render(route, {
+//     result: req.query,
+//     userImg: '',
+//     page: page
+//   });
+// });
 
 //엑셀 다운로드
 router.get('/userExcel', async (req, res) => {

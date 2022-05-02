@@ -19,7 +19,7 @@
    <div class="card mb-4">
       <h5 class="card-header">회원 등록</h5>
       <div class="card-body">
-         <form id="userEnrollForm" name="userEnrollForm" role="form">
+         <form id="userEnrollForm" name="userEnrollForm" role="form" enctype="multipart/form-data">
             <div class="mb-3 row">
                <label for="html5-text-input" class="col-md-2 col-form-label">프로필</label>
                <div class="col-md-10">
@@ -69,7 +69,8 @@
             <div class="mb-3 row">
                <label for="html5-text-input" class="col-md-2 col-form-label">상세주소</label>
                <div class="col-md-10">
-                  <input class="form-control" type="text" value="" id="address_detail" name="userAdres4" placeholder="상세주소를 입력해주세요" />
+                  <input class="form-control" type="text" value="" id="address_detail" name="userAdres4"
+                     placeholder="상세주소를 입력해주세요" />
                </div>
             </div>
             <div class="mb-3 row">
@@ -78,14 +79,6 @@
                   <input class="form-control" type="text" value="" id="userNum" name="userNum" placeholder="ex) 06기" />
                </div>
             </div>
-            <div class="mb-3 row">
-               <label for="html5-text-input" class="col-md-2 col-form-label">직책</label>
-               <div class="col-md-10">
-                  <input class="form-control" type="text" value="" id="userAuth" name="userAuth"
-                     placeholder="ex) 회장, 상임부회장, 이사..." />
-               </div>
-            </div>
-
             <div class="mb-3 row">
                <label for="html5-text-input" class="col-md-2 col-form-label">홈페이지</label>
                <div class="col-md-10">
@@ -111,33 +104,40 @@
                <div class="col-md-10">
                   <div class="col-md">
                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="userCrew" name="userCrew"
-                           value="option2" ondblclick="this.checked = false" />
+                        <input class="form-check-input" type="radio" id="userCrew1" name="userCrew" value="gf" />
                         <label class="form-check-label" for="inlineRadio2">골프회</label>
                      </div>
                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="userCrew" name="userCrew"
-                           value="option2" ondblclick="this.checked = false" />
+                        <input class="form-check-input" type="radio" id="userCrew2" name="userCrew" value="mt" />
                         <label class="form-check-label" for="inlineRadio2">산악회</label>
                      </div>
                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="userCrew" name="userCrew"
-                           value="option2" ondblclick="this.checked = false" />
+                        <input class="form-check-input" type="radio" id="userCrew3" name="userCrew" value="mtgf" />
                         <label class="form-check-label" for="inlineRadio2">골프회 및 산악회</label>
                      </div>
+                     <input type="button" value="선택취소" onclick="test()">
                   </div>
+               </div>
+            </div>
+            <div class="mb-3 row">
+               <label for="html5-text-input" class="col-md-2 col-form-label">총동창회 직책</label>
+               <div class="col-md-10">
+                  <input class="form-control" type="text" value="" id="userAuth" name="userAuth"
+                     placeholder="ex) 회장, 상임부회장, 이사..." />
                </div>
             </div>
             <div class="mb-3 row">
                <label for="html5-text-input" class="col-md-2 col-form-label">골프회 직책</label>
                <div class="col-md-10">
-                  <input class="form-control" type="text" value="" id="gfPosition" name="gfPosition" placeholder="ex) 회장, 사무국장..." />
+                  <input class="form-control" type="text" value="" id="gfPosition" name="gfPosition"
+                     placeholder="ex) 회장, 사무국장..." />
                </div>
             </div>
             <div class="mb-3 row">
                <label for="html5-text-input" class="col-md-2 col-form-label">산악회 직책</label>
                <div class="col-md-10">
-                  <input class="form-control" type="text" value="" id="mtPosition" name="mtPosition" placeholder="ex) 회장, 사무국장..." />
+                  <input class="form-control" type="text" value="" id="mtPosition" name="mtPosition"
+                     placeholder="ex) 회장, 사무국장..." />
                </div>
             </div>
             <div class="demo-inline-spacing">
@@ -150,34 +150,86 @@
 
    <script type="text/javascript">
       $("#update_btn").click(function () {
-      var userName = $("#userName").val();
-      var userPhone = $("#userPhone").val();
-      var userNum = $("#userNum").val();
+         var userName = $("#userName").val();
+         var userPhone = $("#userPhone").val();
+         var userNum = $("#userNum").val();
 
-      if (userName == '') {
-         alert("회원명을 입력해주세요.");
-         $("#userName").focus();
-         return false;
+         if (userName == '') {
+            alert("회원명을 입력해주세요.");
+            $("#userName").focus();
+            return false;
+         }
+
+         if (userPhone == '') {
+            alert("휴대번호를 입력해주세요.");
+            $("#userPhone").focus();
+            return false;
+         }
+
+         if (userNum == '') {
+            alert("기수를 입력해주세요.");
+            $("#userNum").focus();
+            return false;
+         }
+
+         if (confirm("등록하시겠습니까?") == true) {
+            $("#userEnrollForm").attr("action", "/admin/m_user/userInsert");
+            $("#userEnrollForm").attr("method", "post");
+            $("#userEnrollForm").submit();
+         } else {
+            return;
+         }
+      });
+
+      // //체크박스
+      // $("#userCrew").click(function () {
+      //    if ($("#userCrew").prop("checked"))
+      //       $("#userCrew").prop("checked", false);
+      //    else
+      //       $("#userCrew").prop("checked", true);
+      // });
+      // $(document).ready(function () {
+      // function deselect(chk) {
+      //    if (chk.checked) {
+      //       // chk.prop("checked", false);
+      //       chk.checked = '';
+      //       // alert("1111");
+      //    }
+      //    else {
+      //       chk.checked = true;
+      //       alert("222");
+      //    }
+      // }
+      // });
+      //체크 해제할 라디오버튼 불러오기
+      function test() {
+         var park = document.getElementsByName("userCrew");
+
+         for (var i = 0; park.length; i++) {
+
+            //체크되어 있다면 park[i].checked == true
+            //true -> false로 변환 ==> 체크해제
+            if (park[i].checked) {
+               park[i].checked = false;
+            }
+
+         }
       }
 
-      if (userPhone == '') {
-         alert("휴대번호를 입력해주세요.");
-         $("#userPhone").focus();
-         return false;
-      }
+      // $("input[name=userCrew]").click(function () {
+      //    var park = document.getElementsByName("userCrew");
+      //    console.log(park[0])
+      //    for (var i = 0; park.length; i++) {
+      //       //체크되어 있다면 park[i].checked == true
+      //       //true -> false로 변환 ==> 체크해제
+      //       if(park[i].checked == false) {
+      //          if (park[i].checked == true) {
+      //             park[i].setAttribute('checked', '');
+      //          }else{
+      //             park[i].setAttribute('checked', true);
+      //          }
+      //       }
 
-      if (userNum == '') {
-         alert("기수를 입력해주세요.");
-         $("#userNum").focus();
-         return false;
-      }
-
-      if (confirm("등록하시겠습니까?") == true) {
-         $("#userEnrollForm").attr("action", "/admin/m_user/userInsert");
-         $("#userEnrollForm").attr("method", "post");
-         $("#userEnrollForm").submit();
-      } else {
-         return;
-      }
-   });  
+      //    }
+      // })
    </script>
