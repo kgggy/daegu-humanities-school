@@ -22,34 +22,33 @@
                <div class="card-body">
                      <!-- 컨텐츠 -->
                      <form action="" id="boardwrite" method="post" enctype="multipart/form-data" autocomplete="off">
-                        <input type="hidden" id="uid" name="uid" value="<%= uid %>">
-                        <input type="hidden" id="boardId" name="boardId" value="<%= boardId %>">
                         <input type="hidden" id="writContent" name="writContent" value="">
-                        <div class="form-group row">
-                           <label class="col-md-2 col-form-label" for="text-input">제목</label>
-                           <div class="col-md-9">
+                        <div class="mb-3 row">
+                           <label class="col-md-1 col-form-label" for="text-input">제목</label>
+                           <div class="col-md-10">
                               <input class="form-control" id="writTitle" type="text" name="writTitle" value="">
                            </div>
                         </div>
-                        <div class="form-group row">
-                           <label class="col-md-2 col-form-label" for="text-input">내용</label>
-                           <div class="col-md-9">
+                        <div class="mb-3 row">
+                           <label class="col-md-1 col-form-label" for="text-input">내용</label>
+                           <div class="col-md-10">
                               <textarea name="editor" class="editor" id="editor"></textarea>
                            </div>
                         </div>
-                        <div class="form-group row">
-                           <label class="col-md-2 col-form-label">첨부파일</label>
-                           <div style="display: flex; flex-direction: column; gap: 25px; padding-left: 15px">
+                        <div class="mb-3 row">
+                           <label class="col-md-1 col-form-label">첨부파일</label>
+                           <div class="col-md-10" style="display: flex; flex-direction: column; gap: 25px; padding-left: 15px">
                               <input type="file" id="file" name="file">
                               <input type="file" id="file" name="file" />
                               <input type="file" id="file" name="file" />
                               <input type="file" id="file" name="file" />
                               <input type="file" id="file" name="file" />
                            </div>
+                           
                         </div>
-                        <div class="form-group row">
-                           <label class="col-md-2 col-form-label" for="text-input">상단고정여부</label>
-                           <div class="col-md-9">
+                        <div class="mb-3 row">
+                           <label class="col-md-1 col-form-label" for="text-input">상단고정여부</label>
+                           <div class="col-md-10">
                               <input type="checkbox" style='zoom:3.0;' name="noticeFix" value="1">
                            </div>
                         </div>
