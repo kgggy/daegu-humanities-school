@@ -173,7 +173,7 @@
          }
 
          if (confirm("등록하시겠습니까?") == true) {
-            $("#userEnrollForm").attr("action", "/admin/m_user/userInsert");
+            $("#userEnrollForm").attr("action", "/admin/userInsert");
             $("#userEnrollForm").attr("method", "post");
             $("#userEnrollForm").submit();
          } else {
@@ -181,26 +181,6 @@
          }
       });
 
-      // //체크박스
-      // $("#userCrew").click(function () {
-      //    if ($("#userCrew").prop("checked"))
-      //       $("#userCrew").prop("checked", false);
-      //    else
-      //       $("#userCrew").prop("checked", true);
-      // });
-      // $(document).ready(function () {
-      // function deselect(chk) {
-      //    if (chk.checked) {
-      //       // chk.prop("checked", false);
-      //       chk.checked = '';
-      //       // alert("1111");
-      //    }
-      //    else {
-      //       chk.checked = true;
-      //       alert("222");
-      //    }
-      // }
-      // });
       //체크 해제할 라디오버튼 불러오기
       function test() {
          var park = document.getElementsByName("userCrew");
@@ -215,21 +195,4 @@
 
          }
       }
-
-      // $("input[name=userCrew]").click(function () {
-      //    var park = document.getElementsByName("userCrew");
-      //    console.log(park[0])
-      //    for (var i = 0; park.length; i++) {
-      //       //체크되어 있다면 park[i].checked == true
-      //       //true -> false로 변환 ==> 체크해제
-      //       if(park[i].checked == false) {
-      //          if (park[i].checked == true) {
-      //             park[i].setAttribute('checked', '');
-      //          }else{
-      //             park[i].setAttribute('checked', true);
-      //          }
-      //       }
-
-      //    }
-      // })
    </script>

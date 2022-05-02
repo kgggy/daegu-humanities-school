@@ -38,14 +38,31 @@ var upload = multer({ //multer안에 storage정보
 router.get('/', async (req, res) => {
     try {
         var page = req.query.page;
+        const crewDiv = req.query.crewDiv;
+        var eventTarget1 = req.query.eventTarget1 == undefined ? "" : req.query.eventTarget1;
+        var eventTarget2 = req.query.eventTarget2 == undefined ? "" : req.query.eventTarget2;
         var searchType1 = req.query.searchType1 == undefined ? "" : req.query.searchType1;
-        var sql = "select *, date_format(eventDate, '%Y-%m-%d %H:%i') as eventDateFmt\
-                    from event where 1=1";
+        var sql = "select *, date_format(eventDate, '%Y-%m-%d %H:%i') as eventDateFmt,\
+                             date_format(voteStartDate, '%Y-%m-%d %H:%i') as voteStartDateFmt,\
+                             date_format(voteEndDate, '%Y-%m-%d %H:%i') as voteEndDateFmt,\
+                             (case when eventStatus = '0' then '진행중' when eventStatus = '1' then '마감' end) as eventStatusFmt\
+                    from event where crewDiv = ?";
+                    // console.log(eventTarget1);
+                    // console.log(eventTarget2);
+                    // console.log(searchType1);
+        if (eventTarget1 != '') {
+            sql += " and eventTarget1 = '" + eventTarget1 + "'";
+        }
+        if (eventTarget2 != '') {
+            sql += " and eventTarget2 = '" + eventTarget2 + "'";
+        }
         if (searchType1 != '') {
             sql += " and eventStatus = '" + searchType1 + "'";
         }
         sql += " order by eventId desc";
-        connection.query(sql, (err, results) => {
+        connection.query(sql, crewDiv, (err, results) => {
+            console.log(results)
+            console.log(sql)
             var countPage = 10; //하단에 표시될 페이지 개수
             var page_num = 10; //한 페이지에 보여줄 개수
             var last = Math.ceil((results.length) / page_num); //마지막 장
@@ -57,9 +74,12 @@ router.get('/', async (req, res) => {
             if (err) {
                 console.log(err);
             }
-            let route = req.app.get('views') + '/m_event/event';
+            console.log(results)
+            let route = req.app.get('views') + '/event/event';
             res.render(route, {
-                // searchText: searchText,
+                crewDiv: crewDiv,
+                eventTarget1: eventTarget1,
+                eventTarget2: eventTarget2,
                 searchType1: searchType1,
                 results: results,
                 page: page, //현재 페이지
@@ -150,7 +170,7 @@ router.post('/eventWrite', upload.single('file'), async (req, res, next) => {
                             }
                         });
                     });
-                    
+
             }
             param1 = [req.body.eventTitle, req.body.eventContent, req.body.eventDate, req.body.eventPlace, req.body.eventPlaceDetail, req.body.startDate, req.body.startDate, req.body.endDate, req.body.endDate, path];
         } else {
@@ -165,7 +185,9 @@ router.post('/eventWrite', upload.single('file'), async (req, res, next) => {
             //OneSignal 푸쉬 알림
             var message = {
                 app_id: ONE_SIGNAL_CONFIG.APP_ID,
-                contents: { "en": req.body.eventTitle },
+                contents: {
+                    "en": req.body.eventTitle
+                },
                 included_segments: ["All"],
                 content_avaliable: true,
                 small_icon: "ic_notification_icon",

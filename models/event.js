@@ -46,7 +46,7 @@ module.exports = function(sequelize, DataTypes) {
     crewDiv: {
       type: DataTypes.STRING(5),
       allowNull: false,
-      comment: "골프 : gf\/산악회 : mt\/총동창회 : all"
+      comment: "골프 : gf\/산악회 : mt\/총동창회 : all\/골프 및 산악회 모두 참여 : mtgf"
     },
     eventTarget1: {
       type: DataTypes.STRING(10),

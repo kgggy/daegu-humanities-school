@@ -200,7 +200,7 @@
          if (confirm("수정하시겠습니까?")) {
             var userCrew = $("input[name=userCrew1]:checked").val();
             $("input[name=userCrew]").attr('value', userCrew);
-            $("#userForm").attr("action", "userUpdate");
+            $("#userForm").attr("action", "/admin/userUpdate");
             $("#userForm").attr("method", "post");
             $("#userForm").submit();
             alert("수정이 완료되었습니다.");

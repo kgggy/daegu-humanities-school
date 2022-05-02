@@ -33,7 +33,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       comment: "수정일자"
     },
-    boardcontent: {
+    boardContent: {
       type: DataTypes.STRING(3000),
       allowNull: true,
       comment: "내용"
@@ -54,7 +54,7 @@ module.exports = function(sequelize, DataTypes) {
     crewDiv: {
       type: DataTypes.STRING(5),
       allowNull: false,
-      comment: "총동창회 : all,\\n골프회 : gf,\\n산악회: mt"
+      comment: "총동창회 : all,\\\\n골프회 : gf,\\\\n산악회: mt\n골프 및 산악회 모두 참여 : mtgf"
     }
   }, {
     sequelize,
