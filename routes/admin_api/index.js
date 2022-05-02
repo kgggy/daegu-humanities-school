@@ -2,7 +2,14 @@ const express = require('express');
 const router = express.Router();
 
 const m_login = require('./m_login.js');
-const m_user = require('./m_user.js');
+
+const userSelect = require('./user/userSelect.js');
+const userSelectOne = require('./user/userSelectOne.js');
+const userInsert = require('./user/userInsert.js');
+const userUpdate = require('./user/userUpdate.js');
+const userDelete = require('./user/userDelete.js');
+const userExcel = require('./user/userExcel.js');
+
 const m_support = require('./m_support.js');
 const m_comment = require('./m_comment.js');
 const m_board = require('./m_board.js');
@@ -30,7 +37,14 @@ const m_blame = require('./m_blame.js');
 //     }
 // });
 router.use('/', m_login);
-router.use('/m_user', m_user);
+
+router.use('/userSelect', userSelect);
+router.use('/userSelectOne', userSelectOne);
+router.use('/userInsert', userInsert);
+router.use('/userUpdate', userUpdate);
+router.use('/userDelete', userDelete);
+router.use('/userExcel', userExcel);
+
 router.use('/m_support', m_support);
 router.use('/m_comment', m_comment);
 router.use('/m_board', m_board);

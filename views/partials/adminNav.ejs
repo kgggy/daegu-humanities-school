@@ -78,7 +78,7 @@
 	
 	  <!-- 회원관리 -->
 	 <li class="menu-header small text-uppercase">
-		<span class="menu-header-text">Users</span>
+		<span class="menu-header-text">회원</span>
 	 </li>
 	 <li class="menu-item">
 		<a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -88,35 +88,35 @@
 
 		<ul class="menu-sub">
 		  <li class="menu-item">
-			<a href="/admin/m_user?page=1" class="menu-link">
+			<a href="/admin/userSelect?page=1" class="menu-link">
 			  <div data-i18n="Container">일반회원 관리</div>
 			</a>
 		  </li>
 		</ul>
 	  </li>
 
-	  <!-- 게시판 관리 -->
+	  <!-- 총동창회 -->
 	  <li class="menu-header small text-uppercase">
-		<span class="menu-header-text">Boards</span>
+		<span class="menu-header-text">총동창회</span>
 	  </li>
 	  <li class="menu-item">
 		<a href="javascript:void(0);" class="menu-link menu-toggle">
 		  <i class="menu-icon tf-icons bx bx-layout"></i>
-		  <div data-i18n="Layouts">총동창회</div>
+		  <div data-i18n="Layouts">게시판 관리</div>
 		</a>
 		<ul class="menu-sub">
 		  <li class="menu-item">
-			<a href="/admin/m_board?page=1&boardDivId=1" class="menu-link">
+			<a href="/admin/m_board?page=1&boardDivId=1&crewDiv=all" class="menu-link">
 			  <div data-i18n="Without menu">공지사항</div>
 			</a>
 		  </li>
 		  <li class="menu-item">
-			<a href="/admin/m_board?page=1&boardDivId=2" class="menu-link">
+			<a href="/admin/m_board?page=1&boardDivId=2&crewDiv=all" class="menu-link">
 			  <div data-i18n="Without navbar">갤러리</div>
 			</a>
 		  </li>
 		  <li class="menu-item">
-			<a href="/admin/m_board?page=1&boardDivId=3" class="menu-link">
+			<a href="/admin/m_board?page=1&boardDivId=3&crewDiv=all" class="menu-link">
 			  <div data-i18n="Container">경조사</div>
 			</a>
 		  </li>
@@ -124,54 +124,12 @@
 	  </li>
 	  <li class="menu-item">
 		<a href="javascript:void(0);" class="menu-link menu-toggle">
-		  <i class="menu-icon tf-icons bx bx-layout"></i>
-		  <div data-i18n="Layouts">골프회</div>
-		</a>
-		<ul class="menu-sub">
-		  <li class="menu-item">
-			<a href="/admin/m_board?page=1&boardDivId=1" class="menu-link">
-			  <div data-i18n="Without menu">공지사항</div>
-			</a>
-		  </li>
-		  <li class="menu-item">
-			<a href="/admin/m_board?page=1&boardDivId=2" class="menu-link">
-			  <div data-i18n="Without navbar">갤러리</div>
-			</a>
-		  </li>
-		</ul>
-	  </li>
-	  <li class="menu-item">
-		<a href="javascript:void(0);" class="menu-link menu-toggle">
-		  <i class="menu-icon tf-icons bx bx-layout"></i>
-		  <div data-i18n="Layouts">산악회</div>
-		</a>
-		<ul class="menu-sub">
-		  <li class="menu-item">
-			<a href="/admin/m_board?page=1&boardDivId=1" class="menu-link">
-			  <div data-i18n="Without menu">공지사항</div>
-			</a>
-		  </li>
-		  <li class="menu-item">
-			<a href="/admin/m_board?page=1&boardDivId=2" class="menu-link">
-			  <div data-i18n="Without navbar">갤러리</div>
-			</a>
-		  </li>
-		</ul>
-	  </li>
-
-	  <!-- 행사관리 -->
-	  <li class="menu-header small text-uppercase">
-		<span class="menu-header-text">Events</span>
-	  </li>
-	  <li class="menu-item">
-		<a href="javascript:void(0);" class="menu-link menu-toggle">
 		  <i class="menu-icon tf-icons bx bx-calendar-event"></i>
 		  <div data-i18n="Layouts">행사 관리</div>
 		</a>
-
 		<ul class="menu-sub">
 		  <li class="menu-item">
-			<a href="layouts-without-menu.html" class="menu-link">
+			<a href="/admin/m_event?page=1&crewDiv=all" class="menu-link">
 			  <div data-i18n="Without menu">행사 관리</div>
 			</a>
 		  </li>
@@ -182,17 +140,11 @@
 		  </li>
 		</ul>
 	  </li>
-
-	  	  <!-- 후원 -->
-	  <li class="menu-header small text-uppercase">
-		<span class="menu-header-text">Donates</span>
-	  </li>
 	  <li class="menu-item">
 		<a href="javascript:void(0);" class="menu-link menu-toggle">
 		  <i class="menu-icon tf-icons bx bx-donate-heart"></i>
 		  <div data-i18n="Layouts">후원 관리</div>
 		</a>
-
 		<ul class="menu-sub">
 		  <li class="menu-item">
 			<a href="layouts-without-menu.html" class="menu-link">
@@ -202,6 +154,122 @@
 		</ul>
 	  </li>
 
+	  <!-- 골프회 -->
+	  <li class="menu-header small text-uppercase">
+		<span class="menu-header-text">골프회</span>
+	  </li>
+	  <li class="menu-item">
+		<a href="javascript:void(0);" class="menu-link menu-toggle">
+		  <i class="menu-icon tf-icons bx bx-layout"></i>
+		  <div data-i18n="Layouts">게시판 관리</div>
+		</a>
+		<ul class="menu-sub">
+		  <li class="menu-item">
+			<a href="/admin/m_board?page=1&boardDivId=1&crewDiv=gf" class="menu-link">
+			  <div data-i18n="Without menu">공지사항</div>
+			</a>
+		  </li>
+		  <li class="menu-item">
+			<a href="/admin/m_board?page=1&boardDivId=2&crewDiv=gf" class="menu-link">
+			  <div data-i18n="Without navbar">갤러리</div>
+			</a>
+		  </li>
+		  <li class="menu-item">
+			<a href="/admin/m_board?page=1&boardDivId=3&crewDiv=gf" class="menu-link">
+			  <div data-i18n="Container">경조사</div>
+			</a>
+		  </li>
+		</ul>
+	  </li>
+	  <li class="menu-item">
+		<a href="javascript:void(0);" class="menu-link menu-toggle">
+		  <i class="menu-icon tf-icons bx bx-calendar-event"></i>
+		  <div data-i18n="Layouts">행사 관리</div>
+		</a>
+		<ul class="menu-sub">
+		  <li class="menu-item">
+			<a href="/admin/m_event?page=1&crewDiv=gf" class="menu-link">
+			  <div data-i18n="Without menu">행사 관리</div>
+			</a>
+		  </li>
+		  <li class="menu-item">
+			<a href="layouts-without-navbar.html" class="menu-link">
+			  <div data-i18n="Without navbar">투표현황</div>
+			</a>
+		  </li>
+		</ul>
+	  </li>
+	  <li class="menu-item">
+		<a href="javascript:void(0);" class="menu-link menu-toggle">
+		  <i class="menu-icon tf-icons bx bx-donate-heart"></i>
+		  <div data-i18n="Layouts">후원 관리</div>
+		</a>
+		<ul class="menu-sub">
+		  <li class="menu-item">
+			<a href="layouts-without-menu.html" class="menu-link">
+			  <div data-i18n="Without menu">후원목록</div>
+			</a>
+		  </li>
+		</ul>
+	  </li>
 
+	  <!-- 산악회 -->
+	  <li class="menu-header small text-uppercase">
+		<span class="menu-header-text">산악회</span>
+	  </li>
+	  <li class="menu-item">
+		<a href="javascript:void(0);" class="menu-link menu-toggle">
+		  <i class="menu-icon tf-icons bx bx-layout"></i>
+		  <div data-i18n="Layouts">게시판 관리</div>
+		</a>
+		<ul class="menu-sub">
+		  <li class="menu-item">
+			<a href="/admin/m_board?page=1&boardDivId=1&crewDiv=mt" class="menu-link">
+			  <div data-i18n="Without menu">공지사항</div>
+			</a>
+		  </li>
+		  <li class="menu-item">
+			<a href="/admin/m_board?page=1&boardDivId=2&crewDiv=mt" class="menu-link">
+			  <div data-i18n="Without navbar">갤러리</div>
+			</a>
+		  </li>
+		  <li class="menu-item">
+			<a href="/admin/m_board?page=1&boardDivId=3&crewDiv=mt" class="menu-link">
+			  <div data-i18n="Container">경조사</div>
+			</a>
+		  </li>
+		</ul>
+	  </li>
+	  <li class="menu-item">
+		<a href="javascript:void(0);" class="menu-link menu-toggle">
+		  <i class="menu-icon tf-icons bx bx-calendar-event"></i>
+		  <div data-i18n="Layouts">행사 관리</div>
+		</a>
+		<ul class="menu-sub">
+		  <li class="menu-item">
+			<a href="/admin/m_event?page=1&crewDiv=mt" class="menu-link">
+			  <div data-i18n="Without menu">행사 관리</div>
+			</a>
+		  </li>
+		  <li class="menu-item">
+			<a href="layouts-without-navbar.html" class="menu-link">
+			  <div data-i18n="Without navbar">투표현황</div>
+			</a>
+		  </li>
+		</ul>
+	  </li>
+	  <li class="menu-item">
+		<a href="javascript:void(0);" class="menu-link menu-toggle">
+		  <i class="menu-icon tf-icons bx bx-donate-heart"></i>
+		  <div data-i18n="Layouts">후원 관리</div>
+		</a>
+		<ul class="menu-sub">
+		  <li class="menu-item">
+			<a href="layouts-without-menu.html" class="menu-link">
+			  <div data-i18n="Without menu">후원목록</div>
+			</a>
+		  </li>
+		</ul>
+	  </li>
 	</ul>
   </aside>

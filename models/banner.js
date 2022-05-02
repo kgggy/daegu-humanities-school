@@ -12,12 +12,22 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(5),
       allowNull: true,
       defaultValue: "all",
-      comment: "전체배너: all 산악회 : mt 골프회 : gt"
+      comment: "전체배너: all 산악회 : mt 골프회 : gt 골프 및 산악회 모두 참여 : mtgf"
     },
     bannerUrl: {
       type: DataTypes.STRING(200),
       allowNull: true,
       comment: "이동경로"
+    },
+    bannerTitle: {
+      type: DataTypes.STRING(30),
+      allowNull: true,
+      comment: "후원업체명"
+    },
+    bannerDetail: {
+      type: DataTypes.STRING(500),
+      allowNull: true,
+      comment: "후원업체설명"
     }
   }, {
     sequelize,

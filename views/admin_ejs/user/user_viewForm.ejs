@@ -67,6 +67,8 @@
                   <input class="form-control" readonly type="text"
                      value="<%=result[0].userAdres1%> <%=result[0].userAdres2%> <%=result[0].userAdres3%> <%=result[0].userAdres4%>"
                      id="" />
+                  <input type="hidden" id="userAdres" name="userAdres" value="<%=result[0].userAdres1%> <%=result[0].userAdres2%> <%=result[0].userAdres3%>">
+                  <input type="hidden" id="userAdres4" name="userAdres4" value="<%=result[0].userAdres4%>">
                </div>
             </div>
             <div class="mb-3 row">
@@ -151,7 +153,7 @@
                      <button type="button" class="btn btn-outline-info" id="update_btn">수정</button>
                      <button type="button" class="btn btn-outline-danger" id="delete_btn">삭제</button>
                      <button type="button" class="btn btn-outline-primary"
-                        onclick="location.href='/admin/m_user?page=<%=page%><%=keepSearch%>'">목록</button>
+                        onclick="location.href='/admin/userSelect?page=<%=page%><%=keepSearch%>'">목록</button>
                   </div>
          </form>
       </div>
@@ -164,13 +166,13 @@
          $("#update_btn").on("click", function () {
             var userCrew = $("input[name=userCrew1]:checked").val();
             $("input[name=userCrew]").attr('value', userCrew);
-            formObj.attr("action", "userUdtForm");
+            formObj.attr("action", "/admin/userUpdate/udtForm");
             formObj.attr("method", "post");
             formObj.submit();
          });
          // 삭제
          $("#delete_btn").on("click", function () {
-            formObj.attr("action", "oneUserDelete");
+            formObj.attr("action", "/admin/userDelete/one");
             formObj.attr("method", "get");
             if (confirm("회원을 삭제하시겠습니까?") == true) {
                formObj.submit();
