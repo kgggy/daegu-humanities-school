@@ -14,26 +14,12 @@
       height: 400px;
    }
 </style>
-<main class="main">
-   <!-- Breadcrumb-->
-   <ol class="breadcrumb">
-      <li class="breadcrumb-item">Home</li>
-      <li class="breadcrumb-item">
-         <a style="font-weight: bold;">게시판관리</a>
-      </li>
-      <li class="breadcrumb-item active">게시글 등록</li>
-      <!-- Breadcrumb Menu-->
-   </ol>
 
-   <div class="container-fluid">
-      <div class="animated fadeIn">
-         <div class="row">
-            <div class="col-lg-6">
-               <div class="card">
-                  <div class="card-header">
-                     <i class="fa fa-align-justify"></i> 게시글 등록
-                  </div>
-                  <div class="card-body">
+         <div class="col-xs-6">
+            <!-- HTML5 Inputs -->
+            <div class="card mb-4">
+               <h5 class="card-header"><%=boardName%> 등록</h5>
+               <div class="card-body">
                      <!-- 컨텐츠 -->
                      <form action="" id="boardwrite" method="post" enctype="multipart/form-data" autocomplete="off">
                         <input type="hidden" id="uid" name="uid" value="<%= uid %>">
@@ -43,12 +29,6 @@
                            <label class="col-md-2 col-form-label" for="text-input">제목</label>
                            <div class="col-md-9">
                               <input class="form-control" id="writTitle" type="text" name="writTitle" value="">
-                           </div>
-                        </div>
-                        <div class="form-group row">
-                           <label class="col-md-2 col-form-label" for="text-input">우선순위</label>
-                           <div class="col-md-9">
-                              <input class="form-control" id="writRank" type="text" name="writRank" value="">
                            </div>
                         </div>
                         <div class="form-group row">
@@ -67,7 +47,13 @@
                               <input type="file" id="file" name="file" />
                            </div>
                         </div>
-                  </div>
+                        <div class="form-group row">
+                           <label class="col-md-2 col-form-label" for="text-input">상단고정여부</label>
+                           <div class="col-md-9">
+                              <input type="checkbox" style='zoom:3.0;' name="noticeFix" value="1">
+                           </div>
+                        </div>
+                     </div>
                   <!--option 버튼  -->
                   <div class="option_button" style="padding-left: 1.25rem; margin-bottom: 15px;">
                      <div>
@@ -82,10 +68,6 @@
                </div>
             </div>
          </div>
-      </div>
-   </div>
-   </div>
-</main>
 
 <script type="text/javascript">
    $(document).ready(function () {

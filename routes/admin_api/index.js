@@ -9,7 +9,6 @@ const m_board = require('./m_board.js');
 const m_event = require('./m_event.js');
 const m_vote = require('./m_vote.js');
 const m_blame = require('./m_blame.js');
-
 // router.use('/', (req,res,next) => {
 //     if(req.url == '/' || req.url == '/login') {
 //         // console.log("세션 검사 하지않고 로그인페이지로")
