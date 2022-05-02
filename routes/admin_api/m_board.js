@@ -54,6 +54,7 @@ router.get('/', async (req, res) => {
     try {
         //카테고리 명 조회
         const param = req.query.boardDivId;
+        const crewDiv = req.query.crewDiv;
         const sql1 = "select * from boardDiv where boardDivId = ?";
         let community = "";
         connection.query(sql1, param, (err, results) => {
@@ -61,7 +62,6 @@ router.get('/', async (req, res) => {
                 console.log(err);
             }
             community = results;
-            console.log(community);
         });
         
         var page = req.query.page;
@@ -70,12 +70,12 @@ router.get('/', async (req, res) => {
                     from board b\
                     left join boardDiv c on c.boardDivId = b.boardDivId\
                     left join user u  on u.uid = b.uid\
-                    where b.boardDivId = ?";
+                    where b.boardDivId = ? and b.crewDiv = ?";
         if (searchText != '') {
-            sql += " and (u.userName like '%" + searchText + "%' or b.boardTitle like '%" + searchText + "%' or b.boardContent like '%" + searchText + "%')";
+            sql += " and (b.boardTitle like '%" + searchText + "%' or b.boardContent like '%" + searchText + "%')";
         }
         sql += " order by b.boardFix, b.boardDate desc";
-        connection.query(sql, param, (err, results) => {
+        connection.query(sql, [param, crewDiv], (err, results) => {
             var countPage = 10; //하단에 표시될 페이지 개수
             var page_num = 10; //한 페이지에 보여줄 개수
             var last = Math.ceil((results.length) / page_num); //마지막 장
@@ -89,6 +89,7 @@ router.get('/', async (req, res) => {
             };
             let route = req.app.get('views') + '/board/board';
             res.render(route, {
+                crewDiv: crewDiv,
                 community: community,
                 searchText: searchText,
                 results: results,
@@ -111,20 +112,23 @@ router.get('/', async (req, res) => {
 router.get('/boardSearch', async (req, res) => {
     var page = req.query.page;
     const param = req.query.boardDivId;
+    const crewDiv = req.query.crewDiv;
     var searchText = req.query.searchText == undefined ? "" : req.query.searchText;
+    console.log(searchText)
     var sql = "select b.*, c.*, u.userName, u.uid, date_format(boardDate, '%Y-%m-%d') as boardDatefmt, date_format(boardUpdDate, '%Y-%m-%d') as boardUpdDatefmt\
                     from board b\
                     left join boardDiv c on c.boardDivId = b.boardDivId\
                     left join user u  on u.uid = b.uid\
-                    where b.boardDivId = ?";
+                    where b.boardDivId = ? and b.crewDiv = ?";
     if (searchText != '') {
-        sql += " and (u.userName like '%" + searchText + "%' or b.boardTitle like '%" + searchText + "%' or b.boardContent like '%" + searchText + "%')";
+        sql += " and (b.boardTitle like '%" + searchText + "%' or b.boardContent like '%" + searchText + "%')";
     }
     sql += " order by 1 desc";
-    connection.query(sql, param, (err, results) => {
+    connection.query(sql, [param,crewDiv], (err, results) => {
         if (err) {
             console.log(err)
         }
+        console.log(results);
         var countPage = 10; //하단에 표시될 페이지 개수
         var page_num = 10; //한 페이지에 보여줄 개수
         var last = Math.ceil((results.length) / page_num); //마지막 장
@@ -144,22 +148,26 @@ router.get('/boardSearch', async (req, res) => {
             endPage: endPage,
             pass: true,
             last: last, 
-            searchText: searchText
+            searchText: searchText,
+            crewDiv: crewDiv
         });
         // console.log("page = " + page)
     });
 });
 
-//공지사항 글 상세조회
-router.get('/noticeSelectOne', async (req, res) => {
+//게시글 상세조회
+router.get('/selectOne', async (req, res) => {
     try {
         var searchText = req.query.searchText == undefined ? "" : req.query.searchText;
+        var boardName = req.query.boardName;
         const page = req.query.page;
-        const param = req.query.noticeId;
-        const sql = "select *,date_format(noticeWritDate, '%Y-%m-%d') as noticeWritDateFmt,\
-                            (select count(*) from hitCount where hitCount.boardId = notice.noticeId) as hitCount\
-                        from notice\
-                       where noticeId = ?";
+        const param = req.query.boardId;
+        const boardDivId = req.query.boardDivId;
+        const crewDiv = req.query.crewDiv;
+        const sql = "select b.*,date_format(boardDate, '%Y-%m-%d') as boardDateFmt,\
+                            (select count(*) from hitCount where hitCount.boardId = b.boardId) as hitCount,\
+                            f.fileRoute from board b left join file f on b.boardId = f.boardId\
+                            where b.boardId = ?";
 
         connection.query(sql, param, (err, result) => {
             if (err) {
@@ -167,11 +175,14 @@ router.get('/noticeSelectOne', async (req, res) => {
                     msg: "select query error"
                 });
             }
-            let route = req.app.get('views') + '/m_notice/notice_viewForm';
+            let route = req.app.get('views') + '/board/brd_viewForm';
             res.render(route, {
-                'result': result,
+                result: result,
                 page: page,
-                searchText: searchText
+                searchText: searchText,
+                boardName: boardName,
+                crewDiv: crewDiv,
+                boardDivId: boardDivId
             });
         });
     } catch (error) {
@@ -180,29 +191,30 @@ router.get('/noticeSelectOne', async (req, res) => {
 });
 
 //게시글 등록 폼 이동
-router.get('/galleryWritForm', async (req, res) => {
-    let route = req.app.get('views') + '/m_notice/notice_writForm.ejs';
-    var searchText = req.query.searchText == undefined ? "" : req.query.searchText;
+router.get('/boardWritForm', async (req, res) => {
+    let route = req.app.get('views') + '/board/brd_writForm.ejs';
+    var crewDiv = req.query.crewDiv;
+    var boardDivId = req.query.boardDivId;
     res.render(route, {
-        uid: req.query.uid,
-        noticeId: req.query.noticeId,
-        searchText: searchText
+        boardDivId: boardDivId,
+        crewDiv: crewDiv
     });
 });
 
 //공지사항 작성
-router.post('/noticewrite', async (req, res, next) => {
+router.post('/boardWrite', async (req, res, next) => {
     try {
-        const param = [req.body.noticeTitle, req.body.noticeContent];
-        const noticeFix = req.body.noticeFix;
-        console.log(noticeFix);
-        const sql = "call insertNotice(?,?)";
+        const param = [req.body.boardTitle, req.body.boardContent];
+        const boardFix = req.body.boardFix;
+        const crewDiv = req.body.crewDiv;
+        const boardDivId = req.body.boardDivId;
+        const sql = "call insertboard(?,?)";
         connection.query(sql, param, (err) => {
             if (err) {
                 throw err;
             }
-            if(noticeFix == 1){
-                const sql1 = "call noticeFixCheck()";
+            if(boardFix == 1){
+                const sql1 = "call boardFixCheck()";
                 connection.query(sql1, param, (err) => {
                     if (err) {
                         throw err;
@@ -210,7 +222,7 @@ router.post('/noticewrite', async (req, res, next) => {
                 });
             }
         });
-        res.send('<script>alert("공지사항이 등록되었습니다."); location.href="/admin/m_notice/notice?page=1";</script>');
+        res.send('<script>alert("공지사항이 등록되었습니다."); location.href="/admin/m_board?boardDivId='+boardDivId+'&page=1&crewDiv='+crewDiv+'";</script>');
     } catch (error) {
         res.send(error.message);
     }

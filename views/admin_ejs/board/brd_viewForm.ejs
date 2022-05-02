@@ -1,54 +1,35 @@
-    <main class="main">
-       <!-- Breadcrumb-->
-       <ol class="breadcrumb">
-          <li class="breadcrumb-item">Home</li>
-          <li class="breadcrumb-item">
-             <a style="font-weight: bold;">게시판관리</a>
-          </li>
-          <li class="breadcrumb-item active">게시글 상세</li>
-          <!-- Breadcrumb Menu-->
-       </ol>
 
-       <div class="container-fluid">
-          <div class="animated fadeIn">
-             <div class="row">
-                <div class="col-lg-6">
-                   <div class="card">
+         <div class="col-xs-6">
+            <!-- HTML5 Inputs -->
+            <div class="card mb-4">
+               <h5 class="card-header"><%=boardName%> 상세정보</h5>
+               <div class="card-body">
                       <form name="udtForm" role="form">
                          <input type="hidden" id="page" name="page" value="<%=page%>">
                          <input type="hidden" id="searchText" name="searchText" value="<%=searchText%>">
-                         <input type="hidden" id="writId" name="writId" value="<%=result[0].writId%>">
+                         <input type="hidden" id="boardDivId" name="boardDivId" value="<%=result[0].boardDivId%>">
                          <input type="hidden" id="boardId" name="boardId" value="<%=result[0].boardId%>">
-                         <div class="card-header">
-                            <i class="fa fa-align-justify"></i> 게시글 상세</div>
-                         <div class="card-body">
+
                             <!-- 컨텐츠 -->
                             <div class="form-group row">
                                <label class="col-md-2 col-form-label" for="text-input">글번호</label>
                                <div class="col-md-9">
                                   <input class="form-control" id="ucmtitle" type="text" name="ucmtitle"
-                                     disabled="disabled" value="<%=result[0].writId%>">
+                                     disabled="disabled" value="<%=result[0].boardId%>">
                                </div>
                             </div>
                             <div class="form-group row">
                                <label class="col-md-2 col-form-label" for="text-input">제목</label>
                                <div class="col-md-9">
-                                  <input class="form-control" id="ucmtitle" type="text" name="ucmtitle"
-                                     disabled="disabled" value="<%=result[0].writTitle%>">
-                               </div>
-                            </div>
-                            <div class="form-group row">
-                               <label class="col-md-2 col-form-label" for="text-input">작성자</label>
-                               <div class="col-md-9">
-                                  <input class="form-control" id="ucmtitle" type="text" name="ucmtitle"
-                                     disabled="disabled" value="<%=result[0].userNick%><%=result[0].comNick%>">
+                                  <input class="form-control" id="boardTitle" type="text" name="boardTitle"
+                                     disabled="disabled" value="<%=result[0].boardTitle%>">
                                </div>
                             </div>
                             <div class="form-group row">
                                <label class="col-md-2 col-form-label" for="text-input">우선순위</label>
                                <div class="col-md-9">
                                   <input class="form-control" id="ucmtitle" type="text" name="ucmtitle"
-                                     disabled="disabled" value="<%=result[0].writRank%>">
+                                     disabled="disabled" value="<%=result[0].boardRank%>">
                                </div>
                             </div>
                             <div class="form-group row">
@@ -56,20 +37,20 @@
                                <div class="col-md-9">
                                   <input class="form-control" id="ucmtitle" type="text" name="ucmtitle"
                                      disabled="disabled"
-                                     value="<%=result[0].writDatefmt%>/<%=result[0].writUpdDatefmt%>">
+                                     value="<%=result[0].boardDatefmt%>">
                                </div>
                             </div>
                             <div class="form-group row">
                                <label class="col-md-2 col-form-label" for="text-input">조회수</label>
                                <div class="col-md-9">
                                   <input class="form-control" id="ucmtitle" type="text" name="ucmtitle"
-                                     disabled="disabled" value="<%=result[0].writHit%>">
+                                     disabled="disabled" value="<%=result[0].hitCount%>">
                                </div>
                             </div>
                             <div class="form-group row">
                                <label class="col-md-2 col-form-label" for="text-input">내용</label>
                                <div class="col-md-9">
-                                  <%-result[0].writContent%>
+                                  <%-result[0].boardContent%>
                                </div>
                             </div>
                             <div class="form-group row">
@@ -106,18 +87,14 @@
                                </div>
                                <div>
                                   <button class="btn btn-block btn-outline-success" type="button"
-                                     onclick="location.href='/admin/m_board/all?boardId=<%=result[0].boardId%>&page=<%=page%>&searchText=<%=searchText%>'">목록</button>
+                                     onclick="location.href='/admin/m_board?boardDivId=<%=result[0].boardDivId%>boardId=<%=result[0].boardId%>&page=<%=page%>&searchText=<%=searchText%>'">목록</button>
                                </div>
                             </div>
                          </div>
                       </form>
-                   </div>
-                </div>
-             </div>
-          </div>
-       </div>
-    </main>
-
+                  </div>
+               </div>
+            </div>
     <script type="text/javascript">
        var formObj = $("form[name='udtForm']");
        $(document).ready(function () {

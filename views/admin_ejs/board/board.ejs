@@ -1,14 +1,18 @@
-<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">게시판 관리 /</span> <%=community[0].boardName%> 관리</h4>
+<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"><%if(crewDiv=="all"){%>총동창회<%}else if (crewDiv == "gf"){%>골프회<%}
+    else if (crewDiv == "mt"){%>산악회<%}%> /</span> <%=community[0].boardName%> 관리</h4>
+<div style="background-color: #ededfa; padding: 30;">
+    <form name="searchForm" action="" method="get" class="easydropdown">
+        <input type="hidden" id="page" name="page" value="<%=page%>">
+        <input type="hidden" name="boardDivId" id="boardDivId" value="<%=results[0].boardDivId%>">
+        <input type="hidden" name="boardName" id="boardName" value="<%=community[0].boardName%>">
+        <input type="hidden" name="crewDiv" id="crewDiv" value="<%=crewDiv%>">
+        <input class="searchbox" type="text" name="searchText" id="searchText"
+            <%if(searchText!=null){%>value="<%=searchText%>" <%}%> placeholder="작성자, 제목, 내용">
+    </form>
 <!-- Basic Bootstrap Table -->
 <div class="card">
-    <h5 class="card-header"><%=community[0].boardName%> 관리</h5>
+
     <div class="table-responsive text-nowrap">
-        <form name="searchForm" action="" method="get" class="easydropdown">
-            <input type="hidden" id="page" name="page" value="<%=page%>">
-            <input type="hidden" name="boardDivId" value="<%=results[0].boardDivId%>">
-            <input class="searchbox" type="text" name="searchText" id="searchText"
-                            <%if(searchText!=null){%>value="<%=searchText%>" <%}%> placeholder="작성자, 제목, 내용">
-        </form>
             <table class="table table-hove">
             <thead>
                 <tr>
@@ -19,74 +23,68 @@
                 </tr>
             </thead>
             <tbody class="table-border-bottom-0" id="tbody">
-                <% if(results.length > 0) { %>
-                    <% for(var i = (page * page_num) - page_num; i < (page * page_num); i++) { 
+                <% if(results.length > 0) { %> <% for(var i = (page * page_num) - page_num; i < (page * page_num); i++) { 
                     if(i > length){
                         i++;
-                    } else { %>
-                    <tr class="pointer"
-                        onclick="location.href='/admin/m_board/selectOne?boardId=<%=results[i].boardId%>&page=<%=page%>&searchText<%=searchText%>'">
-                        <td onclick='event.cancelBubble=true;'><input type="checkbox" id="chk"
-                                name="chk" value="<%=results[i].boardId %>" />
-                        </td>
-                        <td>
-                            <%=results.length - i%>
-                        </td>
-                        <td>
-                            <%=results[i].boardTitle%>
-                        </td>
-                        <td>
-                            <%= results[i].boardDatefmt %>
-                        </td>
-                    </tr>
-                    <% } %>
-                    <% } %>
-                    <% } else { %>
-                    <tr>
-                        <td colspan="7">등록된 게시물이 없습니다.</td>
-                    </tr>
-                    <% } %>
-     
-                        </div>
-                    </td>
-            </tbody>
-        </table>
+                    } else { %> <tr class="pointer"
+                onclick="location.href='/admin/m_board/selectOne?boardDivId=<%=results[i].boardDivId%>&page=<%=page%>&searchText=<%=searchText%>&boardId=<%=results[i].boardId%>&boardName=<%=community[0].boardName%>&crewDiv=<%=crewDiv%>'">
+            <td onclick='event.cancelBubble=true;'><input type="checkbox" id="chk" name="chk"
+                    value="<%=results[i].boardId %>" />
+            </td>
+            <td>
+                <%=results.length - i%>
+            </td>
+            <td>
+                <%=results[i].boardTitle%>
+            </td>
+            <td>
+                <%= results[i].boardDatefmt %>
+            </td>
+            </tr>
+            <% } %>
+            <% } %>
+            <% } else { %>
+            <tr>
+                <td colspan="7">등록된 게시물이 없습니다.</td>
+            </tr>
+            <% } %>
 
-            <div>
-                <input type="hidden" id="writId" name="writId" value="" />
-                <button id="enrollAction" class="btn btn-block btn-outline-success"
-                    onclick="enroll()">등록</button>
-                <button class="btn btn-block btn-outline-danger" type="button"
-                    id="delete_btn">삭제</button>
-            </div>
-        
-       
-        <div>
-            <div class="mt_20">
-                <div class="paging" id="page_navi">
-                    <ul class="pagination customPaging">
-                        <% if(results.length > 0){ %>
-                        <li>
-                            <a href="/admin/m_board?boardId=<%= results[0].boardId %>&page=1&searchText=<%=searchText%>"
-                                class="num">
-                                << </a> </li> <li>
-                                    <a <%if((page==1)){%><%} else {%>
-                                        href="/admin/m_board?boardId=<%= results[0].boardId %>&page=<%= parseInt(page) - 1 %>&searchText=<%=searchText%>"
-                                        class="num" <% } %>>
-                                        < </a> </li>
-                                            <% for(var i = startPage; i < endPage; i++){  %>
-                                            <li class="paging_on">
-                                            <a href="/admin/m_board?boardId=<%= results[0].boardId %>&page=<%= i + 1 %>&searchText=<%=searchText%>"
-                                                <%if(page==i+1){%>class="selected"
-                                                <%}%> class="num"><%= i + 1 %></a> </li> <% } %>
-                                                <li> <a <%if(page>last-1){%><%} else {%>
-                                                    href="/admin/m_board?boardId=<%= results[0].boardId %>&page=<%= parseInt(page) + 1 %>&searchText=<%=searchText%>"
-                                                    class="num" <% } %>>></a></li>
-                        <li><a href="/admin/m_board?boardId=<%= results[0].boardId %>&page=<%= last%>&searchText=<%=searchText%>"
-                                class="num">>></a></li>
-                        <% } %>
-                    </ul>
-                </div>
+    </div>
+    </td>
+    </tbody>
+    </table>
+    
+</div>
+</div>
+    <div style="margin-top: 30px;">
+        <button id="enrollAction" class="btn btn-outline-primary"
+            onclick="location.href='/admin/m_board/boardWritForm?boardDivId=<%= results[0].boardDivId %>&crewDiv=<%=crewDiv%>&boardName=<%=community[0].boardName%>'">등록</button>
+        <button class="btn btn-outline-danger" type="button" id="delete_btn">삭제</button>
+    </div>
+
+
+    <div>
+        <div class="mt_20">
+            <div class="paging" id="page_navi">
+                <ul class="pagination customPaging">
+                    <% if(results.length > 0){ %>
+                    <li>
+                        <a href="/admin/m_board?boardDivId=<%= results[0].boardDivId %>&page=1&searchText=<%=searchText%>&crewDiv=<%=crewDiv%>"
+                            class="num">
+                            << </a> </li> <li>
+                                <a <%if((page==1)){%><%} else {%>
+                                    href="/admin/m_board?boardDivId=<%= results[0].boardDivId %>&page=<%= parseInt(page) - 1 %>&searchText=<%=searchText%>&crewDiv=<%=crewDiv%>"
+                                    class="num" <% } %>>
+                                    < </a> </li> <% for(var i = startPage; i < endPage; i++){  %> <li class="paging_on">
+                                        <a href="/admin/m_board?boardDivId=<%= results[0].boardDivId %>&page=<%= i + 1 %>&searchText=<%=searchText%>&crewDiv=<%=crewDiv%>"
+                                            <%if(page==i+1){%>class="selected" <%}%> class="num"><%= i + 1 %></a> </li>
+                                            <% } %> <li> <a <%if(page>last-1){%><%} else {%>
+                                                href="/admin/m_board?boardDivId=<%= results[0].boardDivId %>&page=<%= parseInt(page) + 1 %>&searchText=<%=searchText%>&crewDiv=<%=crewDiv%>"
+                                                class="num" <% } %>>></a></li>
+                    <li><a href="/admin/m_board?boardDivId=<%= results[0].boardDivId %>&page=<%= last%>&searchText=<%=searchText%>&crewDiv=<%=crewDiv%>"
+                            class="num">>></a></li>
+                    <% } %>
+                </ul>
             </div>
         </div>
     </div>
@@ -95,10 +93,17 @@
 
 <script>
     $(document).ready(function () {
-        searchajax(); 
+        searchajax();
+        const formObj = $("form[name='boardForm']");
 
-        const formObj = $("form[name='userForm']");
+        //등록 
+        $("#enrollAction").on("click", function () {
+            formObj.attr("method", "get");
+            formObj.attr("action", "boardWritForm");
+            formObj.submit();    
+        });
         // 삭제
+
         $("#delete_btn").on("click", function () {
             var chkArr = [];
             $("input[name=chk]:checked").each(function () {
@@ -129,7 +134,7 @@
                 params[key] = value;
             });
             return params;
-        } 
+        }
         var param = getUrlParams();
         var page = document.getElementById("page");
         page.value = param.page;
@@ -139,11 +144,37 @@
 
     // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 
     var menuItem = document.getElementsByClassName("menu-item");
-        //초기화
-        menuItem.className = 'menu-item';
-        //'[2] = 게시판관리' '[3] = 공지사항' if문 걸어주기.
+    var boardDivId = document.getElementById("boardDivId").value;
+    var crewDiv = document.getElementById("crewDiv").value;
+    //초기화
+    menuItem.className = 'menu-item';
+    //'[2] = 게시판관리' '[3] = 공지사항' '[4] = 갤러리' '[5] = 경조사'
+    //'[6] = 골프회' '[7] = 공지사항' '[8] = 갤러리'
+    //'[9] = 산악회' '[10] = 공지사항' '[11] = 갤러리'
+    if(crewDiv == 'all'){
         menuItem[2].className += ' open active';
-        menuItem[3].className += ' active';
+        if (boardDivId == 1) {
+            menuItem[3].className += ' active';
+        } else if (boardDivId == 2) {
+            menuItem[4].className += ' active';
+        } else if (boardDivId == 3)
+            menuItem[5].className += ' active';
+    } else if (crewDiv == 'gf'){
+        menuItem[6].className += ' open active';
+        if (boardDivId == 1) {
+            menuItem[7].className += ' active';
+        } else if (boardDivId == 2) {
+            menuItem[8].className += ' active';
+        }
+    } else if (crewDiv == 'mt'){
+        menuItem[9].className += ' open active';
+        if (boardDivId == 1) {
+            menuItem[10].className += ' active';
+        } else if (boardDivId == 2) {
+            menuItem[11].className += ' active';
+        }
+    }
+
 
     // 선택
     $("#chkAll").click(function () {
@@ -167,16 +198,12 @@
             var words = $("#searchText").val();
             $.ajax({
                 type: 'get',
-                url: '/admin/m_board/boardSearch?boardDivId=<%=community[0].boardDivId%>&page=1',
+                url: '/admin/m_board/boardSearch?boardDivId=<%=community[0].boardDivId%>&page=1&crewDiv=<%=crewDiv%>',
                 data: {
                     searchText: words
                 },
                 dataType: 'json',
                 success: function (data) {
-                    // console.log(ajaxSearch.page)
-                    // console.log("===========" + ajaxSearch.ajaxSearch[0].boardName);                     
-                    // console.log(page)
-                    // console.log(data)
                     var str = ''
                     $(".customPaging").empty();
                     if (data.ajaxSearch.length > 0) {
@@ -189,7 +216,8 @@
                                 str +=
                                     '<tr onclick="location.href=\'/admin/m_board/selectOne?boardId=' +
                                     data.ajaxSearch[i].boardId + '&page=' + data
-                                    .page + '&searchText=' + data.searchText +
+                                    .page + '&searchText=' + data.searchText + '&boardDivId=' + 
+                                    data.ajaxSearch[i].boardDivId + '&crewDiv=' + data.crewDiv
                                     '\'"> <td onclick="event.cancelBubble=true;"><input type="checkbox" id="chk" name="chk" value="' +
                                     data.ajaxSearch[i].boardId + '" /> </td>';
                                 str +=
@@ -200,19 +228,16 @@
                                     data.ajaxSearch[i].boardTitle + '</td>';
                                 str +=
                                     '<td>' +
-                                    data.ajaxSearch[i].boardDatefmt + '</td>';
-                                // str +=
-                                //     '<td>' +
-                                //     data.ajaxSearch[i].writHit + '</td></tr>'
+                                    data.ajaxSearch[i].boardDatefmt + '</td></tr>';
                             }
                         }
-                        // console.log("str = " + str)
+                        console.log("str = " + str)
                         $("#tbody").append(str);
                     } else {
                         var none = '<tr> <td colspan="8"> 데이터가 존재하지 않습니다. </td> </tr>'
                         $("#tbody").empty();
                         $("#tbody").append(none);
-                    } 
+                    }
                     paging(data);
                 },
                 error: function (e) {
@@ -220,5 +245,52 @@
                 }
             });
         });
+    }
+
+    function paging(data) {
+        var datas = data;
+        var dataLength = datas.length;
+        var dataPageNum = datas.page_num;
+        var boardDivId = datas.ajaxSearch[0].boardDivId;
+        var datasPage = Number(datas.page);
+        var datasLast = Number(datas.last);
+        var startPage = Number(datas.startPage);
+        var endPage = Number(datas.endPage);
+        var temp = '';
+        temp = `<li>
+                <a href="/admin/m_board?boardDivId=${boardDivId}&page=1&searchText=${datas.searchText}&crewDiv=${datas.crewDiv}"
+                class="num">
+                << </a> </li> <li>
+                <a `
+        if (datasPage == 1) {
+            temp += `><</a></li>`
+        } else {
+            temp += `href="/admin/m_board?boardDivId=${boardDivId}&page=${datasPage - 1}&searchText=${datas.searchText}&crewDiv=${datas.crewDiv}"
+                class="num">
+                < </a> </li>`
+        }
+        for (var i = datas.startPage; i < datas.endPage; i++) {
+            temp += `<li class="paging_on">
+                    <a href="/admin/m_board?boardDivId=${boardDivId}&page=${i + 1}&searchText=${datas.searchText}&crewDiv=${datas.crewDiv}"`
+            if (i != 0) {
+                temp += `class="num">${i + 1}</a> </li>`
+            } else {
+                temp +=
+                    `class="selected" style="background-color:#696CFF;><span style="color:white;">${i + 1}</span></a> </li>`
+            }
+        }
+        temp += `<li> <a `
+        if (datasPage == datasLast) {
+            temp += `> > </a></li> <li><a href="/admin/m_board?boardDivId=${boardDivId}&page=${datasPage}&searchText=${datas.searchText}&crewDiv=${datas.crewDiv}</a></li>
+                         <li><a href="/admin/m_board?boardDivId=${boardDivId}&page=${datasPage}&searchText=${datas.searchText}&crewDiv=${datas.crewDiv}"
+                    class="num">>></a></li>`
+        } else {
+            temp += `href="/admin/m_board?boardDivId=${boardDivId}&page=${datasPage + 1}&searchText=${datas.searchText}&crewDiv=${datas.crewDiv}"
+                    class="num">></a></li>
+                    <li><a href="/admin/m_board?boardDivId=${boardDivId}}&page=${datasLast}&searchText=${datas.searchText}&crewDiv=${datas.crewDiv}"
+                    class="num">>></a></li>`
+        }
+
+        $(".customPaging").html(temp);
     }
 </script>
