@@ -41,63 +41,58 @@
         <h5 class="card-header">산악회 행사 수정</h5>
         <% } %>
         <div class="card-body">
-            <form id="userEnrollForm" name="userEnrollForm" role="form" enctype="multipart/form-data">
-                <div class="mb-3 row">
-                    <label for="html5-text-input" class="col-md-2 col-form-label">대표 이미지</label>
-                    <div class="col-md-10">
-                        <% if(result[0].eventImg != null && result[0].eventImg != '') {%> <img
-                            src="../../../<%= result[0].eventImg %>" alt="사진" width="40%" />
-                        <button name="searchAction" class="btn btn-block btn-outline-danger fileDelete" type="button"
-                            data-route="<%=result[0].eventImg%>" data-img="eventImg" data-inputReset="eventImg">삭제</button>
-                        </td>
-                        <% }else{ %>
-                        <input class="form-control" type="file" id="file" name="file" />
-                        <% } %>
-                        <input type="hidden" id="eventImg" name="eventImg" value="<%=result[0].eventImg%>">
-                    </div>
-                </div>
+            <form id="eventUpdateForm" name="eventUpdateForm" enctype="multipart/form-data" method="post">
+                <input type="hidden" id="page" name="page" value="<%=page%>">
+                <input type="hidden" id="crewDiv" name="crewDiv" value="<%=crewDiv%>">
+                <input type="hidden" id="eventId" name="eventId" value="<%=result[0].eventId%>">
+                <input type="hidden" name="keepSearch" value="<%=keepSearch%>">
                 <div class="mb-3 row">
                     <label for="html5-text-input" class="col-md-2 col-form-label">행사 제목</label>
                     <div class="col-md-10">
-                        <input class="form-control" type="text" value="<%=result[0].eventTitle%>" id="eventTitle" name="eventTitle"
-                             />
+                        <input class="form-control" type="text" value="<%=result[0].eventTitle%>" id="eventTitle"
+                            name="eventTitle" />
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="html5-text-input" class="col-md-2 col-form-label">행사 내용</label>
                     <div class="col-md-10">
                         <textarea name="editor" class="editor" id="editor"><%-result[0].eventContent%></textarea>
+                        <input type="hidden" value="" id="eventContent" name="eventContent" />
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="html5-text-input" class="col-md-2 col-form-label">행사 일시</label>
                     <div class="col-md-10">
-                        <input class="form-control" id="eventDate" type="datetime-local" name="eventDate" value="<%=result[0].eventDateFmt%>">
+                        <input class="form-control" id="eventDate" type="datetime-local" name="eventDate"
+                            value="<%=result[0].eventDateFmt%>">
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="html5-text-input" class="col-md-2 col-form-label">행사 위치</label>
                     <div class="col-md-10">
-                        <input class="form-control" type="text" value="<%=result[0].eventAdres%>" id="address_kakao" name="eventAdres" />
+                        <input class="form-control" type="text" value="<%=result[0].eventAdres%>" id="address_kakao"
+                            name="eventAdres" />
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="html5-text-input" class="col-md-2 col-form-label">행사 상세 위치</label>
                     <div class="col-md-10">
-                        <input class="form-control" type="text" value="<%=result[0].eventAdresDetail%>" id="address_detail" name="eventAdresDetail"
-                             />
+                        <input class="form-control" type="text" value="<%=result[0].eventAdresDetail%>"
+                            id="address_detail" name="eventAdresDetail" />
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="html5-text-input" class="col-md-2 col-form-label">투표 시작 일자</label>
                     <div class="col-md-10">
-                        <input class="form-control" id="voteStartDate" type="date" name="voteStartDate" value="<%=result[0].voteStartDateFmt%>">
+                        <input class="form-control" id="voteStartDate" type="date" name="voteStartDate"
+                            value="<%=result[0].voteStartDateFmt%>">
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="html5-text-input" class="col-md-2 col-form-label">투표 마감 일자</label>
                     <div class="col-md-10">
-                        <input class="form-control" id="voteEndDate" type="date" name="voteEndDate" value="<%=result[0].voteEndDateFmt%>">
+                        <input class="form-control" id="voteEndDate" type="date" name="voteEndDate"
+                            value="<%=result[0].voteEndDateFmt%>">
                     </div>
                 </div>
                 <div class="mb-3 row">
@@ -121,8 +116,23 @@
                             <option value="중구" <%if(result[0].eventTarget2=="중구"){%> selected="selected" <%}%>>중구</option>
                             <option value="수성구" <%if(result[0].eventTarget2=="수성구"){%> selected="selected" <%}%>>수성구</option>
                             <option value="달서구" <%if(result[0].eventTarget2=="달서구"){%> selected="selected" <%}%>>달서구</option>
-                            <option value="달성구" <%if(result[0].eventTarget2=="달성구"){%> selected="selected" <%}%>>달성구</option>
+                            <option value="달성군" <%if(result[0].eventTarget2=="달성군"){%> selected="selected" <%}%>>달성군</option>
                          </select>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="html5-text-input" class="col-md-2 col-form-label">대표 이미지</label>
+                    <div class="col-md-10">
+                        <% if(result[0].eventImg != null && result[0].eventImg != '') {%> <img
+                                src="../../../<%= result[0].eventImg %>" alt="사진" width="40%" />
+                            <button name="searchAction" class="btn btn-block btn-outline-danger fileDelete"
+                                type="button" data-route="<%=result[0].eventImg%>" data-img="eventImg"
+                                data-inputReset="eventImg">삭제</button>
+                            </td>
+                            <% }else{ %>
+                            <input class="form-control" type="file" id="file" name="file" />
+                            <% } %>
+                            <!-- <input type="hidden" id="eventImg" name="eventImg" value="<%=result[0].eventImg%>"> -->
                     </div>
                 </div>
                 <div class="demo-inline-spacing">
@@ -181,23 +191,42 @@
                 $("#editor").focus();
                 return false;
             }
-            if (eventPlace == "") {
-                alert("장소를 입력하세요.");
-                $("#address_kakao").focus();
-                return false;
-            }
             if (eventDate == "") {
                 alert("행사일을 입력하세요.");
                 $("#eventDate").focus();
                 return false;
             }
+            if (eventPlace == "") {
+                alert("장소를 입력하세요.");
+                $("#address_kakao").focus();
+                return false;
+            }
 
             if (confirm("수정하시겠습니까?") == true) {
                 $('input[name=eventContent]').attr('value', content);
-                $("#eventWrite").attr("action", "eventWrite");
-                $("#eventWrite").submit();
+                $("#eventUpdateForm").attr("action", "/admin/m_event/eventUpdate");
+                $("#eventUpdateForm").submit();
+                alert("수정이 완료되었습니다.");
             } else {
                 return;
             }
         });
+
+        //첨부파일 삭제
+        $('button[name="searchAction"]').on('click', function (e) {
+            parent = this.parentNode;
+            parent.innerHTML = "";
+            const input = document.createElement('input');
+            parent.append(input);
+            input.setAttribute('type', 'hidden');
+            input.setAttribute('name', 'deleteFileId');
+            input.value = this.dataset['route'];
+            const inputReset = document.createElement('input');
+            const resetName = this.dataset['inputreset']
+            inputReset.setAttribute('type', 'file');
+            inputReset.setAttribute('id', 'file');
+            inputReset.setAttribute('name', 'file');
+            // inputReset.className += 'certiImg'
+            parent.append(inputReset);
+        })
     </script>

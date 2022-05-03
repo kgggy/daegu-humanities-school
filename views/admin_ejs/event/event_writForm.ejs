@@ -41,18 +41,13 @@
         <h5 class="card-header">산악회 행사 등록</h5>
         <% } %>
         <div class="card-body">
-            <form id="userEnrollForm" name="userEnrollForm" role="form" enctype="multipart/form-data">
-                <div class="mb-3 row">
-                    <label for="html5-text-input" class="col-md-2 col-form-label">대표 이미지</label>
-                    <div class="col-md-10">
-                        <input class="form-control" type="file" id="file" name="file" />
-                    </div>
-                </div>
+            <form id="eventEnrollForm" name="eventEnrollForm" role="form" enctype="multipart/form-data" method="post">
+                <input type="hidden" id="crewDiv" name="crewDiv" value="<%= crewDiv %>" />
+                <input type="hidden" id="eventContent" name="eventContent" value="" />
                 <div class="mb-3 row">
                     <label for="html5-text-input" class="col-md-2 col-form-label">행사 제목</label>
                     <div class="col-md-10">
-                        <input class="form-control" type="text" value="" id="userName" name="userName"
-                            placeholder="ex) 홍길동" />
+                        <input class="form-control" type="text" value="" id="eventTitle" name="eventTitle" />
                     </div>
                 </div>
                 <div class="mb-3 row">
@@ -64,32 +59,32 @@
                 <div class="mb-3 row">
                     <label for="html5-text-input" class="col-md-2 col-form-label">행사 일시</label>
                     <div class="col-md-10">
-                        <input class="form-control" id="startDate" type="datetime-local" name="eventDate" value="">
+                        <input class="form-control" id="eventDate" type="datetime-local" name="eventDate" value="">
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="html5-text-input" class="col-md-2 col-form-label">행사 위치</label>
                     <div class="col-md-10">
-                        <input class="form-control" type="text" value="" id="address_kakao" name="userAdres" />
+                        <input class="form-control" type="text" value="" id="address_kakao" name="eventAdres" />
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="html5-text-input" class="col-md-2 col-form-label">행사 상세 위치</label>
                     <div class="col-md-10">
-                        <input class="form-control" type="text" value="" id="address_detail" name="userAdres4"
+                        <input class="form-control" type="text" value="" id="address_detail" name="eventAdresDetail"
                             placeholder="상세주소를 입력해주세요" />
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="html5-text-input" class="col-md-2 col-form-label">투표 시작 일자</label>
                     <div class="col-md-10">
-                        <input class="form-control" id="startDate" type="date" name="startDate" value="">
+                        <input class="form-control" id="voteStartDate" type="date" name="voteStartDate" value="">
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="html5-text-input" class="col-md-2 col-form-label">투표 마감 일자</label>
                     <div class="col-md-10">
-                        <input class="form-control" id="startDate" type="date" name="startDate" value="">
+                        <input class="form-control" id="voteEndDate" type="date" name="voteEndDate" value="">
                     </div>
                 </div>
                 <div class="mb-3 row">
@@ -113,8 +108,14 @@
                             <option value="중구">중구</option>
                             <option value="수성구">수성구</option>
                             <option value="달서구">달서구</option>
-                            <option value="달성구">달성구</option>
+                            <option value="달성군">달성군</option>
                         </select>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="html5-text-input" class="col-md-2 col-form-label">대표 이미지</label>
+                    <div class="col-md-10">
+                        <input class="form-control" type="file" id="file" name="file" />
                     </div>
                 </div>
                 <!-- <div class="mb-3 row">
@@ -160,7 +161,7 @@
                     </div>
                 </div> -->
                 <div class="demo-inline-spacing">
-                    <button type="button" class="btn btn-primary" id="update_btn">등록</button>
+                    <button type="button" class="btn btn-primary" id="enroll_btn">등록</button>
                     <button type="button" class="btn btn-danger" onclick="history.go(-1)">취소</button>
                 </div>
             </form>
@@ -215,32 +216,32 @@
                 $("#editor").focus();
                 return false;
             }
-            if (eventPlace == "") {
-                alert("장소를 입력하세요.");
-                return false;
-            }
             if (eventDate == "") {
                 alert("행사일을 입력하세요.");
                 $("#eventDate").focus();
                 return false;
             }
+            if (eventPlace == "") {
+                alert("장소를 입력하세요.");
+                return false;
+            }
 
             if (confirm("등록하시겠습니까?") == true) {
                 $('input[name=eventContent]').attr('value', content);
-                $("#eventWrite").attr("action", "eventWrite");
-                $("#eventWrite").submit();
+                $("#eventEnrollForm").attr("action", "/admin/m_event/eventWrite");
+                $("#eventEnrollForm").submit();
             } else {
                 return;
             }
         });
 
         //라디오 버튼 선택 해제
-        function test() {
-            var park = document.getElementsByName("userCrew1");
-            for (var i = 0; park.length; i++) {
-                if (park[i].checked) {
-                    park[i].checked = false;
-                }
-            }
-        }
+        // function test() {
+        //     var park = document.getElementsByName("userCrew1");
+        //     for (var i = 0; park.length; i++) {
+        //         if (park[i].checked) {
+        //             park[i].checked = false;
+        //         }
+        //     }
+        // }
     </script>

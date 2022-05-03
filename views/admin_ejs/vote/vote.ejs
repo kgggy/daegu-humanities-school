@@ -1,0 +1,255 @@
+<style>
+    @media (min-width:768px) {
+        .btn {
+            text-align: right;
+            display: flex;
+            justify-content: end;
+            margin-bottom: 7px;
+            gap: 8px;
+        }
+
+        .btn {
+            display: inline-block;
+            text-align: left;
+            height: 40px;
+            margin-left: 15px;
+        }
+    }
+
+    @media (max-width:767px) {
+        .btn {
+            display: grid;
+        }
+
+        .btn {
+            text-align: center;
+            /* height: 50px; */
+            margin-bottom: 10px;
+            width: auto;
+        }
+    }
+</style>
+<h4 class="fw-bold py-3 mb-4">
+    <% if(crewDiv == 'all') { %>
+    <span class="text-muted fw-light">총동창회 / 투표 괸리 </span>&nbsp;&nbsp;투표 현황
+    <% } else if(crewDiv == 'gf') { %>
+    <span class="text-muted fw-light">골프회 / 투표 괸리 </span>&nbsp;&nbsp;투표 현황
+    <% } else { %>
+    <span class="text-muted fw-light">산악회 / 투표 괸리 </span>&nbsp;&nbsp;투표 현황
+    <% } %>
+</h4>
+<div style="background-color: #ededfa; padding: 30;">
+    <form name="searchForm" action="" method="get" class="easydropdown">
+        <input type="hidden" name="page" value="1">
+        <input type="hidden" name="crewDiv" value="<%= crewDiv %>">
+        <select name="eventTarget1" class="dropdown">
+            <option value="">참여 대상</option>
+            <option value="전체" <%if(eventTarget1=="전체"){%> selected="selected" <%}%>>전체</option>
+            <option value="임원" <%if(eventTarget1=="임원"){%> selected="selected" <%}%>>임원</option>
+        </select>
+        <select name="eventTarget2" class="dropdown">
+            <option value="">참여 대상 지역</option>
+            <option value="남구" <%if(eventTarget2=="남구"){%> selected="selected" <%}%>>남구</option>
+            <option value="달서구" <%if(eventTarget2=="달서구"){%> selected="selected" <%}%>>달서구</option>
+            <option value="달성군" <%if(eventTarget2=="달성군"){%> selected="selected" <%}%>>달성군</option>
+            <option value="동구" <%if(eventTarget2=="동구"){%> selected="selected" <%}%>>동구</option>
+            <option value="북구" <%if(eventTarget2=="북구"){%> selected="selected" <%}%>>북구</option>
+            <option value="서구" <%if(eventTarget2=="서구"){%> selected="selected" <%}%>>서구</option>
+            <option value="수성구" <%if(eventTarget2=="수성구"){%> selected="selected" <%}%>>수성구</option>
+            <option value="중구" <%if(eventTarget2=="중구"){%> selected="selected" <%}%>>중구</option>
+        </select>
+        <select name="eventStatus" class="dropdown">
+            <option value="">상태</option>
+            <option value="0" <%if(eventStatus=="0"){%> selected="selected" <%}%>>진행중</option>
+            <option value="1" <%if(eventStatus=="1"){%> selected="selected" <%}%>>마감</option>
+        </select>
+        <button class="btn btn-primary" type="submit" id="searchAction" style="margin-bottom: 10px;">검색</button>
+    </form>
+    <!-- Basic Bootstrap Table -->
+    <div class="card">
+        <!-- <h5 class="card-header">일반회원관리</h5> -->
+        <div class="table-responsive text-nowrap">
+            <form id="eventForm" name="eventForm" action="" method="">
+                <input type="hidden" name="crewDiv" value="<%= crewDiv %>">
+                <table class="table table-hove">
+                    <thead>
+                        <tr>
+                            <th>번호</th>
+                            <th>제목</th>
+                            <th>행사일시</th>
+                            <th>투표기간</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                        <% if(results.length > 0) { %> <% for(var i = (page * page_num) - page_num; i < (page * page_num); i++) { 
+                            if(i > length){
+                                i++;
+                            } else { %>
+                        <tr
+                            onclick="location.href='/admin/m_event/eventSelectOne?eventId=<%=results[i].eventId%>&page=<%=page%>&crewDiv=<%=crewDiv%><%=keepSearch%>'">
+                            <td><%= results.length - i %></td>
+                            <td><%=results[i].eventTitle%></td>
+                            <td><%=results[i].eventDateFmt %></td>
+                            <td><%=results[i].voteStartDateFmt %> - <%=results[i].voteEndDateFmt %></td>
+                            <td onclick="event.cancelBubble=true;">
+                                <div>
+                                    <button class="btn btn-outline-primary" type="button" data-bs-toggle="modal"
+                                        data-bs-target="#modalScrollable"> 참여자</button>
+                                    <button class="btn btn-outline-primary" type="button"> 불참자</button>
+                                    <button class="btn btn-outline-primary" type="button"> 미정자</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="6" class="hiddenRow" style="padding:0">
+                                <div class="collapse" id="collapseExample">
+                                    <div class="d-grid d-sm-flex p-3 border">
+                                        <span>
+                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                            Lorem
+                                            Ipsum has>
+                                        </span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <% } %>
+                        <% } %>
+                        <% } else { %>
+                        <tr>
+                            <td colspan="6" style="text-align: center;">
+                                등록된 목록이 없습니다.
+                            </td>
+                        </tr>
+                        <% } %>
+
+                    </tbody>
+                </table>
+    </form>
+</div>
+</div>
+<!-- 투표자 목록 모달 -->
+<div class="modal fade" id="modalScrollable" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalScrollableTitle">참여자 목록</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                내용내용
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">확인</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 투표자 목록 모달 -->
+<!--/ Basic Bootstrap Table -->
+<div>
+    <div class="demo-inline-spacing">
+        <button type="button" class="btn btn-primary" id="enrollAction" onclick="enroll()">등록</button>
+    </div>
+    <div class="mt_20">
+        <div class="paging" id="page_navi">
+            <ul class="pagination customPaging">
+                <li> <a href="/admin/m_event?page=1&crewDiv=<%=crewDiv%>" class="num">
+                        <<</a> </li> <li> <a <%if((page<startPage)||(page==1)){%><%} else {%>
+                                href="/admin/m_event?page=<%= parseInt(page) - 1 %>&crewDiv=<%=crewDiv%>" class="num"
+                                <% } %>>
+                                <</a> </li> <% for(var i = startPage; i < endPage ; i++){  %> <li class="paging_on">
+                                    <a href="/admin/m_event?page=<%= i + 1 %>&crewDiv=<%=crewDiv%>"
+                                        <%if(page==i+1){%>class="selected" <%}%> class="num"><%= i + 1 %></a> </li>
+                                        <% } %> <li> <a <%if(page>last-1){%><%} else {%>
+                                            href="/admin/m_event?page=<%= parseInt(page) + 1 %>&crewDiv=<%=crewDiv%>"
+                                            class="num" <% } %>>></a></li>
+                <li><a href="/admin/m_event?page=<%= last %>&crewDiv=<%=crewDiv%>" class="num">>></a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div>
+
+<script>
+    const formObj = $("form[name='eventForm']");
+    //등록 
+    function enroll() {
+        formObj.attr("method", "get");
+        formObj.attr("action", "/admin/m_event/eventWritForm");
+        formObj.submit();
+    }
+    // 삭제
+    $("#delete_btn").on("click", function () {
+        var chkArr = [];
+        $("input[name=chk]:checked").each(function () {
+            chkArr.push($(this).val());
+        });
+        $('#eventId').val(chkArr);
+        if (chkArr == "") {
+            alert("삭제할 목록을 선택해주세요.");
+            return false;
+        }
+        var chkImg = [];
+        $("input[name=chk]:checked").each(function () {
+            chkImg.push($(this).attr('data-img'));
+        });
+        $('#eventFileRoute').val(chkImg);
+        formObj.attr("action", "/admin/m_event/eventsDelete");
+        formObj.attr("method", "get");
+        if (confirm("삭제하시겠습니까?") == true) {
+            formObj.submit();
+        } else {
+            return false;
+        }
+    })
+
+    //체크박스
+    $("#chkAll").click(function () {
+        if ($("#chkAll").is(":checked"))
+            $("input[name=chk]").prop("checked", true);
+        else
+            $("input[name=chk]").prop("checked", false);
+    });
+    $("input[name=chk]").click(function () {
+        var total = $("input[name=chk]").length;
+        var checked = $("input[name=chk]:checked").length;
+        if (total != checked)
+            $("#chkAll").prop("checked", false);
+        else
+            $("#chkAll").prop("checked", true);
+    });
+
+    //명단 확인
+    function voteList(theURL, winName, features, choose, eventId) {
+        theURL += '?choose=' + choose + '&eventId=' + eventId;
+        window.open(theURL, winName, features);
+    }
+
+    //네비바
+    function getUrlParams() {
+        var params = {};
+        window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (str, key, value) {
+            params[key] = value;
+        });
+        return params;
+    }
+    var param = getUrlParams();
+    if (param.crewDiv == 'all') {
+        var menuItem = document.getElementsByClassName("menu-item");
+        menuItem.className = 'menu-item';
+        menuItem[6].className += ' open active';
+        menuItem[8].className += ' active';
+    } else if (param.crewDiv == 'gf') {
+        var menuItem = document.getElementsByClassName("menu-item");
+        menuItem.className = 'menu-item';
+        menuItem[14].className += ' open active';
+        menuItem[16].className += ' active';
+    } else {
+        var menuItem = document.getElementsByClassName("menu-item");
+        menuItem.className = 'menu-item';
+        menuItem[22].className += ' open active';
+        menuItem[24].className += ' active';
+    }
+</script>
