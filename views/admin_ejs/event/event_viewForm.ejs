@@ -1,246 +1,178 @@
-<main class="main">
-    <!-- Breadcrumb-->
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">Home</li>
-        <li class="breadcrumb-item">
-            <% if(certiDivision == 0) { %>
-            <a style="font-weight: bold;">탄소실천관리</a>
-            <% } else {%>
-            <a style="font-weight: bold;">챌린지관리</a>
-            <% } %>
-        </li>
-        <li class="breadcrumb-item active">종류 상세</li>
-        <!-- Breadcrumb Menu-->
-    </ol>
-    <div class="container-fluid">
-        <div class="animated fadeIn">
-            <div class="row">
-                <div class="col-lg-6">
-                    <% if(result.length > 0) { %>
-                    <div class="card">
-                        <%if(result[0].certiDivision == 0){%>
-                        <div class="card-header">
-                            <i class="fa fa-align-justify"></i> 탄소실천 종류 상세</div>
-                        <% } else {%>
-                        <div class="card-header">
-                            <i class="fa fa-align-justify"></i> 챌린지 종류 상세</div>
-                        <% } %>
-                        <div class="card-body">
-                            <!-- 컨텐츠 -->
-                            <form id="certiForm" name="certiForm" method="" action="">
-                                <input type="hidden" id="page" name="page" value="<%=page%>">
-                                <input type="hidden" id="certiDivision" name="certiDivision" value="<%=certiDivision%>">
-                                <input type="hidden" id="certiImage" name="certiImage"
-                                    value="<%=result[0].certiImage%>">
-                                <input type="hidden" id="certiExamImg1" name="certiExamImg1"
-                                    value="<%=result[0].certiExamImg1%>">
-                                <input type="hidden" id="certiExamImg2" name="certiExamImg2"
-                                    value="<%=result[0].certiExamImg2%>">
-                                <div class="form-group row">
-                                    <label class="col-md-2 col-form-label" for="text-input">번호</label>
-                                    <div class="col-md-9">
-                                        <input class="form-control" id="certiTitleId" type="text" name="certiTitleId"
-                                            readonly value="<%=result[0].certiTitleId%>">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-2 col-form-label" for="text-input">대표 이미지</label>
-                                    <div class="col-md-9">
-                                        <div class="certi-img" style="background-color: rgb(186, 206, 190);">
-                                            <% if(result.length > 0 && result[0].certiImage != null && result[0].certiImage != '') {%>
-                                            <img src="../../../<%= result[0].certiImage %>" alt="사진"
-                                                style="padding:20px !important; width:100%" />
-                                            <% }else{ %>
-                                            대표 이미지가 존재하지 않습니다.
-                                            <% } %>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-2 col-form-label" for="text-input">좋은 예</label>
-                                    <div class="col-md-9">
-                                        <div class="certi-img" style="background-color: rgb(186, 206, 190);">
-                                            <% if(result.length > 0 && result[0].certiExamImg1 != null && result[0].certiExamImg1 != '') {%>
-                                            <img src="../../../<%= result[0].certiExamImg1 %>" alt="사진"
-                                                style="padding:20px !important; width:100%" />
-                                            <% }else{ %>
-                                            예시 이미지가 존재하지 않습니다.
-                                            <% } %>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-2 col-form-label" for="text-input">나쁜 예</label>
-                                    <div class="col-md-9">
-                                        <div class="certi-img" style="background-color: rgb(186, 206, 190);">
-                                            <% if(result.length > 0 && result[0].certiExamImg2 != null && result[0].certiExamImg2 != '') {%>
-                                            <img src="../../../<%= result[0].certiExamImg2 %>" alt="사진"
-                                                style="padding:20px !important; width:100%" />
-                                            <% }else{ %>
-                                            예시 이미지가 존재하지 않습니다.
-                                            <% } %>
-                                        </div>
-                                    </div>
-                                </div>
-                                <%if(result[0].certiDivision == 0){%>
-                                <div class="form-group row">
-                                    <label class="col-md-2 col-form-label" for="text-input">분류</label>
-                                    <div class="col-md-9">
-                                        <input class="form-control" id="ucmtitle" type="text" name="certiSubDivision"
-                                            readonly value="<%=result[0].certiSubDivision%>">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-2 col-form-label" for="text-input">포인트</label>
-                                    <div class="col-md-9">
-                                        <input class="form-control" id="certiPoint" type="text" name="certiPoint"
-                                            value="<%=result[0].certiPoint%>" readonly>
-                                    </div>
-                                </div>
-                                <% } %>
-                                <div class="form-group row">
-                                    <label class="col-md-2 col-form-label" for="text-input">종류명</label>
-                                    <div class="col-md-9">
-                                        <input class="form-control" id="certiTitle" type="text" name="certiTitle"
-                                            value="<%=result[0].certiTitle%>" readonly>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-2 col-form-label" for="text-input">설명글</label>
-                                    <div class="col-md-9">
-                                        <textarea class="form-control" id="certiDetail" type="text" name="certiDetail"
-                                            readonly><%=result[0].certiDetail%></textarea>
-                                    </div>
-                                </div>
-                                <% if(result[0].certiDivision == 0) {%>
-                                <div class="form-group row">
-                                    <label class="col-md-2 col-form-label" for="text-input">단계</label>
-                                    <div class="col-md-9">
-                                        <input class="form-control" id="certiDiff" type="text" name="certiDiff"
-                                            value="<%=result[0].certiDiff%>" readonly>
-                                    </div>
-                                </div>
-                                <% }else{ %>
-                                    <div class="form-group row">
-                                        <label class="col-md-2 col-form-label" for="text-input">주체</label>
-                                        <div class="col-md-9">
-                                            <input class="form-control" id="comName" type="text" name="comName"
-                                                value="<%=result[0].comName%>" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-md-2 col-form-label" for="text-input">권한</label>
-                                        <div class="col-md-9">
-                                            <input class="form-control" id="certiAuth" type="text" name="certiAuth"
-                                                value="<%=result[0].certiAuth%>" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-md-2 col-form-label" for="text-input">기간</label>
-                                        <div class="col-md-9">
-                                            <input class="form-control" id="ucmtitle" type="text" name="ucmtitle"
-                                                value="<%=result[0].certiStartDatefmt%> ~ <%=result[0].certiEndDatefmt%>"
-                                                readonly>
-                                            <input class="form-control" id="certiStartDate" type="hidden"
-                                                name="certiStartDate" value="<%=result[0].certiStartDatefmt%>" readonly>
-                                            <input class="form-control" id="certiEndDate" type="hidden" name="certiEndDate"
-                                                value="<%=result[0].certiEndDatefmt%>" readonly>
-                                        </div>
-                                    </div>
-                                <div class="form-group row">
-                                    <label class="col-md-2 col-form-label" for="text-input">참여방법</label>
-                                    <div class="col-md-9">
-                                        <textarea class="form-control" id="certiDetail_how" type="text"
-                                            name="certiDetail_how" readonly><%=result[0].certiDetail_how%></textarea>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-2 col-form-label" for="text-input">이벤트</label>
-                                    <div class="col-md-9">
-                                        <textarea class="form-control" id="certiDetail_event" type="text"
-                                            name="certiDetail_event"
-                                            readonly><%=result[0].certiDetail_event%></textarea>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-2 col-form-label" for="text-input">추첨방식</label>
-                                    <div class="col-md-9">
-                                        <textarea class="form-control" id="certiDetail_raffle" type="text"
-                                            name="certiDetail_raffle"
-                                            readonly><%=result[0].certiDetail_raffle%></textarea>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-2 col-form-label" for="text-input">예시사진 설명글</label>
-                                    <div class="col-md-9">
-                                        <textarea class="form-control" id="certiExamDetail" type="text"
-                                            name="certiExamDetail" readonly><%=result[0].certiExamDetail%></textarea>
-                                    </div>
-                                </div>
-                                <% } %>
-                                <div class="form-group row">
-                                    <label class="col-md-2 col-form-label" for="text-input">노출여부</label>
-                                    <div class="col-md-9">
-                                        <input class="form-control" id="certiShow" type="text" name="certiShow"
-                                            <%if(result[0].certiShow==0){%> value="O" <%}else{%> value="X"
-                                            <%}%> readonly >
-                                    </div>
-                                </div>
-                                <!--option 버튼  -->
-                                <div class="option_button">
-                                    <div>
-                                        <button class="btn btn-block btn-outline-success" type="button"
-                                            id="update_btn">수정</button>
-                                    </div>
-                                    <div>
-                                        <button class="btn btn-block btn-outline-danger" type="button"
-                                            id="delete_btn">삭제</button>
-                                    </div>
-                                    <div>
-                                        <button class="btn btn-block btn-outline-success" type="button"
-                                            onclick="location.href='/admin/m_certification/certiAll?certiDivision=<%=result[0].certiDivision%>&page=<%=page%><%= keepSearch %>'">목록</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+<div class="col-xs-6">
+    <!-- HTML5 Inputs -->
+    <div class="card mb-4">
+        <% if(crewDiv == 'all') { %>
+        <h5 class="card-header">총동창회 행사 상세</h5>
+        <% } else if(crewDiv == 'gf') { %>
+        <h5 class="card-header">골프회 행사 상세</h5>
+        <% } else { %>
+        <h5 class="card-header">산악회 행사 상세</h5>
+        <% } %>
+        <div class="card-body">
+            <form id="eventUdtForm" name="eventUdtForm">
+                <input type="hidden" name="page" value="<%=page%>">
+                <input type="hidden" name="crewDiv" value="<%=crewDiv%>">
+                <div class="mb-3 row">
+                    <label for="html5-text-input" class="col-md-2 col-form-label">행사 번호</label>
+                    <div class="col-md-10">
+                        <input class="form-control" readonly type="text" value="<%= result[0].eventId %>" id="eventId"
+                            name="eventId" />
                     </div>
-                    <% } %>
                 </div>
-            </div>
+                <div class="mb-3 row">
+                    <label for="html5-text-input" class="col-md-2 col-form-label">대표이미지</label>
+                    <div class="col-md-10">
+                        <% if(result.length > 0 && result[0].eventImg != null && result[0].eventImg != '') {%>
+                        <img src="../../../<%=result[0].eventImg%>" style="width:100%">
+                        <% }else{ %>
+                        등록된 이미지가 없습니다.
+                        <% } %>
+                        <input type="hidden" value="<%=result[0].eventImg%>" id="eventImg" name="eventImg" />
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="html5-text-input" class="col-md-2 col-form-label">행사 제목</label>
+                    <div class="col-md-10">
+                        <input class="form-control" disabled type="text" value="<%= result[0].eventId %>" id="eventTitle"
+                            name="eventTitle" />
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="html5-text-input" class="col-md-2 col-form-label">행사 내용</label>
+                    <div class="col-md-10">
+                        <input class="form-control" disabled type="text" value="<%- result[0].eventContent %>" id="eventContent"
+                            name="eventContent" />
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="html5-text-input" class="col-md-2 col-form-label">행사 일시</label>
+                    <div class="col-md-10">
+                        <input class="form-control" disabled id="startDate" type="text" name="eventDate"
+                            value="<%= result[0].eventDateFmt %>">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="html5-text-input" class="col-md-2 col-form-label">행사 위치</label>
+                    <div class="col-md-10">
+                        <input class="form-control" disabled type="text" value="<%= result[0].eventAdres %>" id="eventAdres"
+                            name="eventAdres" />
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="html5-text-input" class="col-md-2 col-form-label">행사 상세 위치</label>
+                    <div class="col-md-10">
+                        <input class="form-control" disabled type="text" value="<%= result[0].eventAdresDetail %>"
+                            id="eventAdresDetail" name="eventAdresDetail" />
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="html5-text-input" class="col-md-2 col-form-label">투표 시작 일자</label>
+                    <div class="col-md-10">
+                        <input class="form-control" disabled id="voteStartDate" type="text" name="voteStartDate"
+                            value="<%= result[0].voteStartDateFmt %>">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="html5-text-input" class="col-md-2 col-form-label">투표 마감 일자</label>
+                    <div class="col-md-10">
+                        <input class="form-control" disabled id="voteEndDate" type="text" name="voteEndDate"
+                            value="<%= result[0].voteEndDateFmt %>">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="html5-text-input" class="col-md-2 col-form-label">투표 대상 1</label>
+                    <div class="col-md-10">
+                        <select class="dropdown" name="eventTarget1" disabled>
+                            <option value="전체" <%if(result[0].eventTarget1=='전체'){%>selected<%}%>>전체</option>
+                            <option value="임원" <%if(result[0].eventTarget1=='임원'){%>selected<%}%>>임원</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="html5-text-input" class="col-md-2 col-form-label">투표 대상 2</label>
+                    <div class="col-md-10">
+                        <select class="dropdown" name="eventTarget2" disabled>
+                            <option value="전체" <%if(result[0].eventTarget2=='전체'){%>selected<%}%>>전체</option>
+                            <option value="동구" <%if(result[0].eventTarget2=='동구'){%>selected<%}%>>동구</option>
+                            <option value="서구" <%if(result[0].eventTarget2=='서구'){%>selected<%}%>>서구</option>
+                            <option value="남구" <%if(result[0].eventTarget2=='남구'){%>selected<%}%>>남구</option>
+                            <option value="북구" <%if(result[0].eventTarget2=='북구'){%>selected<%}%>>북구</option>
+                            <option value="중구" <%if(result[0].eventTarget2=='중구'){%>selected<%}%>>중구</option>
+                            <option value="수성구" <%if(result[0].eventTarget2=='수성구'){%>selected<%}%>>수성구</option>
+                            <option value="달서구" <%if(result[0].eventTarget2=='달서구'){%>selected<%}%>>달서구</option>
+                            <option value="달성구" <%if(result[0].eventTarget2=='달성구'){%>selected<%}%>>달성구</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- <div class="mb-3 row">
+                    <label for="html5-text-input" class="col-md-2 col-form-label">노출</label>
+                    <div class="col-md">
+                        <div class="form-check form-check-inline mt-3">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="userCrew1" value="option1" />
+                            <label class="form-check-label" for="inlineCheckbox1">총동창회</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" name="userCrew1" value="option2" />
+                            <label class="form-check-label" for="inlineCheckbox2">골프회</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" name="userCrew1" value="option2" />
+                            <label class="form-check-label" for="inlineCheckbox2">산악회</label>
+                        </div>
+                        <input class="btn rounded-pill btn-info" type="button" value="선택취소" onclick="test()">
+                    </div>
+                </div> -->
+                <!-- <div class="mb-3 row">
+                    <label for="html5-text-input" class="col-md-2 col-form-label">첨부파일2</label>
+                    <div class="col-md-10">
+                        <input class="form-control" disabled type="file" id="file" name="file" />
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="html5-text-input" class="col-md-2 col-form-label">첨부파일3</label>
+                    <div class="col-md-10">
+                        <input class="form-control" disabled type="file" id="file" name="file" />
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="html5-text-input" class="col-md-2 col-form-label">첨부파일4</label>
+                    <div class="col-md-10">
+                        <input class="form-control" disabled type="file" id="file" name="file" />
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="html5-text-input" class="col-md-2 col-form-label">첨부파일5</label>
+                    <div class="col-md-10">
+                        <input class="form-control" disabled type="file" id="file" name="file" />
+                    </div>
+                </div> -->
+                <div class="demo-inline-spacing">
+                    <button type="button" class="btn btn-primary" id="update_btn">수정</button>
+                    <button type="button" class="btn btn-danger" id="delete_btn">삭제</button>
+                    <button type="button" class="btn btn-dark"
+                        onclick="location.href='/admin/m_event?page=<%=page%>&crewDiv=<%=crewDiv%><%=keepSearch%>'">목록</button>
+                </div>
+            </form>
         </div>
-</main>
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        const formObj = $("form[name='certiForm']");
-        // 수정 폼 연결
-        $("#update_btn").on("click", function () {
-            formObj.attr("action", "certiUdtForm");
-            formObj.attr("method", "post");
-            formObj.submit();
-        });
-        // 삭제
-        $("#delete_btn").on("click", function () {
-            formObj.attr("action", "certiDelete");
-            formObj.attr("method", "get");
-            if (confirm("삭제하시겠습니까?") == true) {
-                alert("삭제가 완료되었습니다.");
+    </div>
+    <script type="text/javascript">
+        var formObj = $("form[name='eventUdtForm']");
+        $(document).ready(function () {
+            // 수정 폼 연결
+            $("#update_btn").on("click", function () {
+                formObj.attr("action", "/admin/m_event/eventUdtForm");
+                formObj.attr("method", "post");
                 formObj.submit();
-            } else {
-                return;
-            }
-        });
-    });
-
-    var certiDivi = document.getElementById("certiDivision").value
-
-    if(certiDivi == 0){
-    // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 '[2] = 탄소실천관리'
-    var navDropdown = document.getElementsByClassName("nav-dropdown");
-        navDropdown[2].className += 'open';
-    } else if(certiDivi == 1){
-        // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 '[3] = 챌린지관리'
-        var navDropdown = document.getElementsByClassName("nav-dropdown");
-            navDropdown[3].className += 'open';        
-    }
-</script>
+            });
+            // 삭제
+            $("#delete_btn").on("click", function () {
+                formObj.attr("action", "/admin/userDelete/one");
+                formObj.attr("method", "get");
+                if (confirm("회원을 삭제하시겠습니까?") == true) {
+                    formObj.submit();
+                } else {
+                    return;
+                }
+            });
+        })
+    </script>

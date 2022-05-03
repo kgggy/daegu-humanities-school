@@ -37,12 +37,12 @@ router.post('/login', async (req, res) => {
     }
     if (nickChk !== '' && pwdChk !== '') {
         if (req.session.user) {
-            res.redirect('/admin/m_user?page=1');
+            res.redirect('/admin/userSelect?page=1');
         } else { // 세션 없는 admin일 경우 만들어줌
             req.session.user = {
                 adminId: adminId
             };
-            res.redirect('/admin/m_user?page=1');
+            res.redirect('/admin/userSelect?page=1');
         }
     } else {
         return res.send('<script>alert("아이디 또는 비밀번호를 잘못 입력했습니다."); location.href = document.referrer;</script>');
@@ -59,7 +59,7 @@ router.get('/logout', async (req, res) => {
             res.send("<script>alert('로그아웃 되었습니다.'); location.href='/admin'</script>");
         });
     } else {
-        res.redirect('/admin/m_user?page=1');
+        res.redirect('/admin/userSelect?page=1');
     }
 });
 

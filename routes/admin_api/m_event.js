@@ -41,28 +41,25 @@ router.get('/', async (req, res) => {
         const crewDiv = req.query.crewDiv;
         var eventTarget1 = req.query.eventTarget1 == undefined ? "" : req.query.eventTarget1;
         var eventTarget2 = req.query.eventTarget2 == undefined ? "" : req.query.eventTarget2;
-        var searchType1 = req.query.searchType1 == undefined ? "" : req.query.searchType1;
+        var eventStatus = req.query.eventStatus == undefined ? "" : req.query.eventStatus;
+        const keepSearch = "&eventTarget1=" + eventTarget1 + "&eventTarget2=" + eventTarget2 + "&eventStatus=" + eventStatus;
         var sql = "select *, date_format(eventDate, '%Y-%m-%d %H:%i') as eventDateFmt,\
                              date_format(voteStartDate, '%Y-%m-%d %H:%i') as voteStartDateFmt,\
-                             date_format(voteEndDate, '%Y-%m-%d %H:%i') as voteEndDateFmt,\
+                             date_format(voteEndDate, '%Y-%m-%d %H시 %i분') as voteEndDateFmt,\
                              (case when eventStatus = '0' then '진행중' when eventStatus = '1' then '마감' end) as eventStatusFmt\
                     from event where crewDiv = ?";
-                    // console.log(eventTarget1);
-                    // console.log(eventTarget2);
-                    // console.log(searchType1);
         if (eventTarget1 != '') {
             sql += " and eventTarget1 = '" + eventTarget1 + "'";
         }
         if (eventTarget2 != '') {
             sql += " and eventTarget2 = '" + eventTarget2 + "'";
         }
-        if (searchType1 != '') {
-            sql += " and eventStatus = '" + searchType1 + "'";
+        if (eventStatus != '') {
+            sql += " and eventStatus = '" + eventStatus + "'";
         }
         sql += " order by eventId desc";
         connection.query(sql, crewDiv, (err, results) => {
-            console.log(results)
-            console.log(sql)
+            console.log(crewDiv)
             var countPage = 10; //하단에 표시될 페이지 개수
             var page_num = 10; //한 페이지에 보여줄 개수
             var last = Math.ceil((results.length) / page_num); //마지막 장
@@ -74,13 +71,12 @@ router.get('/', async (req, res) => {
             if (err) {
                 console.log(err);
             }
-            console.log(results)
             let route = req.app.get('views') + '/event/event';
             res.render(route, {
                 crewDiv: crewDiv,
                 eventTarget1: eventTarget1,
                 eventTarget2: eventTarget2,
-                searchType1: searchType1,
+                eventStatus: eventStatus,
                 results: results,
                 page: page, //현재 페이지
                 length: results.length - 1, //데이터 전체길이(0부터이므로 -1해줌)
@@ -89,7 +85,8 @@ router.get('/', async (req, res) => {
                 startPage: startPage,
                 endPage: endPage,
                 pass: true,
-                last: last
+                last: last,
+                keepSearch: keepSearch
             });
         });
     } catch (error) {
@@ -100,16 +97,19 @@ router.get('/', async (req, res) => {
 //행사 상세조회
 router.get('/eventSelectOne', async (req, res) => {
     try {
-        const page = req.query.page
-        const searchType1 = req.query.searchType1;
+        const page = req.query.page;
+        const crewDiv = req.query.crewDiv;
         const vote = req.query.vote == undefined ? "" : req.query.vote;
         const param = req.query.eventId;
-        const sql = "select *, date_format(startDate, '%Y-%m-%d') as startDateFmt,\
-                                date_format(endDate, '%Y-%m-%d') as endDateFmt,\
-                                date_format(eventDate, '%Y-%m-%d %H:%i') as eventDateFmt\
+        var eventTarget1 = req.query.eventTarget1 == undefined ? "" : req.query.eventTarget1;
+        var eventTarget2 = req.query.eventTarget2 == undefined ? "" : req.query.eventTarget2;
+        var eventStatus = req.query.eventStatus == undefined ? "" : req.query.eventStatus;
+        const keepSearch = "&eventTarget1=" + eventTarget1 + "&eventTarget2=" + eventTarget2 + "&eventStatus=" + eventStatus;
+        const sql = "select *, date_format(voteStartDate, '%Y-%m-%d') as voteStartDateFmt,\
+                                date_format(voteEndDate, '%Y-%m-%d') as voteEndDateFmt,\
+                                date_format(eventDate, '%Y-%m-%d %H시 %i분') as eventDateFmt\
                         from event\
                         where eventId = ?";
-
         connection.query(sql, param, (err, result) => {
             if (err) {
                 res.json({
@@ -128,13 +128,14 @@ router.get('/eventSelectOne', async (req, res) => {
                 fileOrgName = '';
             }
 
-            let route = req.app.get('views') + '/m_event/event_viewForm';
+            let route = req.app.get('views') + '/event/event_viewForm';
             res.render(route, {
+                crewDiv: crewDiv,
                 result: result,
                 fileOrgName: fileOrgName,
                 vote: vote,
                 page: page,
-                searchType1: searchType1
+                keepSearch: keepSearch
             });
         });
     } catch (error) {
@@ -144,12 +145,14 @@ router.get('/eventSelectOne', async (req, res) => {
 
 //이벤트 등록 폼 이동
 router.get('/eventWritForm', async (req, res) => {
-    let route = req.app.get('views') + '/m_event/event_writForm.ejs';
-    res.render(route);
+    let route = req.app.get('views') + '/event/event_writForm.ejs';
+    res.render(route, {
+        crewDiv: req.query.crewDiv
+    });
 });
 
 //이벤트 등록
-router.post('/eventWrite', upload.single('file'), async (req, res, next) => {
+router.post('/eventWrite', upload.array('file'), async (req, res, next) => {
     try {
         var param1 = [];
         if (req.file != null) {
@@ -172,36 +175,36 @@ router.post('/eventWrite', upload.single('file'), async (req, res, next) => {
                     });
 
             }
-            param1 = [req.body.eventTitle, req.body.eventContent, req.body.eventDate, req.body.eventPlace, req.body.eventPlaceDetail, req.body.startDate, req.body.startDate, req.body.endDate, req.body.endDate, path];
+            param1 = [req.body.eventTitle, req.body.eventContent, req.body.eventDate, req.body.eventAdres, req.body.eventAdresDetail, req.body.voteStartDate, req.body.voteStartDate, req.body.voteEndDate, req.body.voteEndDate, req.body.eventTarget1, req.body.eventTarget2];
         } else {
-            param1 = [req.body.eventTitle, req.body.eventContent, req.body.eventDate, req.body.eventPlace, req.body.eventPlaceDetail, req.body.startDate, req.body.startDate, req.body.endDate, req.body.endDate, req.body.eventFileRoute];
+            param1 = [req.body.eventTitle, req.body.eventContent, req.body.eventDate, req.body.eventAdres, req.body.eventAdresDetail, req.body.voteStartDate, req.body.voteStartDate, req.body.voteEndDate, req.body.voteEndDate, req.body.eventTarget1, req.body.eventTarget2];
         }
-        const sql1 = "insert into event(eventTitle, eventContent, eventDate, eventPlace, eventPlaceDetail, startDate, endDate, eventFileRoute)\
+        const sql1 = "insert into event(eventTitle, eventContent, eventDate, eventAdres, eventAdresDetail, voteStartDate, voteEndDate, eventTarget1, eventTarget2)\
                                   values(?, ?, ?, ?, ?, if(? = '',null,?), if(? = '',null,?), ?)";
         connection.query(sql1, param1, (err) => {
             if (err) {
                 throw err;
             }
-            //OneSignal 푸쉬 알림
-            var message = {
-                app_id: ONE_SIGNAL_CONFIG.APP_ID,
-                contents: {
-                    "en": req.body.eventTitle
-                },
-                included_segments: ["All"],
-                content_avaliable: true,
-                small_icon: "ic_notification_icon",
-                data: {
-                    PushTitle: "CUSTOM NOTIFICATION"
-                }
-            };
+            // //OneSignal 푸쉬 알림
+            // var message = {
+            //     app_id: ONE_SIGNAL_CONFIG.APP_ID,
+            //     contents: {
+            //         "en": req.body.eventTitle
+            //     },
+            //     included_segments: ["All"],
+            //     content_avaliable: true,
+            //     small_icon: "ic_notification_icon",
+            //     data: {
+            //         PushTitle: "CUSTOM NOTIFICATION"
+            //     }
+            // };
 
-            pushNotificationService.sendNotification(message, (error, results) => {
-                if (error) {
-                    return next(error);
-                }
-                return null;
-            })
+            // pushNotificationService.sendNotification(message, (error, results) => {
+            //     if (error) {
+            //         return next(error);
+            //     }
+            //     return null;
+            // })
 
             res.send('<script>alert("행사가 등록되었습니다."); location.href="/admin/m_event?page=1";</script>');
         });
@@ -211,13 +214,13 @@ router.post('/eventWrite', upload.single('file'), async (req, res, next) => {
 });
 
 //행사 수정 폼 이동
-router.get('/eventUdtForm', async (req, res) => {
+router.post('/eventUdtForm', async (req, res) => {
     try {
-        const page = req.query.page;
-        const searchType1 = req.query.searchType1;
-        const param = req.query.eventId;
-        const sql = "select *, date_format(startDate, '%Y-%m-%d') as startDateFmt,\
-                                date_format(endDate, '%Y-%m-%d') as endDateFmt,\
+        const page = req.body.page;
+        const crewDiv = req.body.crewDiv;
+        const param = req.body.eventId;
+        const sql = "select *, date_format(voteStartDate, '%Y-%m-%d') as voteStartDateFmt,\
+                                date_format(voteEndDate, '%Y-%m-%d') as voteEndDateFmt,\
                                 date_format(eventDate, '%Y-%m-%dT%H:%i') as eventDateFmt\
                        from event\
                       where eventId = ?";
@@ -225,22 +228,13 @@ router.get('/eventUdtForm', async (req, res) => {
             if (err) {
                 console.log(err);
             }
-            var fileOrgName;
-            if (result[0].eventFileRoute != null && result[0].eventFileRoute != '') {
-                const str = result[0].eventFileRoute.split("\\");
-                fileOrgName = str[2];
-            } else {
-                fileOrgName = '';
-            }
-            let route = req.app.get('views') + '/m_event/event_udtForm';
+            let route = req.app.get('views') + '/event/event_udtForm';
             res.render(route, {
                 result: result,
-                fileOrgName: fileOrgName,
                 page: page,
-                searchType1: searchType1
+                crewDiv: crewDiv
             });
         });
-
     } catch (error) {
         res.status(401).send(error.message);
     }
@@ -250,7 +244,7 @@ router.get('/eventUdtForm', async (req, res) => {
 router.post('/eventUpdate', upload.single('file'), (req, res) => {
     try {
         const page = req.body.page;
-        const searchType1 = req.body.searchType1;
+        const eventStatus = req.body.eventStatus;
         const sql = "update event set eventTitle = ?, eventContent = ?, eventPlace = ?, eventPlaceDetail = ?,\
         eventDate = ?, startDate = if(? = '',null,?), endDate = if(? = '',null,?), eventFileRoute = ?\
         where eventId = ?";
@@ -266,7 +260,7 @@ router.post('/eventUpdate', upload.single('file'), (req, res) => {
             if (err) {
                 console.error(err);
             }
-            res.redirect('eventSelectOne?eventId=' + req.body.eventId + '&page=' + page + '&searchType1=' + searchType1);
+            res.redirect('eventSelectOne?eventId=' + req.body.eventId + '&page=' + page + '&eventStatus=' + eventStatus);
         });
     } catch (error) {
         res.send(error.message);
@@ -338,7 +332,7 @@ router.get('/eventFileDelete', async (req, res) => {
     const page = req.query.page;
     const eventFileRoute = req.query.eventFileRoute;
     const param = [req.query.eventId];
-    const searchType1 = req.query.searchType1;
+    const eventStatus = req.query.eventStatus;
     try {
         const sql = "update event set eventFileRoute = null where eventId = ?";
         connection.query(sql, param, (err) => {
@@ -357,7 +351,7 @@ router.get('/eventFileDelete', async (req, res) => {
             console.log("프로필 삭제 에러 발생");
         }
     }
-    res.redirect('eventUdtForm?eventId=' + req.query.eventId + '&page=' + page + '&searchType1=' + searchType1);
+    res.redirect('eventUdtForm?eventId=' + req.query.eventId + '&page=' + page + '&eventStatus=' + eventStatus);
 });
 
 module.exports = router;
