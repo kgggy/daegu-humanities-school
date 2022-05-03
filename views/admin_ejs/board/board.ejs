@@ -3,7 +3,7 @@
 <div style="background-color: #ededfa; padding: 30;">
     <form name="searchForm" action="" method="get" class="easydropdown">
         <input type="hidden" id="page" name="page" value="<%=page%>">
-        <input type="hidden" name="boardDivId" id="boardDivId" value="<%=results[0].boardDivId%>">
+        <input type="hidden" name="boardDivId" id="boardDivId" value="<%=boardDivId%>">
         <input type="hidden" name="boardName" id="boardName" value="<%=community[0].boardName%>">
         <input type="hidden" name="crewDiv" id="crewDiv" value="<%=crewDiv%>">
         <input class="searchbox" type="text" name="searchText" id="searchText"
@@ -12,6 +12,12 @@
 <!-- Basic Bootstrap Table -->
 <div class="card">
 
+    <form id="boardForm" name="boardForm" action="" method="">
+        <input type="hidden" id="page" name="page" value="<%=page%>">
+        <input type="hidden" name="boardDivId" id="boardDivId" value="<%=boardDivId%>">
+        <input type="hidden" name="boardName" id="boardName" value="<%=community[0].boardName%>">
+        <input type="hidden" name="crewDiv" id="crewDiv" value="<%=crewDiv%>">
+        <input type="hidden" id="boardId" name="boardId" value="" />
     <div class="table-responsive text-nowrap">
             <table class="table table-hove">
             <thead>
@@ -27,7 +33,7 @@
                     if(i > length){
                         i++;
                     } else { %> <tr class="pointer"
-                onclick="location.href='/admin/m_board/selectOne?boardDivId=<%=results[i].boardDivId%>&page=<%=page%>&searchText=<%=searchText%>&boardId=<%=results[i].boardId%>&boardName=<%=community[0].boardName%>&crewDiv=<%=crewDiv%>'">
+                onclick="location.href='/admin/boardSelectOne?boardDivId=<%=results[i].boardDivId%>&page=<%=page%>&searchText=<%=searchText%>&boardId=<%=results[i].boardId%>&boardName=<%=community[0].boardName%>&crewDiv=<%=crewDiv%>'">
             <td onclick='event.cancelBubble=true;'><input type="checkbox" id="chk" name="chk"
                     value="<%=results[i].boardId %>" />
             </td>
@@ -49,17 +55,17 @@
             </tr>
             <% } %>
 
-    </div>
-    </td>
+        </td>
     </tbody>
-    </table>
-    
+</table>
+</form>
 </div>
 </div>
+
     <div style="margin-top: 30px;">
-        <button id="enrollAction" class="btn btn-outline-primary"
-            onclick="location.href='/admin/m_board/boardWritForm?boardDivId=<%= results[0].boardDivId %>&crewDiv=<%=crewDiv%>&boardName=<%=community[0].boardName%>'">등록</button>
-        <button class="btn btn-outline-danger" type="button" id="delete_btn">삭제</button>
+        <button id="enrollAction" class="btn btn-primary"
+            onclick="location.href='/admin/boardInsert?boardDivId=<%=boardDivId %>&crewDiv=<%=crewDiv%>&boardName=<%=community[0].boardName%>'">등록</button>
+        <button class="btn btn-danger" type="button" id="delete_btn">삭제</button>
     </div>
 
 
@@ -67,27 +73,26 @@
         <div class="mt_20">
             <div class="paging" id="page_navi">
                 <ul class="pagination customPaging">
-                    <% if(results.length > 0){ %>
                     <li>
-                        <a href="/admin/m_board?boardDivId=<%= results[0].boardDivId %>&page=1&searchText=<%=searchText%>&crewDiv=<%=crewDiv%>"
+                        <a href="/admin/boardMain?boardDivId=<%=boardDivId %>&page=1&searchText=<%=searchText%>&crewDiv=<%=crewDiv%>"
                             class="num">
                             << </a> </li> <li>
                                 <a <%if((page==1)){%><%} else {%>
-                                    href="/admin/m_board?boardDivId=<%= results[0].boardDivId %>&page=<%= parseInt(page) - 1 %>&searchText=<%=searchText%>&crewDiv=<%=crewDiv%>"
+                                    href="/admin/boardMain?boardDivId=<%=boardDivId %>&page=<%= parseInt(page) - 1 %>&searchText=<%=searchText%>&crewDiv=<%=crewDiv%>"
                                     class="num" <% } %>>
                                     < </a> </li> <% for(var i = startPage; i < endPage; i++){  %> <li class="paging_on">
-                                        <a href="/admin/m_board?boardDivId=<%= results[0].boardDivId %>&page=<%= i + 1 %>&searchText=<%=searchText%>&crewDiv=<%=crewDiv%>"
+                                        <a href="/admin/boardMain?boardDivId=<%=boardDivId %>&page=<%= i + 1 %>&searchText=<%=searchText%>&crewDiv=<%=crewDiv%>"
                                             <%if(page==i+1){%>class="selected" <%}%> class="num"><%= i + 1 %></a> </li>
                                             <% } %> <li> <a <%if(page>last-1){%><%} else {%>
-                                                href="/admin/m_board?boardDivId=<%= results[0].boardDivId %>&page=<%= parseInt(page) + 1 %>&searchText=<%=searchText%>&crewDiv=<%=crewDiv%>"
+                                                href="/admin/boardMain?boardDivId=<%=boardDivId %>&page=<%= parseInt(page) + 1 %>&searchText=<%=searchText%>&crewDiv=<%=crewDiv%>"
                                                 class="num" <% } %>>></a></li>
-                    <li><a href="/admin/m_board?boardDivId=<%= results[0].boardDivId %>&page=<%= last%>&searchText=<%=searchText%>&crewDiv=<%=crewDiv%>"
+                    <li><a href="/admin/boardMain?boardDivId=<%=boardDivId %>&page=<%= last%>&searchText=<%=searchText%>&crewDiv=<%=crewDiv%>"
                             class="num">>></a></li>
-                    <% } %>
                 </ul>
             </div>
         </div>
     </div>
+</div>
 </div>
 <!--/ Basic Bootstrap Table -->
 
@@ -95,13 +100,6 @@
     $(document).ready(function () {
         searchajax();
         const formObj = $("form[name='boardForm']");
-
-        //등록 
-        $("#enrollAction").on("click", function () {
-            formObj.attr("method", "get");
-            formObj.attr("action", "boardWritForm");
-            formObj.submit();    
-        });
         // 삭제
 
         $("#delete_btn").on("click", function () {
@@ -109,17 +107,12 @@
             $("input[name=chk]:checked").each(function () {
                 chkArr.push($(this).val());
             });
-            $('#uid').val(chkArr);
+            $('#boardId').val(chkArr);
             if (chkArr == "") {
                 alert("삭제할 목록을 선택해주세요.");
                 return false;
             }
-            var chkImg = [];
-            $("input[name=chk]:checked").each(function () {
-                chkImg.push($(this).attr('data-img'));
-            });
-            $('#userImg').val(chkImg);
-            formObj.attr("action", "userDelete");
+            formObj.attr("action", "/admin/boardDelete/brdsDelete");
             formObj.attr("method", "get");
             if (confirm("삭제하시겠습니까?") == true) {
                 formObj.submit();
@@ -149,8 +142,8 @@
     //초기화
     menuItem.className = 'menu-item';
     //'[2] = 게시판관리' '[3] = 공지사항' '[4] = 갤러리' '[5] = 경조사'
-    //'[6] = 골프회' '[7] = 공지사항' '[8] = 갤러리'
-    //'[9] = 산악회' '[10] = 공지사항' '[11] = 갤러리'
+    //'[10] = 골프회' '[11] = 공지사항' '[12] = 갤러리'
+    //'[17] = 산악회' '[18] = 공지사항' '[19] = 갤러리'
     if(crewDiv == 'all'){
         menuItem[2].className += ' open active';
         if (boardDivId == 1) {
@@ -160,20 +153,21 @@
         } else if (boardDivId == 3)
             menuItem[5].className += ' active';
     } else if (crewDiv == 'gf'){
-        menuItem[6].className += ' open active';
+        menuItem[10].className += ' open active';
         if (boardDivId == 1) {
-            menuItem[7].className += ' active';
+            menuItem[11].className += ' active';
         } else if (boardDivId == 2) {
-            menuItem[8].className += ' active';
+            menuItem[12].className += ' active';
         }
     } else if (crewDiv == 'mt'){
-        menuItem[9].className += ' open active';
+        menuItem[17].className += ' open active';
         if (boardDivId == 1) {
-            menuItem[10].className += ' active';
+            menuItem[18].className += ' active';
         } else if (boardDivId == 2) {
-            menuItem[11].className += ' active';
+            menuItem[19].className += ' active';
         }
     }
+
 
 
     // 선택
@@ -198,7 +192,7 @@
             var words = $("#searchText").val();
             $.ajax({
                 type: 'get',
-                url: '/admin/m_board/boardSearch?boardDivId=<%=community[0].boardDivId%>&page=1&crewDiv=<%=crewDiv%>',
+                url: '/admin/boardSearch?boardDivId=<%=community[0].boardDivId%>&page=1&crewDiv=<%=crewDiv%>',
                 data: {
                     searchText: words
                 },
@@ -214,11 +208,13 @@
                             } else {
                                 $("#tbody").empty();
                                 str +=
-                                    '<tr onclick="location.href=\'/admin/m_board/selectOne?boardId=' +
+                                    '<tr onclick="location.href=\'/admin/boardSelectOne?boardId=' +
                                     data.ajaxSearch[i].boardId + '&page=' + data
                                     .page + '&searchText=' + data.searchText + '&boardDivId=' + 
-                                    data.ajaxSearch[i].boardDivId + '&crewDiv=' + data.crewDiv
-                                    '\'"> <td onclick="event.cancelBubble=true;"><input type="checkbox" id="chk" name="chk" value="' +
+                                    data.ajaxSearch[i].boardDivId + '&crewDiv=' + data.crewDiv +'">';
+
+                                str +=
+                                    '<td onclick="event.cancelBubble=true;"><input type="checkbox" id="chk" name="chk" value="' +
                                     data.ajaxSearch[i].boardId + '" /> </td>';
                                 str +=
                                     '<td>' +
@@ -258,20 +254,20 @@
         var endPage = Number(datas.endPage);
         var temp = '';
         temp = `<li>
-                <a href="/admin/m_board?boardDivId=${boardDivId}&page=1&searchText=${datas.searchText}&crewDiv=${datas.crewDiv}"
+                <a href="/admin/boardMain?boardDivId=${boardDivId}&page=1&searchText=${datas.searchText}&crewDiv=${datas.crewDiv}"
                 class="num">
                 << </a> </li> <li>
                 <a `
         if (datasPage == 1) {
             temp += `><</a></li>`
         } else {
-            temp += `href="/admin/m_board?boardDivId=${boardDivId}&page=${datasPage - 1}&searchText=${datas.searchText}&crewDiv=${datas.crewDiv}"
+            temp += `href="/admin/boardMain?boardDivId=${boardDivId}&page=${datasPage - 1}&searchText=${datas.searchText}&crewDiv=${datas.crewDiv}"
                 class="num">
                 < </a> </li>`
         }
         for (var i = datas.startPage; i < datas.endPage; i++) {
             temp += `<li class="paging_on">
-                    <a href="/admin/m_board?boardDivId=${boardDivId}&page=${i + 1}&searchText=${datas.searchText}&crewDiv=${datas.crewDiv}"`
+                    <a href="/admin/boardMain?boardDivId=${boardDivId}&page=${i + 1}&searchText=${datas.searchText}&crewDiv=${datas.crewDiv}"`
             if (i != 0) {
                 temp += `class="num">${i + 1}</a> </li>`
             } else {
@@ -281,13 +277,13 @@
         }
         temp += `<li> <a `
         if (datasPage == datasLast) {
-            temp += `> > </a></li> <li><a href="/admin/m_board?boardDivId=${boardDivId}&page=${datasPage}&searchText=${datas.searchText}&crewDiv=${datas.crewDiv}</a></li>
-                         <li><a href="/admin/m_board?boardDivId=${boardDivId}&page=${datasPage}&searchText=${datas.searchText}&crewDiv=${datas.crewDiv}"
+            temp += `> > </a></li> <li><a href="/admin/boardMain?boardDivId=${boardDivId}&page=${datasPage}&searchText=${datas.searchText}&crewDiv=${datas.crewDiv}</a></li>
+                         <li><a href="/admin/boardMain?boardDivId=${boardDivId}&page=${datasPage}&searchText=${datas.searchText}&crewDiv=${datas.crewDiv}"
                     class="num">>></a></li>`
         } else {
-            temp += `href="/admin/m_board?boardDivId=${boardDivId}&page=${datasPage + 1}&searchText=${datas.searchText}&crewDiv=${datas.crewDiv}"
+            temp += `href="/admin/boardMain?boardDivId=${boardDivId}&page=${datasPage + 1}&searchText=${datas.searchText}&crewDiv=${datas.crewDiv}"
                     class="num">></a></li>
-                    <li><a href="/admin/m_board?boardDivId=${boardDivId}}&page=${datasLast}&searchText=${datas.searchText}&crewDiv=${datas.crewDiv}"
+                    <li><a href="/admin/boardMain?boardDivId=${boardDivId}}&page=${datasLast}&searchText=${datas.searchText}&crewDiv=${datas.crewDiv}"
                     class="num">>></a></li>`
         }
 
