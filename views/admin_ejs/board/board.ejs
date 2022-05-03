@@ -3,7 +3,7 @@
 <div style="background-color: #ededfa; padding: 30;">
     <form name="searchForm" action="" method="get" class="easydropdown">
         <input type="hidden" id="page" name="page" value="<%=page%>">
-        <input type="hidden" name="boardDivId" id="boardDivId" value="<%=results[0].boardDivId%>">
+        <input type="hidden" name="boardDivId" id="boardDivId" value="<%=boardDivId%>">
         <input type="hidden" name="boardName" id="boardName" value="<%=community[0].boardName%>">
         <input type="hidden" name="crewDiv" id="crewDiv" value="<%=crewDiv%>">
         <input class="searchbox" type="text" name="searchText" id="searchText"
@@ -14,7 +14,7 @@
 
     <form id="boardForm" name="boardForm" action="" method="">
         <input type="hidden" id="page" name="page" value="<%=page%>">
-        <input type="hidden" name="boardDivId" id="boardDivId" value="<%=results[0].boardDivId%>">
+        <input type="hidden" name="boardDivId" id="boardDivId" value="<%=boardDivId%>">
         <input type="hidden" name="boardName" id="boardName" value="<%=community[0].boardName%>">
         <input type="hidden" name="crewDiv" id="crewDiv" value="<%=crewDiv%>">
         <input type="hidden" id="boardId" name="boardId" value="" />
@@ -64,7 +64,7 @@
 
     <div style="margin-top: 30px;">
         <button id="enrollAction" class="btn btn-primary"
-            onclick="location.href='/admin/boardInsert?boardDivId=<%= results[0].boardDivId %>&crewDiv=<%=crewDiv%>&boardName=<%=community[0].boardName%>'">등록</button>
+            onclick="location.href='/admin/boardInsert?boardDivId=<%=boardDivId %>&crewDiv=<%=crewDiv%>&boardName=<%=community[0].boardName%>'">등록</button>
         <button class="btn btn-danger" type="button" id="delete_btn">삭제</button>
     </div>
 
@@ -73,23 +73,21 @@
         <div class="mt_20">
             <div class="paging" id="page_navi">
                 <ul class="pagination customPaging">
-                    <% if(results.length > 0){ %>
                     <li>
-                        <a href="/admin/boardMain?boardDivId=<%= results[0].boardDivId %>&page=1&searchText=<%=searchText%>&crewDiv=<%=crewDiv%>"
+                        <a href="/admin/boardMain?boardDivId=<%=boardDivId %>&page=1&searchText=<%=searchText%>&crewDiv=<%=crewDiv%>"
                             class="num">
                             << </a> </li> <li>
                                 <a <%if((page==1)){%><%} else {%>
-                                    href="/admin/boardMain?boardDivId=<%= results[0].boardDivId %>&page=<%= parseInt(page) - 1 %>&searchText=<%=searchText%>&crewDiv=<%=crewDiv%>"
+                                    href="/admin/boardMain?boardDivId=<%=boardDivId %>&page=<%= parseInt(page) - 1 %>&searchText=<%=searchText%>&crewDiv=<%=crewDiv%>"
                                     class="num" <% } %>>
                                     < </a> </li> <% for(var i = startPage; i < endPage; i++){  %> <li class="paging_on">
-                                        <a href="/admin/boardMain?boardDivId=<%= results[0].boardDivId %>&page=<%= i + 1 %>&searchText=<%=searchText%>&crewDiv=<%=crewDiv%>"
+                                        <a href="/admin/boardMain?boardDivId=<%=boardDivId %>&page=<%= i + 1 %>&searchText=<%=searchText%>&crewDiv=<%=crewDiv%>"
                                             <%if(page==i+1){%>class="selected" <%}%> class="num"><%= i + 1 %></a> </li>
                                             <% } %> <li> <a <%if(page>last-1){%><%} else {%>
-                                                href="/admin/boardMain?boardDivId=<%= results[0].boardDivId %>&page=<%= parseInt(page) + 1 %>&searchText=<%=searchText%>&crewDiv=<%=crewDiv%>"
+                                                href="/admin/boardMain?boardDivId=<%=boardDivId %>&page=<%= parseInt(page) + 1 %>&searchText=<%=searchText%>&crewDiv=<%=crewDiv%>"
                                                 class="num" <% } %>>></a></li>
-                    <li><a href="/admin/boardMain?boardDivId=<%= results[0].boardDivId %>&page=<%= last%>&searchText=<%=searchText%>&crewDiv=<%=crewDiv%>"
+                    <li><a href="/admin/boardMain?boardDivId=<%=boardDivId %>&page=<%= last%>&searchText=<%=searchText%>&crewDiv=<%=crewDiv%>"
                             class="num">>></a></li>
-                    <% } %>
                 </ul>
             </div>
         </div>

@@ -48,7 +48,9 @@ router.get('/', async (req, res) => {
                 endPage = last
             };
             let route = req.app.get('views') + '/board/board';
+            console.log(results)
             res.render(route, {
+                boardDivId: param,
                 crewDiv: crewDiv,
                 community: community,
                 searchText: searchText,
