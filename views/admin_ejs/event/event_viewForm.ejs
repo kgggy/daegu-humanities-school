@@ -12,6 +12,7 @@
             <form id="eventUdtForm" name="eventUdtForm">
                 <input type="hidden" name="page" value="<%=page%>">
                 <input type="hidden" name="crewDiv" value="<%=crewDiv%>">
+                <input type="hidden" name="keepSearch" value="<%=keepSearch%>">
                 <div class="mb-3 row">
                     <label for="html5-text-input" class="col-md-2 col-form-label">행사 번호</label>
                     <div class="col-md-10">
@@ -20,28 +21,16 @@
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="html5-text-input" class="col-md-2 col-form-label">대표이미지</label>
-                    <div class="col-md-10">
-                        <% if(result.length > 0 && result[0].eventImg != null && result[0].eventImg != '') {%>
-                        <img src="../../../<%=result[0].eventImg%>" style="width:100%">
-                        <% }else{ %>
-                        등록된 이미지가 없습니다.
-                        <% } %>
-                        <input type="hidden" value="<%=result[0].eventImg%>" id="eventImg" name="eventImg" />
-                    </div>
-                </div>
-                <div class="mb-3 row">
                     <label for="html5-text-input" class="col-md-2 col-form-label">행사 제목</label>
                     <div class="col-md-10">
-                        <input class="form-control" disabled type="text" value="<%= result[0].eventId %>" id="eventTitle"
+                        <input class="form-control" disabled type="text" value="<%= result[0].eventTitle %>" id="eventTitle"
                             name="eventTitle" />
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="html5-text-input" class="col-md-2 col-form-label">행사 내용</label>
                     <div class="col-md-10">
-                        <input class="form-control" disabled type="text" value="<%- result[0].eventContent %>" id="eventContent"
-                            name="eventContent" />
+                        <%- result[0].eventContent %>
                     </div>
                 </div>
                 <div class="mb-3 row">
@@ -100,8 +89,19 @@
                             <option value="중구" <%if(result[0].eventTarget2=='중구'){%>selected<%}%>>중구</option>
                             <option value="수성구" <%if(result[0].eventTarget2=='수성구'){%>selected<%}%>>수성구</option>
                             <option value="달서구" <%if(result[0].eventTarget2=='달서구'){%>selected<%}%>>달서구</option>
-                            <option value="달성구" <%if(result[0].eventTarget2=='달성구'){%>selected<%}%>>달성구</option>
+                            <option value="달성군" <%if(result[0].eventTarget2=='달성군'){%>selected<%}%>>달성군</option>
                         </select>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="html5-text-input" class="col-md-2 col-form-label">대표이미지</label>
+                    <div class="col-md-3">
+                        <% if(result.length > 0 && result[0].eventImg != null && result[0].eventImg != '') {%>
+                        <img src="../../../<%=result[0].eventImg%>" style="width:100%">
+                        <% }else{ %>
+                        등록된 이미지가 없습니다.
+                        <% } %>
+                        <input type="hidden" value="<%=result[0].eventImg%>" id="eventImg" name="eventImg" />
                     </div>
                 </div>
                 <!-- <div class="mb-3 row">
@@ -166,9 +166,9 @@
             });
             // 삭제
             $("#delete_btn").on("click", function () {
-                formObj.attr("action", "/admin/userDelete/one");
+                formObj.attr("action", "/admin/m_event/eventDelete");
                 formObj.attr("method", "get");
-                if (confirm("회원을 삭제하시겠습니까?") == true) {
+                if (confirm("삭제하시겠습니까?") == true) {
                     formObj.submit();
                 } else {
                     return;
