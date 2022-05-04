@@ -12,11 +12,11 @@ var connection = require('../../../config/db').conn;
 var upload = multer({ //multer안에 storage정보  
     storage: multer.diskStorage({
         destination: (req, file, callback) => {
-            fs.mkdir('public/images/support', function (err) {
+            fs.mkdir('public/images/banner', function (err) {
                 if (err && err.code != 'EEXIST') {
                     // console.log("already exist")
                 } else {
-                    callback(null, 'public/images/support');
+                    callback(null, 'public/images/banner');
                 }
             })
         },
@@ -32,18 +32,21 @@ var upload = multer({ //multer안에 storage정보
     },
 
 });
-//후원광고 수정폼 이동
+//후원 수정 폼 이동
 router.get('/', async (req, res) => {
     try {
-        const param = req.query.supportId;
-        const sql = "select * from support where supportId = ?"
-        connection.query(sql, param, function (err, result, fields) {
+        const page = req.query.page;
+        const bannerId = req.query.bannerId;
+        const sql = "select b.*, f.* from banner b left join file f on b.bannerId = f.bannerId where b.bannerId = ?"
+        let route = req.app.get('views') + '/banner/banner_udtForm';
+        connection.query(sql, bannerId, (err, result) => {
             if (err) {
-                console.log(err);
+                console.error(err);
             }
-            let route = req.app.get('views') + '/m_support/support_udtForm';
             res.render(route, {
-                result: result
+                result: result,
+                page: page,
+                bannerId: bannerId
             });
         });
     } catch (error) {
@@ -51,27 +54,37 @@ router.get('/', async (req, res) => {
     }
 });
 
-//후원 수정
-router.post('/', upload.single('file'), async (req, res) => {
-    var path = "";
-    var param = "";
-    var sql = "";
-    if (req.file != null) {
-        path = req.file.path;
-        param = [path, req.body.supporter, req.body.supportId];
-        sql = "update support set supportImg = ?, supporter = ?\
-                                     where supportId = ?";
-    } else {
-        param = [req.body.supportImg, req.body.supporter, req.body.supportId];
-        sql = "update support set supportImg = ?, supporter = ?\
-                                     where supportId = ?";
-    }
-    connection.query(sql, param, (err) => {
-        if (err) {
-            console.error(err);
-        }
-        res.redirect('/admin/m_support?page=1');
-    });
-});
+//게시글 수정
+router.post('/', upload.array('file'), (req, res) => {
+    const paths = req.files.map(data => data.path);
+    const orgName = req.files.map(data => data.originalname);
+    var searchText = req.body.searchText == undefined ? "" : req.body.searchText;
+    const page = req.body.page;
+    var bannerDiv = req.body.bannerDiv;
+    try {
+        const param = [req.body.bannerTitle, req.body.bannerDetail, req.body.bannerUrl, req.body.bannerId];
+        console.log(param)
+        const sql = "update banner set bannerTitle = ?, bannerDetail = ?, bannerUrl = ? where bannerId = ?";
 
+        connection.query(sql, param, (err) => {
+            if (err) {
+                console.error(err);
+            }
+            for (let i = 0; i < paths.length; i++) {
+                const sql2 = "insert into file(fileRoute, fileOrgName, bannerId) values (?, ?, ?)";
+                const param2 = [paths[i], orgName[i], req.body.bannerId];
+                connection.query(sql2, param2, (err) => {
+                    if (err) {
+                        throw err;
+                    }
+                });
+            };
+            res.redirect('bannerSelectOne?bannerId=' +
+                req.body.bannerId + '&page=' + page + '&searchText=' + searchText
+                + '&bannerDiv=' + bannerDiv);
+        });
+    } catch (error) {
+        res.send(error.message);
+    }
+});
 module.exports = router;

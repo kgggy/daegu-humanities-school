@@ -34,22 +34,30 @@ var upload = multer({ //multer안에 storage정보
 });
 
 //후원광고 삭제
-router.get('/bannerDelete', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
-        const supportImg = req.query.supportImg;
-        const sql = "delete from support where supportId = ?";
-        connection.query(sql, req.query.supportId, (err, row) => {
+        const param = req.query.bannerId;
+        var bannerDiv = req.query.bannerDiv;
+        const sql = "delete from banner where bannerId = ?;\
+                        delete from file where bannerId = ?";
+        connection.query(sql, [param, param], (err) => {
             if (err) {
-                console.log("쿼리 에러입니다.");
+                console.log(err);
             }
-            if (supportImg !== '') {
-                fs.unlinkSync(supportImg, (err) => {
-                    if (err) {
-                        console.log(err);
-                    }
-                });
+            if (req.query.fileRoute != undefined) {
+                if (Array.isArray(req.query.fileRoute) == false) {
+                    req.query.fileRoute = [req.query.fileRoute];
+                }
+                for (let i = 0; i < req.query.fileRoute.length; i++) {
+                    fs.unlinkSync(req.query.fileRoute[i], (err) => {
+                        if (err) {
+                            console.log(err);
+                        }
+                        return;
+                    });
+                }
             }
-            res.redirect("/admin/m_support?page=1");
+            res.send('<script>alert("게시물이 삭제되었습니다."); location.href="/admin/bannerMain?page=1&bannerDiv=' + bannerDiv + '";</script>');
         });
     } catch (error) {
         res.send(error.message);
@@ -59,7 +67,8 @@ router.get('/bannerDelete', async (req, res) => {
 //첨부파일 삭제
 router.get('/bannerFileDelete', async (req, res) => {
     const param = req.query.fileId;
-    const fileRoute = req.query.fileRoute;
+    const fileRoute = req.query.fileRoute; 
+    console.log(param, fileRoute)
     try {
         const sql = "delete from file where fileId = ?";
         connection.query(sql, param, (err, row) => {

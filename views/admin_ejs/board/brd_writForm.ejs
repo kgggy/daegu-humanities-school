@@ -106,7 +106,7 @@
 
          if (confirm("등록하시겠습니까?") == true) {
             $('input[name=writContent]').attr('value', content);
-            $("#boardwrite").attr("action", "boardwrite");
+            $("#boardwrite").attr("action", "boardInsert");
             $("#boardwrite").submit();
          } else {
             return;

@@ -5,8 +5,8 @@ const sharp = require('sharp');
 const multer = require("multer");
 const path = require('path');
 var connection = require('../../../config/db').conn;
-// const {ONE_SIGNAL_CONFIG} = require("../../config/pushNotification_config");
-// const pushNotificationService = require("../../services/push_Notification.services");
+const {ONE_SIGNAL_CONFIG} = require("../../../config/pushNotification_config");
+const pushNotificationService = require("../../../services/push_Notification.services");
 
 //파일업로드 모듈
 var upload = multer({ //multer안에 storage정보  
@@ -75,26 +75,26 @@ router.post('/', upload.single('file'), async (req, res, next) => {
             if (err) {
                 throw err;
             }
-            // //OneSignal 푸쉬 알림
-            // var message = {
-            //     app_id: ONE_SIGNAL_CONFIG.APP_ID,
-            //     contents: {
-            //         "en": req.body.eventTitle
-            //     },
-            //     included_segments: ["All"],
-            //     content_avaliable: true,
-            //     small_icon: "ic_notification_icon",
-            //     data: {
-            //         PushTitle: "CUSTOM NOTIFICATION"
-            //     }
-            // };
+            //OneSignal 푸쉬 알림
+            var message = {
+                app_id: ONE_SIGNAL_CONFIG.APP_ID,
+                contents: {
+                    "en": req.body.eventTitle
+                },
+                included_segments: ["All"],
+                content_avaliable: true,
+                small_icon: "ic_notification_icon",
+                data: {
+                    PushTitle: "CUSTOM NOTIFICATION"
+                }
+            };
 
-            // pushNotificationService.sendNotification(message, (error, results) => {
-            //     if (error) {
-            //         return next(error);
-            //     }
-            //     return null;
-            // })
+            pushNotificationService.sendNotification(message, (error, results) => {
+                if (error) {
+                    return next(error);
+                }
+                return null;
+            })
 
             res.send('<script>alert("행사가 등록되었습니다."); location.href="/admin/eventSelect?page=1&crewDiv=' + crewDiv + '";</script>');
         });

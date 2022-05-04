@@ -32,7 +32,6 @@ router.get('/', async (req, res) => {
                 endPage = last
             };
             let route = req.app.get('views') + '/banner/banner';
-            console.log(results)
             res.render(route, {
                 bannerDiv: bannerDiv,
                 searchText: searchText,

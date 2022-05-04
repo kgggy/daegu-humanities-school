@@ -22,6 +22,7 @@
         <h5 class="card-header">※ 삭제시 원글(게시글/댓글)이 함께 삭제됩니다.</h5>
         <div class="table-responsive text-nowrap">
             <form id="eventForm" name="eventForm" action="" method="">
+                <input type="hidden" name="page" value="1">
                 <table class="table table-hove">
                     <thead>
                         <tr>
@@ -68,7 +69,7 @@
                     <button class="btn btn-block btn-outline-primary" onclick="board('/admin/m_blame/blameDetail?blameDiv=0&targetContentId<%=results[i].targetContentId %>', '',
                         'resizable=no,width=640, height=700, scrollbars=1', '<%= results[i].fileRoute %>')">게시글</button>
                     <%} else{ %>
-                    <button class="btn btn-block btn-outline-primary" onclick="board('/admin/m_certiContent/one?certiContentId=<%=results[i].targetContentId %>', '',
+                    <button class="btn btn-block btn-outline-primary" onclick="board('/admin/m_blame/blameDetail?blameId=<%=results[i].blameId%>', '',
                         'resizable=no,width=640, height=700, scrollbars=1', '<%= results[i].fileRoute %>')">댓글</button>
                     <%}%>  
                 </td>

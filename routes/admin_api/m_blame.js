@@ -12,7 +12,7 @@ router.get('/blame', async (req, res) => {
         if (blameDiv != '') {
             sql += " and blameDiv = '" + blameDiv + "'";
         }
-            sql += " order by blameDate desc"
+        sql += " order by blameDate desc"
         connection.query(sql, (err, results) => {
             var countPage = 10; //하단에 표시될 페이지 개수
             var page_num = 10; //한 페이지에 보여줄 개수
@@ -46,9 +46,9 @@ router.get('/blame', async (req, res) => {
 
 //신고 여러개 삭제
 router.get('/blameDelete', (req, res) => {
-     const param = req.query.blameId;
-     const page = req.query.page;
-     const str = param.split(',');
+    const param = req.query.blameId;
+    const page = req.query.page;
+    const str = param.split(',');
     for (var i = 0; i < str.length; i++) {
         const sql = "call blameComplate(?)";
         connection.query(sql, str[i], (err, result) => {
@@ -60,6 +60,51 @@ router.get('/blameDelete', (req, res) => {
     res.send('<script>alert("신고내역이 처리되었습니다."); location.href="/admin/m_blame/blameAll?page=1";</script>');
 });
 
-
+//게시글, 댓글 상세보기
+router.get('/blameDetail', (req, res) => {
+    try {
+        if(req.query.blameDiv == '0') {
+            //게시글
+            const param = req.query.boardId;
+            const boardDivId = req.query.boardDivId;
+            const sql = "select b.*,date_format(boardDate, '%Y-%m-%d') as boardDateFmt,\
+                                    (select count(*) from hitCount where hitCount.boardId = b.boardId) as hitCount,\
+                                    f.fileRoute from board b left join file f on b.boardId = f.boardId\
+                                    where b.boardId = ?";
+    
+            connection.query(sql, param, (err, result) => {
+                if (err) {
+                    res.json({
+                        msg: "select query error"
+                    });
+                }
+                let route = req.app.get('views') + '/board/brd_viewForm';
+                res.render(route, {
+                    result: result,
+                    boardName: boardName,
+                    boardDivId: boardDivId
+                });
+            });
+        } else {
+            //댓글
+            const param = req.query.blameId;
+            const sql = "select date_format(cmtDate, '%Y-%m-%d') as cmtDateFmt,\
+                                b.targetUserName, b.uid, c.cmtId, c.cmtContent, c.cmtDate from blame b\
+                      left join comment c on c.cmtId = b.targetContentId\
+                          where b.blameId = ?";
+            connection.query(sql, param, (err, result) => {
+                if (err) {
+                    console.log(err);
+                }
+                let route = req.app.get('views') + '/blame/blameDetail';
+                    res.render(route, {
+                    result: result
+                });
+            })
+        }
+    } catch (error) {
+        res.status(401).send(error.message);
+    }
+});
 
 module.exports = router;

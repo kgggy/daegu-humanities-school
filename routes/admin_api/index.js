@@ -31,7 +31,10 @@ const bannerInsert = require('./banner/bannerInsert.js');
 const bannerUpdate = require('./banner/bannerUpdate.js');
 const bannerDelete = require('./banner/bannerDelete.js');
 
-const m_comment = require('./m_comment.js');
+
+const commentSelect = require('./comment/commentSelect.js');
+const commentDelete = require('./comment/commentDelete.js');
+
 const m_blame = require('./m_blame.js');
 
 // router.use('/', (req,res,next) => {
@@ -84,7 +87,10 @@ router.use('/bannerInsert', bannerInsert);
 router.use('/bannerUpdate', bannerUpdate);
 router.use('/bannerDelete', bannerDelete);
 
-router.use('/m_comment', m_comment);
+
+router.use('/commentSelect', commentSelect);
+router.use('/commentDelete', commentDelete);
+
 router.use('/m_blame', m_blame);
 
 module.exports = router;
