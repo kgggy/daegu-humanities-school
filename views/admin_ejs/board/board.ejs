@@ -26,6 +26,7 @@
                     <th>번호</th>
                     <th>제목</th>
                     <th>날짜</th>
+                    <th>댓글</th>
                 </tr>
             </thead>
             <tbody class="table-border-bottom-0" id="tbody">
@@ -46,6 +47,12 @@
             <td>
                 <%= results[i].boardDatefmt %>
             </td>
+            <td onclick='event.cancelBubble=true;'>
+                <% if(results[i].mcount != 0) { %>
+                <button id="comment_btn" type="button"
+                    class="btn btn-block btn-outline-success"
+                    onclick="comment('/admin/commentSelect', '', 'resizable=0,width=640, height=700, scrollbars=1', '<%= results[i].boardId %>')">댓글(<%=results[i].mcount %>)</button>
+                <% } %></td>
             </tr>
             <% } %>
             <% } %>
@@ -72,6 +79,7 @@
     <div>
         <div class="mt_20">
             <div class="paging" id="page_navi">
+                <% if(results.length > 0) { %>
                 <ul class="pagination customPaging">
                     <li>
                         <a href="/admin/boardMain?boardDivId=<%=boardDivId %>&page=1&searchText=<%=searchText%>&crewDiv=<%=crewDiv%>"
@@ -89,6 +97,7 @@
                     <li><a href="/admin/boardMain?boardDivId=<%=boardDivId %>&page=<%= last%>&searchText=<%=searchText%>&crewDiv=<%=crewDiv%>"
                             class="num">>></a></li>
                 </ul>
+                <%}%>
             </div>
         </div>
     </div>
@@ -288,5 +297,11 @@
         }
 
         $(".customPaging").html(temp);
+    }
+
+    //댓글 확인
+    function comment(theURL, winName, features, boardId) {
+        theURL += '?boardId=' + boardId;
+        window.open(theURL, winName, features);
     }
 </script>

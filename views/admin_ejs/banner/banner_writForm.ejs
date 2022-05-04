@@ -19,7 +19,7 @@
             <!-- HTML5 Inputs -->
             <div class="card mb-4">
                <h5 class="card-header"><%if(bannerDiv=="all"){%>총동창회<%}else if (bannerDiv == "gf"){%>골프회<%}
-                                       else if (bannerDiv == "mt"){%>산악회<%}%> / <%=bannerName%> 등록</h5>
+                                       else if (bannerDiv == "mt"){%>산악회<%}%> / 후원 등록</h5>
                <div class="card-body">
                      <!-- 컨텐츠 -->
                      <form action="" id="bannerwrite" method="post" enctype="multipart/form-data" autocomplete="off">
@@ -35,6 +35,12 @@
                            <label class="col-md-1 col-form-label" for="text-input">업체세부내용</label>
                            <div class="col-md-10">
                               <textarea name="bannerDetail" class="editor" id="editor"></textarea>
+                           </div>
+                        </div>
+                        <div class="mb-3 row">
+                           <label class="col-md-1 col-form-label" for="text-input">사이트</label>
+                           <div class="col-md-10">
+                              <input class="form-control" id="bannerUrl" type="text" name="bannerUrl" value="">
                            </div>
                         </div>
                         <div class="mb-3 row">
@@ -62,6 +68,22 @@
          </div>
 
 <script type="text/javascript">
+       // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 
+    var menuItem = document.getElementsByClassName("menu-item");
+    var bannerDiv = document.getElementById("bannerDiv").value;
+    //초기화
+    menuItem.className = 'menu-item';
+    //'[2] = 게시판관리' '[3] = 공지사항' '[4] = 갤러리' '[5] = 경조사'
+    //'[10] = 골프회' '[11] = 공지사항' '[12] = 갤러리'
+    //'[17] = 산악회' '[18] = 공지사항' '[19] = 갤러리'
+    if(bannerDiv == 'all'){
+        menuItem[8].className += ' open active';
+    } else if (bannerDiv == 'gf'){
+        menuItem[14].className += ' open active';
+    } else if (bannerDiv == 'mt'){
+        menuItem[20].className += ' open active';
+    }
+    
    $(document).ready(function () {
       //ckeditor
       ClassicEditor
@@ -98,7 +120,7 @@
 
          if (confirm("등록하시겠습니까?") == true) {
             $('input[name=writContent]').attr('value', content);
-            $("#bannerwrite").attr("action", "bannerwrite");
+            $("#bannerwrite").attr("action", "bannerInsert");
             $("#bannerwrite").submit();
          } else {
             return;

@@ -27,7 +27,7 @@ router.get('/', async (req, res) => {
         var page = req.query.page;
         var searchText = req.query.searchText == undefined ? "" : req.query.searchText;
         var sql = "select b.*, c.*, u.userName, u.uid, date_format(boardDate, '%Y-%m-%d') as boardDatefmt, date_format(boardUpdDate, '%Y-%m-%d') as boardUpdDatefmt\
-                    from board b\
+                    ,(select count(*) from comment c where c.boardId = b.boardId) as mcount from board b\
                     left join boardDiv c on c.boardDivId = b.boardDivId\
                     left join user u  on u.uid = b.uid\
                     where b.boardDivId = ? and b.crewDiv = ?";
@@ -48,7 +48,6 @@ router.get('/', async (req, res) => {
                 endPage = last
             };
             let route = req.app.get('views') + '/board/board';
-            console.log(results)
             res.render(route, {
                 boardDivId: param,
                 crewDiv: crewDiv,
