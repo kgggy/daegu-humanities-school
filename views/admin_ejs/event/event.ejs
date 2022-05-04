@@ -1,8 +1,9 @@
-<script>
-    $(document).ready(function () {
-        voteAjax();
-    });
-</script>
+<style>
+    .menu-item.active .menu-link {
+        color: #696cff;
+        background-color: rgba(105, 108, 255, 0.16) !important;
+    }
+</style>
 <h4 class="fw-bold py-3 mb-4">
     <% if(crewDiv == 'all') { %>
     <span class="text-muted fw-light">총동창회 / </span>&nbsp;&nbsp;행사 관리
@@ -70,8 +71,10 @@
                             <td><%=results[i].eventDateFmt %></td>
                             <td><%=results[i].eventAdres %> <%=results[i].eventAdresDetail %></td>
                             <td><%=results[i].eventStatusFmt %></td>
-                            <td onclick="event.cancelBubble=true;"><button class="btn btn-outline-primary" type="button"
-                                    data-bs-toggle="modal" data-bs-target="#modalScrollable"> 투표명단</button></td>
+                            <td onclick="event.cancelBubble=true;"><button name="voteEventId"
+                                    class="btn btn-outline-primary" type="button" value="<%=results[i].eventId%>"
+                                    data-bs-toggle="modal" data-bs-target="#modalScrollable" onclick="voteAjax(0)">
+                                    투표명단</button></td>
                         </tr>
                         <% } %>
                         <% } %>
@@ -101,62 +104,42 @@
                     <div class="nav-align-top mb-4">
                         <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
                             <li class="nav-item">
-                                <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab"
-                                    data-bs-target="#join" aria-controls="join" aria-selected="true">
+                                <button type="button" class="nav-link eventId active" role="tab" data-bs-toggle="tab"
+                                    data-bs-target="#join" aria-controls="join" aria-selected="true"
+                                    onclick="voteAjax(0)" value="">
                                     참여자
                                 </button>
                             </li>
                             <li class="nav-item">
-                                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
-                                    data-bs-target="#nJoin" aria-controls="nJoin" aria-selected="false">
+                                <button type="button" class="nav-link eventId" role="tab" data-bs-toggle="tab"
+                                    data-bs-target="#noJoin" aria-controls="noJoin" aria-selected="false"
+                                    onclick="voteAjax(1)" value="">
                                     불참자
                                 </button>
                             </li>
                             <li class="nav-item">
-                                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
-                                    data-bs-target="#noChoose" aria-controls="noChoose" aria-selected="false">
+                                <button type="button" class="nav-link eventId" role="tab" data-bs-toggle="tab"
+                                    data-bs-target="#noChoose" aria-controls="noChoose" aria-selected="false"
+                                    onclick="voteAjax()" value="">
                                     미정자
                                 </button>
                             </li>
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="join" role="tabpanel">
-                                <div class="form-group row">
-									<div class="cmtInfo-wrap">
-										<div class="cmtInfo">
-											<img src="../../../public/images/icon_admin.gif">
-											<span>안녕</span>
-										</div>
-									</div>
-								</div>
+                                <div class="form-group row col-sm-12 here">
+
+                                </div>
                             </div>
-                            <div class="tab-pane fade" id="nJoin" role="tabpanel">
-                                <p>
-                                    Donut dragée jelly pie halvah. Danish gingerbread bonbon cookie wafer candy oat cake
-                                    ice
-                                    cream. Gummies halvah tootsie roll muffin biscuit icing dessert gingerbread. Pastry
-                                    ice cream
-                                    cheesecake fruitcake.
-                                </p>
-                                <p class="mb-0">
-                                    Jelly-o jelly beans icing pastry cake cake lemon drops. Muffin muffin pie tiramisu
-                                    halvah
-                                    cotton candy liquorice caramels.
-                                </p>
+                            <div class="tab-pane fade" id="noJoin" role="tabpanel">
+                                <div class="form-group row col-sm-12 here">
+
+                                </div>
                             </div>
                             <div class="tab-pane fade" id="noChoose" role="tabpanel">
-                                <p>
-                                    Oat cake chupa chups dragée donut toffee. Sweet cotton candy jelly beans macaroon
-                                    gummies
-                                    cupcake gummi bears cake chocolate.
-                                </p>
-                                <p class="mb-0">
-                                    Cake chocolate bar cotton candy apple pie tootsie roll ice cream apple pie brownie
-                                    cake. Sweet
-                                    roll icing sesame snaps caramels danish toffee. Brownie biscuit dessert dessert.
-                                    Pudding jelly
-                                    jelly-o tart brownie jelly.
-                                </p>
+                                <div class="form-group row col-sm-12 here">
+
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -173,23 +156,25 @@
     <div class="demo-inline-spacing">
         <button type="button" class="btn btn-primary" id="enrollAction" onclick="enroll()">등록</button>
     </div>
+    <% if(results.length > 0) { %>
     <div class="mt_20">
         <div class="paging" id="page_navi">
             <ul class="pagination customPaging">
-                <li> <a href="/admin/m_event?page=1&crewDiv=<%=crewDiv%>" class="num">
+                <li> <a href="/admin/m_event?page=1&crewDiv=<%=crewDiv%><%=keepSearch%>" class="num">
                         <<</a> </li> <li> <a <%if((page<startPage)||(page==1)){%><%} else {%>
-                                href="/admin/m_event?page=<%= parseInt(page) - 1 %>&crewDiv=<%=crewDiv%>" class="num"
+                                href="/admin/m_event?page=<%= parseInt(page) - 1 %>&crewDiv=<%=crewDiv%><%=keepSearch%>" class="num"
                                 <% } %>>
                                 <</a> </li> <% for(var i = startPage; i < endPage ; i++){  %> <li class="paging_on">
-                                    <a href="/admin/m_event?page=<%= i + 1 %>&crewDiv=<%=crewDiv%>"
+                                    <a href="/admin/m_event?page=<%= i + 1 %>&crewDiv=<%=crewDiv%><%=keepSearch%>"
                                         <%if(page==i+1){%>class="selected" <%}%> class="num"><%= i + 1 %></a> </li>
                                         <% } %> <li> <a <%if(page>last-1){%><%} else {%>
-                                            href="/admin/m_event?page=<%= parseInt(page) + 1 %>&crewDiv=<%=crewDiv%>"
+                                            href="/admin/m_event?page=<%= parseInt(page) + 1 %>&crewDiv=<%=crewDiv%><%=keepSearch%>"
                                             class="num" <% } %>>></a></li>
-                <li><a href="/admin/m_event?page=<%= last %>&crewDiv=<%=crewDiv%>" class="num">>></a></li>
+                <li><a href="/admin/m_event?page=<%= last %>&crewDiv=<%=crewDiv%><%=keepSearch%>" class="num">>></a></li>
             </ul>
         </div>
     </div>
+    <% } %>
 </div>
 </div>
 
@@ -236,73 +221,44 @@
         menuItem[20].className += ' open active';
     }
 
-    function voteAjax() {
-        $("#searchText").keyup(function () {
-            var words = $("#searchText").val();
-            // console.log(words);
-            $.ajax({
-                type: 'get',
-                url: '/admin/m_event/voteList',
-                data: {
-                    choose: words,
-                    eventId: eventId
-                },
-                dataType: 'json',
-                success: function (data) {
-                    var str = ''
-                    $(".customPaging").empty();
-                    if (data.ajaxSearch.length > 0) {
-                        for (var i = (data.page * data.page_num) - data
-                                .page_num; i < (data.page * data.page_num); i++) {
-                            if (i > data.length) {
-                                i++;
-                            } else {
-                                $("#tbody").empty();
-                                str +=
-                                    '<tr onclick="location.href=\'/admin/m_gallery/gallerySelectOne?galleryId=' +
-                                    data.ajaxSearch[i].galleryId + '&page=' + data
-                                    .page + '&searchText=' + data.searchText +
-                                    '\'"> <td onclick="event.cancelBubble=true;"><input type="checkbox" id="chk" name="chk" value="' +
-                                    data.ajaxSearch[i].galleryId + '" /> </td>';
-                                str +=
-                                    '<td>' +
-                                    (data.ajaxSearch.length - i) + '</td>';
-                                str +=
-                                    '<td>' +
-                                    data.ajaxSearch[i].galleryTitle + '</td>';
-                                str +=
-                                    '<td>' +
-                                    data.ajaxSearch[i].hitCount + '</td>';
-                                str +=
-                                    '<td>' +
-                                    data.ajaxSearch[i].galleryWritDateFmt + '</td>'
-                                str += '<td onclick="event.cancelBubble=true;">'
-                                if (data.ajaxSearch[i].mcount != 0) {
-                                    str +=
-                                        '<button id="comment_btn" type="button" class="btn btn-block btn-outline-success"'
-                                    str +=
-                                        'onclick = "comment(\'/admin/m_comment\',\'\', \'resizable=0,width=640, height=700, scrollbars=1\',\'' +
-                                        data.ajaxSearch[i].galleryId + '\')">'
-                                    str += '댓글(' + data.ajaxSearch[i].mcount + ')</button></td>'
-                                } else {
-                                    str += '<td></td>'
-                                }
-                                str += '</tr>'
-                            }
-                        }
-                        // console.log("str = " + str)
-                        $("#tbody").append(str);
-                    } else {
-                        var none = '<tr> <td colspan="6"> 데이터가 존재하지 않습니다. </td> </tr>'
-                        $("#tbody").empty();
-                        $("#tbody").append(none);
+    function voteAjax(choose) {
+        var words = choose;
+        var eventId1 = event.target.value
+        $(".eventId").attr('value', eventId1);
+        var eventId = $(".eventId").val();
+        $.ajax({
+            type: 'get',
+            url: '/admin/m_event/voteList',
+            data: {
+                choose: words,
+                eventId: eventId
+            },
+            dataType: 'json',
+            success: function (data) {
+                var str = ''
+                if (data.joinyn.length > 0) {
+                    $(".here").empty();
+                    str += '<span> 총 인원 수 : ' + data.joinyn.length + ' 명</span>';
+                    for (var i = 0; i < data.joinyn.length; i++) {
+                        str += '<br><br><div class="cmtInfo-wrap col-sm-4" style="margin-bottom: 30px;">';
+                        str += '<div class="cmtInfo">';
+                        str += '<img src="../../../public/images/icon_admin.gif"><span>&nbsp;' + data.joinyn[i].userName + '</span>';
+                        str += '</div>';
+                        str += '</div>';
                     }
-                    paging(data);
-                },
-                error: function (e) {
-                    console.log('error:' + e.status);
+                    $(".here").append(str);
+                } else {
+                    $(".here").empty();
+                    var none = '';
+                    none += '<div class="cmtInfo">';
+                    none += '<span>투표 참여자가 존재하지 않습니다.</span>';
+                    none += '</div>';
+                    $(".here").append(none);
                 }
-            });
+            },
+            error: function (e) {
+                console.log('error:' + e.status);
+            }
         });
     }
 </script>
