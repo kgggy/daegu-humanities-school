@@ -1,156 +1,97 @@
-<main class="main">
-    <!-- Breadcrumb-->
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">Home</li>
-        <li class="breadcrumb-item">
-            <a style="font-weight: bold;">배너관리</a>
-        </li>
-        <% if(bannerDiv == 'p') { %>
-        <li class="breadcrumb-item active">팝업배너</li>
-        <% }else if(bannerDiv == 'm1') { %>
-        <li class="breadcrumb-item active">메인 영상 배너</li>
-        <% }else if(bannerDiv == 'm2') { %>
-        <li class="breadcrumb-item active">메인 이미지 배너</li>
-        <% } %>
-    </ol>
-    <div class="container-fluid">
-        <div class="animated fadeIn">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-header">
-                            <i class="fa fa-align-justify"></i>
-                            <% if(results.length > 0 && bannerDiv == 'p') {%>
-                            팝업 배너 관리 (최대 9개까지 등록 가능합니다.)
-                            <% }else if(results.length > 0 && bannerDiv == 'm1'){ %>
-                            메인 영상 배너 관리
-                            <% }else if(results.length > 0 && bannerDiv == 'm2'){ %>
-                            메인 이미지 배너 관리
-                            <% } %>
-                        </div>
-                        <div class="card-body">
-                            <form id="bannerForm" name="bannerForm" method="" action="">
-                                <input type="hidden" name="bannerId" value="" />
-                                <input type="hidden" name="bannerRoute" value="" />
-                                <input type="hidden" id="bannerDiv" name="bannerDiv" value="<%=bannerDiv%>" />
-                                <table class="table table-responsive-sm table-hover">
-                                    <colgroup>
-                                        <col width="5%" />
-                                        <col width="20%" />
-                                        <col width="10%" />
-                                        <col width="15%" />
-                                        <col width="15%" />
-                                        <col width="10%" />
-                                    </colgroup>
-                                    <thead>
-                                        <tr>
-                                            <th>번호</th>
-                                            <% if(bannerDiv != 'm1') { %>
-                                            <th>이미지</th>
-                                            <% } else { %>
-                                            <th>경로</th>
-                                            <% } %>
-                                            <th>시작날짜</th>
-                                            <th>끝날짜</th>
-                                            <th>노출여부</th>
-                                            <th>순서</th>
-                                            <th>비고</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <% if(results.length > 0) { %>
-                                        <% for(var i = 0; i < results.length; i++){ %>
-                                        <tr>
-                                            <td><%= i + 1 %></td>
-                                            <% if(bannerDiv != 'm1') { %>
-                                            <% if(results[i].bannerRoute != null && results[i].bannerRoute != '') {%>
-                                            <td><img src="../../../<%= results[i].bannerRoute %>" alt="사진"
-                                                    style="padding:20px !important; width:250px" /></td>
-                                            <% }else{ %>
-                                            <td><img src="../../../public/images/certification/sprout.png" alt=""
-                                                    style="padding:20px !important; width:250px" /></td>
-                                            <% } %>
-                                            <% } else { %>
-                                            <td><%=results[i].bannerRoute %></td>
-                                            <% } %>
-                                            <td><%=results[i].startDatefmt %></td>
-                                            <td><%=results[i].endDatefmt%></td>
-                                            <% if(results[i].showYN == 0) {%>
-                                            <td>O</td>
-                                            <% }else{ %>
-                                            <td>X</td>
-                                            <% } %>
-                                            <td><%=results[i].showNo%></td>
-                                            <td>
-                                                <input id="searchAction" type="button"
-                                                    class="btn btn-block btn-outline-success"
-                                                    onclick="bannerUpdate('<%=results[i].bannerId%>')" value="수정 " />
-                                                <button type="button" id="delete_btn" name="bannerDelete"
-                                                    class="btn btn-block btn-outline-danger"
-                                                    data-bannerId="<%=results[i].bannerId%>"
-                                                    data-bannerRoute="<%=results[i].bannerRoute%>">삭제</button>
-                                            </td>
-                                        </tr>
-                                        <% } %>
-                                        <% } else {%>
-                                        <tr>
-                                            <td colspan="7">
-                                                등록된 목록이 없습니다.
-                                            </td>
-                                        </tr>
-                                        <%}%>
-            </tbody>
-        </table>
+<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"><%if(bannerDiv=="all"){%>총동창회<%}else if (bannerDiv == "gf"){%>골프회<%}
+    else if (bannerDiv == "mt"){%>산악회<%}%> /</span> 후원 관리</h4>
+<div style="background-color: #ededfa; padding: 30;">
+    <form name="searchForm" action="" method="get" class="easydropdown">
+        <input type="hidden" id="page" name="page" value="<%=page%>">
+        <input type="hidden" name="bannerDiv" id="bannerDiv" value="<%=bannerDiv%>">
+        <input class="searchbox" type="text" name="searchText" id="searchText"
+            <%if(searchText!=null){%>value="<%=searchText%>" <%}%> placeholder="후원업체명">
+    </form>
+<!-- Basic Bootstrap Table -->
+<div class="card">
+
+    <form id="bannerForm" name="bannerForm" action="" method="">
+        <input type="hidden" id="page" name="page" value="<%=page%>">
+        <input type="hidden" name="bannerDiv" id="bannerDiv" value="<%=bannerDiv%>">
+        <input type="hidden" id="bannerId" name="bannerId" value="" />
+    <div class="table-responsive text-nowrap">
+            <table class="table table-hove">
+            <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>후원업체</th>
+                    <th>사이트</th>
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0" id="tbody">
+                <% if(results.length > 0) { %> <% for(var i = (page * page_num) - page_num; i < (page * page_num); i++) { 
+                    if(i > length){
+                        i++;
+                    } else { %> <tr class="pointer"
+                onclick="location.href='/admin/bannerSelectOne?bannerDiv=<%=results[i].bannerDiv%>&page=<%=page%>&searchText=<%=searchText%>&bannerId=<%=results[i].bannerId%>'">
+            <td>
+                <%=results.length - i%>
+            </td>
+            <td>
+                <%=results[i].bannerTitle%>
+            </td>
+            <td>
+                <%= results[i].bannerUrl %>
+            </td>
+            </tr>
+            <% } %>
+            <% } %>
+            <% } else { %>
+            <tr>
+                <td colspan="7">등록된 게시물이 없습니다.</td>
+            </tr>
+            <% } %>
+
+        </td>
+    </tbody>
+</table>
 </form>
-<div class="mt_20">
-    <p class="float_r">
-        <input id="enrollAction" class="btn btn-block btn-outline-success" type="button" onclick="enroll('<%= results.length %>')"
-                                        value="등록" />
-                                        </p>
-                        </div>
-                    </div>
-                </div>
+</div>
+</div>
+
+    <div style="margin-top: 30px;">
+        <button id="enrollAction" class="btn btn-primary"
+            onclick="location.href='/admin/bannerInsert?bannerDiv=<%=bannerDiv %>'">등록</button>
+        <button class="btn btn-danger" type="button" id="delete_btn">삭제</button>
+    </div>
+
+
+    <div>
+        <div class="mt_20">
+            <div class="paging" id="page_navi">
+                <ul class="pagination customPaging">
+                    <li>
+                        <a href="/admin/bannerMain?bannerDiv=<%=bannerDiv %>&page=1&searchText=<%=searchText%>"
+                            class="num">
+                            << </a> </li> <li>
+                                <a <%if((page==1)){%><%} else {%>
+                                    href="/admin/bannerMain?bannerDiv=<%=bannerDiv %>&page=<%= parseInt(page) - 1 %>&searchText=<%=searchText%>"
+                                    class="num" <% } %>>
+                                    < </a> </li> <% for(var i = startPage; i < endPage; i++){  %> <li class="paging_on">
+                                        <a href="/admin/bannerMain?bannerDiv=<%=bannerDiv %>&page=<%= i + 1 %>&searchText=<%=searchText%>"
+                                            <%if(page==i+1){%>class="selected" <%}%> class="num"><%= i + 1 %></a> </li>
+                                            <% } %> <li> <a <%if(page>last-1){%><%} else {%>
+                                                href="/admin/bannerMain?bannerDiv=<%=bannerDiv %>&page=<%= parseInt(page) + 1 %>&searchText=<%=searchText%>"
+                                                class="num" <% } %>>></a></li>
+                    <li><a href="/admin/bannerMain?bannerDiv=<%=bannerDiv %>&page=<%= last%>&searchText=<%=searchText%>"
+                            class="num">>></a></li>
+                </ul>
             </div>
         </div>
     </div>
-    </div>
-</main>
+</div>
+</div>
+<!--/ Basic Bootstrap Table -->
 
 <script>
-    // 삭제
-    const formObj = $("form[name='bannerForm']");
-    $("button[name=bannerDelete]").on("click", function () {
-        $('input[name=bannerId').val($(this).attr('data-bannerId'));
-        $('input[name=bannerRoute').val($(this).attr('data-bannerRoute'));
-        // console.log($(this).attr('data-bannerRoute'));
-        formObj.attr("action", "bannerDelete");
-        formObj.attr("method", "get");
-        if (confirm("삭제하시겠습니까?") == true) {
-            formObj.submit();
-            alert("삭제되었습니다.");
-        } else {
-            return;
-        }
-    });
-
-    function bannerUpdate(str) {
-        $('input[name=bannerId').val(str);
-        formObj.attr("action", "bannerUdtForm");
-        formObj.attr("method", "get");
-        formObj.submit();
-    }
-
-    function enroll(results) {
-        if (results > 8) {
-            alert("배너는 최대 9개까지 등록 가능합니다.");
-        } else {
-            formObj.attr("action", "bannerWritForm");
-            formObj.attr("method", "get");
-            formObj.submit();
-        }
-    }
-
     $(document).ready(function () {
+        searchajax();
+        
         //쿼리스트링 페이지
         function getUrlParams() {
             var params = {};
@@ -160,11 +101,142 @@
             return params;
         }
         var param = getUrlParams();
-        var bannerDiv = document.getElementById("bannerDiv");
-        bannerDiv.value = param.bannerDiv;
+        var page = document.getElementById("page");
+        page.value = param.page;
+        const searchForm = $("form[name='searchForm']");
     });
 
-    // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 '[4] = 배너관리'
-    var navDropdown = document.getElementsByClassName("nav-dropdown");
-        navDropdown[4].className += 'open';
+    // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 
+    var menuItem = document.getElementsByClassName("menu-item");
+    var bannerDiv = document.getElementById("bannerDiv").value;
+    var crewDiv = document.getElementById("crewDiv").value;
+    //초기화
+    menuItem.className = 'menu-item';
+    //'[2] = 게시판관리' '[3] = 공지사항' '[4] = 갤러리' '[5] = 경조사'
+    //'[10] = 골프회' '[11] = 공지사항' '[12] = 갤러리'
+    //'[17] = 산악회' '[18] = 공지사항' '[19] = 갤러리'
+    if(crewDiv == 'all'){
+        menuItem[2].className += ' open active';
+        if (bannerDivId == 1) {
+            menuItem[3].className += ' active';
+        } else if (bannerDivId == 2) {
+            menuItem[4].className += ' active';
+        } else if (bannerDivId == 3)
+            menuItem[5].className += ' active';
+    } else if (crewDiv == 'gf'){
+        menuItem[10].className += ' open active';
+        if (bannerDivId == 1) {
+            menuItem[11].className += ' active';
+        } else if (bannerDivId == 2) {
+            menuItem[12].className += ' active';
+        }
+    } else if (crewDiv == 'mt'){
+        menuItem[17].className += ' open active';
+        if (bannerDivId == 1) {
+            menuItem[18].className += ' active';
+        } else if (bannerDivId == 2) {
+            menuItem[19].className += ' active';
+        }
+    }
+
+    //검색
+    function searchajax() {
+        $("#searchText").keyup(function () {
+            var words = $("#searchText").val();
+            console.log(words)
+            $.ajax({
+                type: 'get',
+                url: '/admin/bannerSearch?bannerDiv=<%=bannerDiv%>&page=1',
+                data: {
+                    searchText: words
+                },
+                dataType: 'json',
+                success: function (data) {
+                    var str = ''
+                    $(".customPaging").empty();
+                    if (data.ajaxSearch.length > 0) {
+                        for (var i = (data.page * data.page_num) - data
+                                .page_num; i < (data.page * data.page_num); i++) {
+                            if (i > data.length) {
+                                i++;
+                            } else {
+                                $("#tbody").empty();
+                                str +=
+                                    '<tr onclick="location.href=\'/admin/bannerSelectOne?bannerId=' +
+                                    data.ajaxSearch[i].bannerId + '&page=' + data
+                                    .page + '&searchText=' + data.searchText + '&bannerDiv=' + 
+                                    data.ajaxSearch[i].bannerDiv +'">';
+                                str +=
+                                    '<td>' +
+                                    (data.ajaxSearch.length - i) + '</td>';
+                                str +=
+                                    '<td>' +
+                                    data.ajaxSearch[i].bannerTitle + '</td>';
+                                str +=
+                                    '<td>' +
+                                    data.ajaxSearch[i].bannerUrl + '</td></tr>';
+                            }
+                        }
+                        console.log("str = " + str)
+                        $("#tbody").append(str);
+                    } else {
+                        var none = '<tr> <td colspan="8"> 데이터가 존재하지 않습니다. </td> </tr>'
+                        $("#tbody").empty();
+                        $("#tbody").append(none);
+                    }
+                    paging(data);
+                },
+                error: function (e) {
+                    console.log('error:' + e.status);
+                }
+            });
+        });
+    }
+
+    function paging(data) {
+        var datas = data;
+        var dataLength = datas.length;
+        var dataPageNum = datas.page_num;
+        var bannerDiv = datas.ajaxSearch[0].bannerDiv;
+        var datasPage = Number(datas.page);
+        var datasLast = Number(datas.last);
+        var startPage = Number(datas.startPage);
+        var endPage = Number(datas.endPage);
+        var temp = '';
+        temp = `<li>
+                <a href="/admin/bannerMain?bannerDiv=${bannerDiv}&page=1&searchText=${datas.searchText}"
+                class="num">
+                << </a> </li> <li>
+                <a `
+        if (datasPage == 1) {
+            temp += `><</a></li>`
+        } else {
+            temp += `href="/admin/bannerMain?bannerDiv=${bannerDiv}&page=${datasPage - 1}&searchText=${datas.searchText}"
+                class="num">
+                < </a> </li>`
+        }
+        for (var i = datas.startPage; i < datas.endPage; i++) {
+            temp += `<li class="paging_on">
+                    <a href="/admin/bannerMain?bannerDiv=${bannerDiv}&page=${i + 1}&searchText=${datas.searchText}"`
+            if (i != 0) {
+                temp += `class="num">${i + 1}</a> </li>`
+            } else {
+                temp +=
+                    `class="selected" style="background-color:#696CFF;><span style="color:white;">${i + 1}</span></a> </li>`
+            }
+        }
+        temp += `<li> <a `
+        if (datasPage == datasLast) {
+            temp += `> > </a></li> <li><a href="/admin/bannerMain?bannerDiv=${bannerDiv}&page=${datasPage}&searchText=${datas.searchText}</a></li>
+                         <li><a href="/admin/bannerMain?bannerDiv=${bannerDiv}&page=${datasPage}&searchText=${datas.searchText}"
+                    class="num">>></a></li>`
+        } else {
+            temp += `href="/admin/bannerMain?bannerDiv=${bannerDiv}&page=${datasPage + 1}&searchText=${datas.searchText}"
+                    class="num">></a></li>
+                    <li><a href="/admin/bannerMain?bannerDiv=${bannerDiv}}&page=${datasLast}&searchText=${datas.searchText}"
+                    class="num">>></a></li>`
+        }
+
+        $(".customPaging").html(temp);
+    }
 </script>

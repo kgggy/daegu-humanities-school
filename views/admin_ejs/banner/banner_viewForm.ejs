@@ -1,0 +1,130 @@
+
+         <div class="col-xs-6">
+            <!-- HTML5 Inputs -->
+            <div class="card mb-4">
+               <h5 class="card-header">후원관리</h5>
+               <div class="card-body">
+                      <form name="udtForm" role="form">
+                         <input type="hidden" id="page" name="page" value="<%=page%>">
+                         <input type="hidden" id="searchText" name="searchText" value="<%=searchText%>">
+                         <input type="hidden" id="bannerDiv" name="bannerDiv" value="<%=result[0].bannerDiv%>">
+                         <input type="hidden" id="bannerId" name="bannerId" value="<%=result[0].bannerId%>">
+                            <!-- 컨텐츠 -->
+                            <div class="mb-3 row">
+                               <label class="col-md-2 col-form-label" for="text-input">배너번호</label>
+                               <div class="col-md-9">
+                                  <input class="form-control" id="bannerId" type="text" name="bannerId"
+                                     disabled="disabled" value="<%=result[0].bannerId%>">
+                               </div>
+                            </div>
+                            <div class="mb-3 row">
+                               <label class="col-md-2 col-form-label" for="text-input">업체명</label>
+                               <div class="col-md-9">
+                                  <input class="form-control" id="bannerTitle" type="text" name="bannerTitle"
+                                     disabled="disabled" value="<%=result[0].bannerTitle%>">
+                               </div>
+                            </div>
+                           <div class="mb-3 row">
+                               <label class="col-md-2 col-form-label" for="text-input">사이트</label>
+                               <div class="col-md-9">
+                                  <input class="form-control" id="bannerUrl" type="text" name="bannerUrl"
+                                     disabled="disabled" value="<%=result[0].bannerUrl%>">
+                               </div>
+                            </div>
+                            <div class="mb-3 row">
+                               <label class="col-md-2 col-form-label" for="text-input">업체세부내용</label>
+                               <div class="col-md-9">
+                                  <%-result[0].bannerDetail%>
+                               </div>
+                            </div>
+                            <div class="mb-3 row">
+                               <label class="col-md-2 col-form-label">첨부파일</label>
+                               <div class="col-md-9">
+                               <% if(result[0].fileRoute != null) { %>
+                               <div class="file-wrap">
+                                  <% for(var i = 0; i < result.length; i++) {%>
+                                  <div id="" style="padding: 10px;">
+                                     <p><img src="../../../<%= result[i].fileRoute %>" style="width:300px; margin-bottom: 15px;">
+                                        <a href="../../../<%= result[i].fileRoute %>"
+                                           class="btn btn-block btn-outline-success" type="button" download>파일 다운로드</a>
+                                     </p>
+                                     <input type="hidden" name="fileRoute" value="<%=result[i].fileRoute%>">
+                                  </div>
+                                  <% } %>
+                               </div>
+                               <% }%>
+                               <% if(result[0].fileRoute == null) { %>
+                               <div id="fileDiv" style="padding: 10px;">
+                                  파일이 없습니다.
+                               </div>
+                               <br><% } %>
+                            </div>
+                            </div>
+                            <!--option 버튼  -->
+                           <div class="demo-inline-spacing">
+                           <button type="button" class="btn btn-outline-info" id="update_btn">수정</button>
+                           <button type="button" class="btn btn-outline-danger" id="delete_btn">삭제</button>
+                           <button type="button" class="btn btn-outline-primary"
+                              onclick="location.href='/admin/bannerMain?bannerDiv=<%=result[0].bannerDiv%>&page=<%=page%>&searchText=<%=searchText%>'">목록</button>
+                           </div>
+                         </div>
+                      </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+    <script type="text/javascript">
+       $(document).ready(function () {
+          var formObj = $("form[name='udtForm']");
+          // 수정 폼 연결
+          $("#update_btn").on("click", function () {
+             formObj.attr("action", "bannerUpdate");
+             formObj.attr("method", "get");
+             formObj.submit();
+          });
+          // 삭제
+          $("#delete_btn").on("click", function () {
+             formObj.attr("action", "bannerDelete");
+             formObj.attr("method", "get");
+             if (confirm("게시글을 삭제하시겠습니까?") == true) {
+                formObj.submit();
+             } else {
+                return;
+             }
+          });
+       })
+
+   // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 
+    var menuItem = document.getElementsByClassName("menu-item");
+    var bannerDiv = document.getElementById("bannerDiv").value;
+    var crewDiv = document.getElementById("crewDiv").value;
+    //초기화
+    menuItem.className = 'menu-item';
+    //'[2] = 게시판관리' '[3] = 공지사항' '[4] = 갤러리' '[5] = 경조사'
+    //'[10] = 골프회' '[11] = 공지사항' '[12] = 갤러리'
+    //'[17] = 산악회' '[18] = 공지사항' '[19] = 갤러리'
+    if(crewDiv == 'all'){
+        menuItem[2].className += ' open active';
+        if (bannerDivId == 1) {
+            menuItem[3].className += ' active';
+        } else if (bannerDivId == 2) {
+            menuItem[4].className += ' active';
+        } else if (bannerDivId == 3)
+            menuItem[5].className += ' active';
+    } else if (crewDiv == 'gf'){
+        menuItem[10].className += ' open active';
+        if (bannerDivId == 1) {
+            menuItem[11].className += ' active';
+        } else if (bannerDivId == 2) {
+            menuItem[12].className += ' active';
+        }
+    } else if (crewDiv == 'mt'){
+        menuItem[17].className += ' open active';
+        if (bannerDivId == 1) {
+            menuItem[18].className += ' active';
+        } else if (bannerDivId == 2) {
+            menuItem[19].className += ' active';
+        }
+    }
+
+    </script>
