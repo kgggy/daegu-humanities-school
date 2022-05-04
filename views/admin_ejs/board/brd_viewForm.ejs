@@ -9,52 +9,47 @@
                          <input type="hidden" id="searchText" name="searchText" value="<%=searchText%>">
                          <input type="hidden" id="boardDivId" name="boardDivId" value="<%=result[0].boardDivId%>">
                          <input type="hidden" id="boardId" name="boardId" value="<%=result[0].boardId%>">
-
+                         <input type="hidden" id="boardName" name="boardName" value="<%=boardName%>">
+                         <input type="hidden" id="crewDiv" name="crewDiv" value="<%=crewDiv%>">
                             <!-- 컨텐츠 -->
-                            <div class="form-group row">
+                            <div class="mb-3 row">
                                <label class="col-md-2 col-form-label" for="text-input">글번호</label>
                                <div class="col-md-9">
-                                  <input class="form-control" id="ucmtitle" type="text" name="ucmtitle"
+                                  <input class="form-control" id="boardId" type="text" name="boardId"
                                      disabled="disabled" value="<%=result[0].boardId%>">
                                </div>
                             </div>
-                            <div class="form-group row">
+                            <div class="mb-3 row">
                                <label class="col-md-2 col-form-label" for="text-input">제목</label>
                                <div class="col-md-9">
                                   <input class="form-control" id="boardTitle" type="text" name="boardTitle"
                                      disabled="disabled" value="<%=result[0].boardTitle%>">
                                </div>
                             </div>
-                            <div class="form-group row">
-                               <label class="col-md-2 col-form-label" for="text-input">우선순위</label>
+                            <div class="mb-3 row">
+                               <label class="col-md-2 col-form-label" for="text-input">작성일</label>
                                <div class="col-md-9">
-                                  <input class="form-control" id="ucmtitle" type="text" name="ucmtitle"
-                                     disabled="disabled" value="<%=result[0].boardRank%>">
-                               </div>
-                            </div>
-                            <div class="form-group row">
-                               <label class="col-md-2 col-form-label" for="text-input">작성일/수정일</label>
-                               <div class="col-md-9">
-                                  <input class="form-control" id="ucmtitle" type="text" name="ucmtitle"
+                                  <input class="form-control" id="boardDatefmt" type="text" name="boardDatefmt"
                                      disabled="disabled"
                                      value="<%=result[0].boardDatefmt%>">
                                </div>
                             </div>
-                            <div class="form-group row">
+                            <div class="mb-3 row">
                                <label class="col-md-2 col-form-label" for="text-input">조회수</label>
                                <div class="col-md-9">
-                                  <input class="form-control" id="ucmtitle" type="text" name="ucmtitle"
+                                  <input class="form-control" id="hitCount" type="text" name="hitCount"
                                      disabled="disabled" value="<%=result[0].hitCount%>">
                                </div>
                             </div>
-                            <div class="form-group row">
+                            <div class="mb-3 row">
                                <label class="col-md-2 col-form-label" for="text-input">내용</label>
                                <div class="col-md-9">
                                   <%-result[0].boardContent%>
                                </div>
                             </div>
-                            <div class="form-group row">
+                            <div class="mb-3 row">
                                <label class="col-md-2 col-form-label">첨부파일</label>
+                               <div class="col-md-9">
                                <% if(result[0].fileRoute != null) { %>
                                <div class="file-wrap">
                                   <% for(var i = 0; i < result.length; i++) {%>
@@ -63,7 +58,6 @@
                                         <a href="../../../<%= result[i].fileRoute %>"
                                            class="btn btn-block btn-outline-success" type="button" download>파일 다운로드</a>
                                      </p>
-                                     <input type="hidden" name="fileNo" value="<%=result[i].fileNo%>">
                                      <input type="hidden" name="fileRoute" value="<%=result[i].fileRoute%>">
                                   </div>
                                   <% } %>
@@ -75,38 +69,32 @@
                                </div>
                                <br><% } %>
                             </div>
-                            <!--option 버튼  -->
-                            <div class="option_button">
-                               <div>
-                                  <button class="btn btn-block btn-outline-success" type="button"
-                                     id="update_btn">수정</button>
-                               </div>
-                               <div>
-                                  <button class="btn btn-block btn-outline-danger" type="button"
-                                     id="delete_btn">삭제</button>
-                               </div>
-                               <div>
-                                  <button class="btn btn-block btn-outline-success" type="button"
-                                     onclick="location.href='/admin/m_board?boardDivId=<%=result[0].boardDivId%>boardId=<%=result[0].boardId%>&page=<%=page%>&searchText=<%=searchText%>'">목록</button>
-                               </div>
                             </div>
+                            <!--option 버튼  -->
+                           <div class="demo-inline-spacing">
+                           <button type="button" class="btn btn-outline-info" id="update_btn">수정</button>
+                           <button type="button" class="btn btn-outline-danger" id="delete_btn">삭제</button>
+                           <button type="button" class="btn btn-outline-primary"
+                              onclick="location.href='/admin/boardMain?boardDivId=<%=result[0].boardDivId%>&page=<%=page%>&searchText=<%=searchText%>&crewDiv=<%=crewDiv%>'">목록</button>
+                           </div>
                          </div>
                       </form>
                   </div>
                </div>
             </div>
+         </div>
     <script type="text/javascript">
-       var formObj = $("form[name='udtForm']");
        $(document).ready(function () {
+          var formObj = $("form[name='udtForm']");
           // 수정 폼 연결
           $("#update_btn").on("click", function () {
-             formObj.attr("action", "brdUdtForm");
+             formObj.attr("action", "boardUpdate");
              formObj.attr("method", "get");
              formObj.submit();
           });
           // 삭제
           $("#delete_btn").on("click", function () {
-             formObj.attr("action", "brdDelete");
+             formObj.attr("action", "boardDelete/brdDelete");
              formObj.attr("method", "get");
              if (confirm("게시글을 삭제하시겠습니까?") == true) {
                 formObj.submit();
@@ -115,7 +103,38 @@
              }
           });
        })
-    // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 '[1] = 게시판관리'
-    var navDropdown = document.getElementsByClassName("nav-dropdown");
-        navDropdown[1].className += 'open';       
+
+   // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 
+    var menuItem = document.getElementsByClassName("menu-item");
+    var boardDivId = document.getElementById("boardDivId").value;
+    var crewDiv = document.getElementById("crewDiv").value;
+    //초기화
+    menuItem.className = 'menu-item';
+    //'[2] = 게시판관리' '[3] = 공지사항' '[4] = 갤러리' '[5] = 경조사'
+    //'[10] = 골프회' '[11] = 공지사항' '[12] = 갤러리'
+    //'[17] = 산악회' '[18] = 공지사항' '[19] = 갤러리'
+    if(crewDiv == 'all'){
+        menuItem[2].className += ' open active';
+        if (boardDivId == 1) {
+            menuItem[3].className += ' active';
+        } else if (boardDivId == 2) {
+            menuItem[4].className += ' active';
+        } else if (boardDivId == 3)
+            menuItem[5].className += ' active';
+    } else if (crewDiv == 'gf'){
+        menuItem[10].className += ' open active';
+        if (boardDivId == 1) {
+            menuItem[11].className += ' active';
+        } else if (boardDivId == 2) {
+            menuItem[12].className += ' active';
+        }
+    } else if (crewDiv == 'mt'){
+        menuItem[17].className += ' open active';
+        if (boardDivId == 1) {
+            menuItem[18].className += ' active';
+        } else if (boardDivId == 2) {
+            menuItem[19].className += ' active';
+        }
+    }
+
     </script>

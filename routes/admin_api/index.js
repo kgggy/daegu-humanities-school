@@ -10,9 +10,16 @@ const userUpdate = require('./user/userUpdate.js');
 const userDelete = require('./user/userDelete.js');
 const userExcel = require('./user/userExcel.js');
 
+const boardMain = require('./board/boardMain.js');
+const boardSearch = require('./board/boardSearch.js');
+const boardSelectOne = require('./board/boardSelectOne.js');
+const boardInsert = require('./board/boardInsert.js');
+const boardUpdate = require('./board/boardUpdate.js');
+const boardDelete = require('./board/boardDelete.js');
+
+
 const m_support = require('./m_support.js');
 const m_comment = require('./m_comment.js');
-const m_board = require('./m_board.js');
 const m_event = require('./m_event.js');
 const m_vote = require('./m_vote.js');
 const m_blame = require('./m_blame.js');
@@ -44,9 +51,15 @@ router.use('/userUpdate', userUpdate);
 router.use('/userDelete', userDelete);
 router.use('/userExcel', userExcel);
 
+router.use('/boardMain', boardMain);
+router.use('/boardSearch', boardSearch);
+router.use('/boardSelectOne', boardSelectOne);
+router.use('/boardInsert', boardInsert);
+router.use('/boardUpdate', boardUpdate);
+router.use('/boardDelete', boardDelete);
+
 router.use('/m_support', m_support);
 router.use('/m_comment', m_comment);
-router.use('/m_board', m_board);
 router.use('/m_event', m_event);
 router.use('/m_vote', m_vote);
 router.use('/m_blame', m_blame);
