@@ -1,178 +1,133 @@
 <style>
-    /* div.dataTables_wrapper div.dataTables_filter label {
-        display: block !important;
-    } */
-
-    .userTable thead tr .sorting:first-child::before,
-    .userTable thead tr .sorting_asc:first-child::before,
-    .userTable thead tr .sorting_asc:first-child::after,
-    .userTable thead .sorting_desc:first-child:after,
-    .userTable thead .sorting:first-child:after,
-    .userTable thead .sorting:first-child {
-        content: none !important;
-        cursor: unset
+    .menu-item.active .menu-link {
+        color: #696cff;
+        background-color: rgba(105, 108, 255, 0.16) !important;
     }
-
 </style>
-<script>
-    $(document).ready(function () {
-        searchajax();
-    });
-</script>
-<main class="main">
-    <!-- Breadcrumb-->
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">Home</li>
-        <li class="breadcrumb-item">
-            <a style="font-weight: bold;">게시판관리</a>
-        </li>
-        <li class="breadcrumb-item active">신고글관리</li>
-    </ol>
-    <div class="container-fluid">
-        <div class="animated fadeIn">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-header">
-                            <i class="fa fa-align-justify"></i> 신고글관리 (삭제시 원글(게시글/댓글)이 함께 삭제됩니다.)
-                        </div>
-                        <div class="card-body">
-                            <form id="boardForm" name="boardForm" method="" action="">
-                                <div style="display: flex; justify-content: end; gap: 5px;">
-                                    <input type="hidden" id="page" name="page" value="">
-                                    <select name="targetType" class="dropdown">
-                                    <option value="" selected="selected">종류</option>
-                                    <option value="0" <%if(targetType =="0"){%> selected="selected" <%}%>>게시글</option>
-                                    <option value="1" <%if(targetType =="1"){%> selected="selected" <%}%>>댓글</option>
-                                </select>
-                                    <input class="btn btn-block btn-outline-success" type="button" id="searchAction"
-                                    value="검색" onclick="search()" />
-                                    <!-- <button class="btn btn-block btn-outline-success" type="submit" id="searchAction"  style="margin-bottom: 10px;">검색</button> -->
-                                </div>
-                                <table id="exampleTable"
-                                    class="table userTable table-responsive-sm table-hover">
-                                    <colgroup>
-                                        <col width="5%" />
-                                        <col width="8%" />
-                                        <col width="8%" />
-                                        <col width="30%" />
-                                        <col width="10%" />
-                                        <col width="10%" />
-                                        <col width="10%" />
-                                        <col width="5%" />
-                                    </colgroup>
-                                    <thead>
-                                        <tr>
-                                            <th><input type="checkbox" name="chkAll" id="chkAll" /></th>
-                                            <th>신고 번호</th>
-                                            <th>종류</th>
-                                            <th>신고 사유</th>
-                                            <th>신고자</th>
-                                            <th>대상자</th>
-                                            <th>신고일</th>
-                                            <th>존재유무</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tbody">
-                                        <% if(results.length > 0){ %> <% for(var i = (page * page_num) - page_num; i < (page * page_num); i++) { 
-                                    if(i > length){
-                                        i++;
-                                    } else { 
-                                        if(results[i].fileRoute){
-                                        if(results[i].targetType == 0){%> 
-                                            <tr onclick="board('/admin/m_certiContent/one?certiContentId=<%=results[i].targetContentId %>', '',
-                                             'resizable=no,width=640, height=700, scrollbars=1', '<%= results[i].fileRoute %>')">
-                                        <%} else{%>
-                                            <tr onclick="comment('/admin/m_comment/certiCommentOne', '', 'resizable=no,width=640, height=700, scrollbars=1',
-                                             '<%= results[i].certiContentId %>', '<%= results[i].targetContentId %>')">
-                                            <%}}else{%>
-                                                <tr>
-                                                    <%}%>
-                                    <td onclick='event.cancelBubble=true;'><input type="checkbox" id="chk" name="chk" value="<%=results[i].blaId %>"/>
-                                    </td>
-                                    <td>
-                                        <%=results[i].blaId%></td>
-                                    <% if(results[i].targetType == 0){ %>
-                                        <td>게시글</td>
-                                    <%} else{ %>
-                                        <td>댓글</td>
-                                        
-                                    <%}%>
-                                    
-                                    <td>
-                                        <%=results[i].blaContent%></td>
-                                    <td>
-                                        <%=results[i].uid%></td>
-                                    <td>
-                                        <%=results[i].targetUid%></td>
-                                    <td>
-                                        <%=results[i].blaDatefmt%></td>
-                                    <td>
-                                        <% if(results[i].fileRoute){%>
-                                           Y
-                                        <%}else{%>
-                                           N
-                                        <%}%></td>    
-                                    </tr>    
-                                    <% } %>
-                                    <% } %>
-                                    <% } else { %>
-                                    <tr>
-                                        <td colspan="6">
-                                            데이터가 존재하지 않습니다.
-                                        </td>
-                                    </tr>
-                                    <% } %>
-                                    </tbody>
-                                    </table>
-                                    <div>
-                                        <input type="hidden" id="blameId" name="blameId" value="" />
-                                        <button class="btn btn-block btn-outline-danger" type="button"
-                                            id="delete_btn">삭제</button>
-                                    </div>
-                                    <div class="mt_20">
-                                        <div class="paging" id="page_navi">
-                                            <ul class="pagination customPaging">
-                                                <% if(results.length > 0){ %>
-                                                <li>
-                                                    <a href="/admin/m_blame/blameAll?page=1"
-                                                        class="num">
-                                                        << </a> </li> <li>
-                                                            <a <%if((page<last-1)||(page==1)){%><%} else {%>
-                                                                href="/admin/m_blame/blameAll?page=<%= parseInt(page) - 1 %><%= keepSearch %>"
-                                                                class="num" <% } %>>
-                                                                < </a> </li>
-                                                                    <% for(var i = startPage; i < endPage; i++){  %>
-                                                                    <li class="paging_on">
-                                                                    <a href="/admin/m_blame/blameAll?page=<%= i + 1 %>"
-                                                                        <%if(page==i+1){%>class="selected"
-                                                                        <%}%> class="num"><%= i + 1 %></a> </li> <% } %>
-                                                                        <li> <a <%if(page>last-1){%><%} else {%>
-                                                                            href="/admin/m_blame/blameAll?page=<%= parseInt(page) + 1 %><%= keepSearch %>"
-                                                                            class="num" <% } %>>></a></li>
-                                                <li><a href="/admin/m_blame/blameAll?page=<%= last%>"
-                                                        class="num">>></a></li>
-                                                <% } %>
-                                            </ul>
-                                        </div>
-                                    </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<h4 class="fw-bold py-3 mb-4">
+    <span class="text-muted fw-light">신고 / </span>신고 관리
+</h4>
+<div style="background-color: #ededfa; padding: 30;">
+    <form name="searchForm" action="" method="get" class="easydropdown">
+        <input type="hidden" name="page" value="1">
+        <select name="blameDiv" class="dropdown">
+            <option value="" selected="selected">종류</option>
+            <option value="0" <%if(blameDiv =="0"){%> selected="selected" <%}%>>게시글</option>
+            <option value="1" <%if(blameDiv =="1"){%> selected="selected" <%}%>>댓글</option>
+        </select>
+        <button class="btn btn-primary" type="submit" id="searchAction" style="margin-bottom: 10px;">검색</button>
+    </form>
+    <!-- Basic Bootstrap Table -->
+    <div class="card">
+        <h5 class="card-header">※ 삭제시 원글(게시글/댓글)이 함께 삭제됩니다.</h5>
+        <div class="table-responsive text-nowrap">
+            <form id="eventForm" name="eventForm" action="" method="">
+                <table class="table table-hove">
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox" name="chkAll" id="chkAll" /></th>
+                            <th>신고 번호</th>
+                            <th>신고 사유</th>
+                            <th>신고자</th>
+                            <th>대상자</th>
+                            <th>신고일</th>
+                            <th>존재유무</th>
+                            <th>종류</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                        <% if(results.length > 0){ %> <% for(var i = (page * page_num) - page_num; i < (page * page_num); i++) { 
+                            if(i > length){
+                                i++;
+                            } else {  %> <tr>
+
+                <!-- <tr onclick="comment('/admin/m_comment/certiCommentOne', '', 'resizable=no,width=640, height=700, scrollbars=1',
+                                     '<%= results[i].certiContentId %>', '<%= results[i].targetContentId %>')"> -->
+
+                <td onclick='event.cancelBubble=true;'><input type="checkbox" id="chk" name="chk"
+                        value="<%=results[i].blaId %>" />
+                </td>
+                <td>
+                    <%=results[i].blameId%></td>
+                <td>
+                    <%=results[i].blameContent%></td>
+                <td>
+                    <%=results[i].userName%></td>
+                <td>
+                    <%=results[i].targetUserName%></td>
+                <td>
+                    <%=results[i].blameDatefmt%></td>
+                <td>
+                    <% if(results[i].fileRoute){%>
+                    Y
+                    <%}else{%>
+                    N
+                    <%}%></td>  
+                        <td>
+                    <% if(results[i].blameDiv == 0){ %>
+                    <button class="btn btn-block btn-outline-primary" onclick="board('/admin/m_blame/blameDetail?blameDiv=0&targetContentId<%=results[i].targetContentId %>', '',
+                        'resizable=no,width=640, height=700, scrollbars=1', '<%= results[i].fileRoute %>')">게시글</button>
+                    <%} else{ %>
+                    <button class="btn btn-block btn-outline-primary" onclick="board('/admin/m_certiContent/one?certiContentId=<%=results[i].targetContentId %>', '',
+                        'resizable=no,width=640, height=700, scrollbars=1', '<%= results[i].fileRoute %>')">댓글</button>
+                    <%}%>  
+                </td>
+                            </tr>    
+                            <% } %>
+                    <% } %>
+                    <% } else { %>
+                    <tr>
+                        <td colspan="8">
+                            데이터가 존재하지 않습니다.
+                        </td>
+                    </tr>
+                    <% } %>
+                    </tbody>
+                    </table>
+    </form>
+</div>
+</div>
+<!--/ Basic Bootstrap Table -->
+<div>
+    <div class="demo-inline-spacing">
+        <input type="hidden" id="blameId" name="blameId" value="" />
+        <button class="btn btn-block btn-danger" type="button" id="delete_btn">삭제</button>
+    </div>
+    <% if(results.length > 0) { %>
+    <div class="mt_20">
+        <div class="paging" id="page_navi">
+            <ul class="pagination customPaging">
+                <% if(results.length > 0){ %>
+                <li>
+                    <a href="/admin/m_blame/blameAll?page=1" class="num">
+                        << </a> </li> <li>
+                            <a <%if((page<last-1)||(page==1)){%><%} else {%>
+                                href="/admin/m_blame/blameAll?page=<%= parseInt(page) - 1 %>" class="num" <% } %>>
+                                < </a> </li> <% for(var i = startPage; i < endPage; i++){  %> <li class="paging_on">
+                                    <a href="/admin/m_blame/blameAll?page=<%= i + 1 %>"
+                                        <%if(page==i+1){%>class="selected" <%}%> class="num"><%= i + 1 %></a> </li>
+                                        <% } %> <li> <a <%if(page>last-1){%><%} else {%>
+                                            href="/admin/m_blame/blameAll?page=<%= parseInt(page) + 1 %>" class="num"
+                                            <% } %>>></a></li>
+                <li><a href="/admin/m_blame/blameAll?page=<%= last%>" class="num">>></a></li>
+                <% } %>
+            </ul>
         </div>
     </div>
-</main>
+    <% } %>
+</div>
+</div>
 
 <script>
-    const formObj = $("form[name='boardForm']");
-    //등록 
-    function enroll() {
-        formObj.attr("method", "get");
-        formObj.attr("action", "writForm");
-        formObj.submit();
-    }
+    const formObj = $("form[name='searchForm']");
+    $(document).ready(function () {
+        //검색
+        $("#searchAction").on("click", function () {
+            searchForm.attr("action", "/admin/m_blame/blame");
+            searchForm.attr("method", "get");
+            searchForm.submit();
+        })
+    });
     // 삭제
     $("#delete_btn").on("click", function () {
         var chkArr = [];
@@ -195,17 +150,15 @@
     })
     //검색
     function search() {
-        
         formObj.attr("method", "get");
         formObj.attr("action", "blameAll");
         formObj.submit();
     }
     //체크박스
     $("#chkAll").click(function () {
-        if ($("#chkAll").is(":checked")){
+        if ($("#chkAll").is(":checked")) {
             $("input[name=chk]").prop("checked", true);
-        }
-        else
+        } else
             $("input[name=chk]").prop("checked", false);
     });
     $("input[name=chk]").click(function () {
@@ -216,18 +169,6 @@
         else
             $("#chkAll").prop("checked", true);
     });
-
-    //쿼리스트링 페이지
-    function getUrlParams() {
-        var params = {};
-        window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (str, key, value) {
-            params[key] = value;
-        });
-        return params;
-    }
-    var param = getUrlParams();
-    var page = document.getElementById("page");
-    page.value = param.page;
 
     //신고 댓글 확인
     function comment(theURL, winName, features, certiContentId, targetContentId) {
@@ -241,7 +182,7 @@
         window.open(theURL, winName, features);
     }
 
-    // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 '[1] = 게시판관리'
-    var navDropdown = document.getElementsByClassName("nav-dropdown");
-        navDropdown[1].className += 'open';
+    var menuItem = document.getElementsByClassName("menu-item");
+    menuItem.className = 'menu-item';
+    menuItem[24].className += ' open active';
 </script>
