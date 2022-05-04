@@ -17,8 +17,13 @@ const boardInsert = require('./board/boardInsert.js');
 const boardUpdate = require('./board/boardUpdate.js');
 const boardDelete = require('./board/boardDelete.js');
 
+const bannerMain = require('./banner/bannerMain.js');
+const bannerSearch = require('./banner/bannerSearch.js');
+const bannerSelectOne = require('./banner/bannerSelectOne.js');
+const bannerInsert = require('./banner/bannerInsert.js');
+const bannerUpdate = require('./banner/bannerUpdate.js');
+const bannerDelete = require('./banner/bannerDelete.js');
 
-const m_support = require('./m_support.js');
 const m_comment = require('./m_comment.js');
 const m_event = require('./m_event.js');
 const m_vote = require('./m_vote.js');
@@ -58,7 +63,13 @@ router.use('/boardInsert', boardInsert);
 router.use('/boardUpdate', boardUpdate);
 router.use('/boardDelete', boardDelete);
 
-router.use('/m_support', m_support);
+router.use('/bannerMain', bannerMain);
+router.use('/bannerSearch', bannerSearch);
+router.use('/bannerSelectOne', bannerSelectOne);
+router.use('/bannerInsert', bannerInsert);
+router.use('/bannerUpdate', bannerUpdate);
+router.use('/bannerDelete', bannerDelete);
+
 router.use('/m_comment', m_comment);
 router.use('/m_event', m_event);
 router.use('/m_vote', m_vote);

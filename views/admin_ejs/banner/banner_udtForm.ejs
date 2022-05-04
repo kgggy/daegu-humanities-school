@@ -1,178 +1,194 @@
+<!-- ckeditor -->
+<script src="../../../public/build/ckeditor.js"></script>
 <style>
-	.subTitle {
-		display: inline-block;
-		text-align: left;
-		width: 500px !important;
-		height: 34px !important;
-		position: relative;
-		width: 160px;
-		border: 1px solid #ccc;
-		cursor: pointer;
-		background: #fff;
-		border-radius: 3px;
-		-webkit-user-select: none;
-		-moz-user-select: none;
-		user-select: none;
-	}
+   .ck.ck-editor__main>.ck-editor__editable:not(.ck-focused) {
+      border-color: var(--ck-color-base-border);
+      height: 40%;
+   }
 
-	.sub div:first-child {
-		display: inline-block;
-		text-align: left;
-		padding-right: 50px;
-		width: auto !important;
-		height: 34px !important;
-	}
+   .ck.ck-editor__editable:not(.ck-editor__nested-editable).ck-focused {
+      height: 400px;
+   }
 
-	.subTitle option {
-		font-size: 13px !important;
-		padding: 10px 12px !important;
-	}
-
-	.subTitle option.hover {
-		background-color: orange;
-	}
+   .ck.ck-editor__main>.ck-editor__editable:not(.ck-focused) {
+      height: 400px;
+   }
 </style>
-<main class="main">
-	<!-- Breadcrumb-->
-	<ol class="breadcrumb">
-		<li class="breadcrumb-item">Home</li>
-		<li class="breadcrumb-item">
-			<a style="font-weight: bold;">배너관리</a>
-		</li>
-		<li class="breadcrumb-item active">팝업배너</li>
-	</ol>
 
-	<div class="container-fluid">
-		<div class="animated fadeIn">
-			<div class="row">
-				<div class="col-lg-6">
-					<div class="card">
-						<div class="card-header">
-							<i class="fa fa-align-justify"></i> 배너 수정
-						</div>
-						<div class="card-body">
-							<!-- 컨텐츠 -->
-							<form action="" id="bannerUdt" name="bannerUdt" method="" enctype="multipart/form-data">
-								<input type="hidden" name="bannerId" value="<%=result[0].bannerId%>">
-								<input type="hidden" name="bannerRoute" value="<%=result[0].bannerRoute%>">
-								<input type="hidden" name="bannerDiv" value="<%= bannerDiv %>">
-								<input type="hidden" name="showYN" value="">
-								<div class="form-group row">
-									<label class="col-md-2 col-form-label">이미지</label>
-									<% if(result.length > 0 && result[0].bannerRoute != null && result[0].bannerRoute != '') { %>
-									<div class="banner_img_wrap">
-										<img src="../../../<%=result[0].bannerRoute%>" width="100%">&nbsp;
-										<button class="btn btn-block btn-outline-danger" name="fileDelete"
-											data-bannerRoute="<%=result[0].bannerRoute%>">삭제</button>
-									</div>
-									<% } else {%>
-									<div class="col-md-9 sub"><input type="file" id="file" name="file" /></div>
-									<% } %>
-									</td>
-								</div>
-								<div class="form-group row">
-									<label class="col-md-2 col-form-label" for="text-input">시작 날짜</label>
-									<div class="col-md-9 sub">
-										<input type="date" id="startDate" name="startDate"
-											value="<%=result[0].startDatefmt%>">
-									</div>
-								</div>
-								<div class="form-group row">
-									<label class="col-md-2 col-form-label" for="text-input">종료 날짜</label>
-									<div class="col-md-9 sub">
-										<input type="date" id="endDate" name="endDate"
-											value="<%=result[0].endDatefmt%>">
-									</div>
-								</div>
-								<div class="form-group row">
-									<label class="col-md-2 col-form-label" for="text-input">순서</label>
-									<div class="col-md-9 sub">
-										<input type="number" id="showNo" name="showNo" value="<%=result[0].showNo%>">
-									</div>
-								</div>
-								<div class="form-group row">
-									<label class="col-md-2 col-form-label" for="text-input">노출 여부</label>
-									<div class="col-md-9 sub">
-										<select class="dropdown" id="showYN">
-											<option value='0' <%if(result[0].showYN=="0"){%> selected="selected" <%}%>>노출</option>
-											<option value="1" <%if(result[0].showYN=="1"){%> selected="selected" <%}%>>비노출</option>
-										</select>
-									</div>
-								</div>
-								<!--option 버튼  -->
-								<div class="option_button" style="padding-left: 1.25rem; margin-bottom: 15px;">
-									<div>
-										<button class="btn btn-block btn-outline-success" type="button"
-											id="enroll_btn" onclick="bannerUpdate()">수정</button>
-									</div>
-									<div>
-										<button class="btn btn-block btn-outline-danger" type="button"
-											onclick="history.go(-1)">취소</button>
-									</div>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</main>
+         <div class="col-xs-6">
+            <!-- HTML5 Inputs -->
+            <div class="card mb-4">
+               <h5 class="card-header"><%if(result[0].crewDiv=="all"){%>총동창회<%}else if (result[0].crewDiv == "gf"){%>골프회<%}
+                                     else if (result[0].crewDiv == "mt"){%>산악회<%}%> <%=boardName%> 수정</h5>
+                  <div class="card-body">
+                     <!-- 컨텐츠 -->
+                     <form name="udtForm" role="form">
+                        <input type="hidden" name="fileId" value="">
+                        <input type="hidden" name="fileRoute" value="">
+                        <input type="hidden" name="page" value="<%=page%>">
+                        <input type="hidden" id="writContent" name="boardContent" value="">
+                        <input type="hidden" id="boardDivId" name="boardDivId" value="<%=result[0].boardDivId%>">
+                        <input type="hidden" id="crewDiv" name="crewDiv" value="<%=result[0].crewDiv%>">
+                        <input type="hidden" id="boardName" name="boardName" value="<%=boardName%>">
+                        <div class="mb-3 row">
+                           <label class="col-md-1 col-form-label" for="text-input">글번호</label>
+                           <div class="col-md-10">
+                              <input class="form-control" id="writId" type="text" name="boardId" readonly
+                                 value="<%=boardId%>">
+                           </div>
+                        </div>
+                        <div class="mb-3 row">
+                           <label class="col-md-1 col-form-label" for="text-input">제목</label>
+                           <div class="col-md-10">
+                              <input class="form-control" id="writTitle" type="text" name="boardTitle"
+                                 value="<%=result[0].boardTitle%>">
+                           </div>
+                        </div>
+                        <div class="mb-3 row">
+                           <label class="col-md-1 col-form-label" for="text-input">내용</label>
+                           <div class="col-md-10">
+                              <textarea name="editor" class="editor" id="editor"><%-result[0].boardContent %></textarea>
+                           </div>
+                        </div>
+                        <div class="mb-3 row">
+                           <label class="col-md-1 col-form-label">첨부파일</label>
+                           <% if(result[0].fileRoute != null) { %>
+                           <div class="file-wrap banner_img_wrap col-md-10">
+                              <% for(var i = 0; i < result.length; i++) {%>
+                              <p><span><%=result[i].fileOrgName%></span>
+                                 <button name="boardFileDelete" data-fileRoute="<%=result[i].fileRoute%>" data-fileId="<%=result[i].fileId%>"
+                                    class="btn btn-block btn-outline-danger fileDelete">삭제</button></p>
+                              <% } %>
+                              <% if(result.length < 5) { %>
+                              <% for(var i = 0; i < 5-result.length; i++) {%>
+                              <br><br><input type="file" id="file" name="file" /><br><br>
+                              <% } %>
+                              <% } %>
+                              </div>
+                              <% } else {%>
+                              <div class="col-md-10" style="display: flex; flex-direction: column; gap: 25px; padding-left: 15px">
+                                 <input type="file" id="file" name="file">
+                                 <input type="file" id="file" name="file" />
+                                 <input type="file" id="file" name="file" />
+                                 <input type="file" id="file" name="file" />
+                                 <input type="file" id="file" name="file" />
+                              </div>
+                              <% } %>
+                           
+                        </div>
+
+                        <div class="mb-3 row" style="margin-top: 30px; margin-bottom: 30px;">
+                           <label class="col-md-1 col-form-label" for="text-input">상단고정여부</label>
+                           <div class="col-md-10">
+                              <% if(result[0].boardFix == 1){%>
+                                 <input type="checkbox" style='zoom:3.0;' name="boardFix" value="1" checked>
+                              <%}else{%>
+                                 <input type="checkbox" style='zoom:3.0;' name="boardFix" value="0">
+                              <%}%>
+                           </div>
+                        </div>
+                        <!--option 버튼  -->
+                         <div class="demo-inline-spacing" >
+                           <button type="button" class="btn btn-outline-success" id="update_btn">수정</button>
+                           <button type="button" class="btn btn-outline-primary"
+                              onclick="history.go(-1)">취소</button>
+                        </div>
+                           </div>
+
+                     </form>
+                  </div>
+               </div>
+            </div>
+
 
 <script type="text/javascript">
-	var formObj = $("form[name='bannerUdt']");
-	$(document).ready(function () {
-		//확장자 체크
-		$("input:file[name='file']").change(function () {
-			var str = $(this).val();
-			var fileName = str.split('\\').pop().toLowerCase();
-			// alert(fileName);
-			checkFileName(fileName);
-		});
-	});
+   $(document).ready(function () {
+      //ckeditor
+      ClassicEditor
+         .create(document.querySelector('#editor'), {
+            language: 'ko'
+         })
+         .then(newEditor => {
+            editor = newEditor;
+         })
+         .catch(error => {
+            console.error(error);
+         });
 
-	//확장자 체크
-	function checkFileName(str) {
-		var ext = str.split('.').pop().toLowerCase();
-		// alert(ext);
-		if ($.inArray(ext, ['jpg', 'png', 'jpeg', 'gif']) == -1) {
-			alert(ext + '파일은 업로드 하실 수 없습니다.');
-			$("input:file[name='file']").val("");
-		}
-	}
+      var formObj = $("form[name='udtForm']");
+      // 수정
+      $("#update_btn").on("click", function () {
+         var writTitle = $("#writTitle").val();
+         var content = editor.getData();
+         if (writTitle == "") {
+            alert("제목을 입력하세요.");
+            $("#writTitle").focus();
+            return false;
+         }
 
-	function bannerUpdate() {
-		var bannerImg = $("#file").val();
+         if (content == null) {
+            alert("내용을 입력하세요.");
+            $("#editor").focus();
+            return false;
+         }
 
-			if (bannerImg == '') {
-				alert("이미지를 선택해주세요.");
-				return false;
-			}
-		if (confirm("수정하시겠습니까?") == true) {
-			$('input[name=showYN]').val($("#showYN option:selected").val());
-			formObj.attr("action", "bannerUpdate");
-			formObj.attr("method", "post");
-			formObj.submit();
-			alert("수정이 완료되었습니다.");
-		} else {
-			return;
-		}
-	};
-	
-	// 첨부파일 삭제
-	$("[name=fileDelete]").on("click", function () {
-		$('input[name=bannerRoute').val($(this).attr('data-bannerRoute'));
-		if (confirm("실제 파일이 삭제됩니다. 정말 삭제하시겠습니까?") == true) {
-			formObj.attr("action", "bannerImgDelete");
-			formObj.attr("method", "get");
-			formObj.submit();
-			alert("삭제되었습니다.");
-		} else {
-			return;
-		}
-	});
+         if (confirm("수정하시겠습니까?") == true) {
+            $('input[id=writContent]').attr('value', content);
+            formObj.attr("action", "brdUpdate");
+            formObj.attr("enctype", "multipart/form-data");
+            formObj.attr("method", "post");
+            formObj.submit();
+            alert("수정되었습니다.");
+         } else {
+            return;
+         }
+      });
 
-	// 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 '[4] = 배너관리'
-    var navDropdown = document.getElementsByClassName("nav-dropdown");
-        navDropdown[4].className += 'open';
+      //첨부파일 삭제
+      $("[name=boardFileDelete]").on("click", function () {
+         $('input[name=fileId').val($(this).attr('data-fileId'));
+         $('input[name=fileRoute').val($(this).attr('data-fileRoute'));
+         if (confirm("실제 파일이 삭제됩니다. 정말 삭제하시겠습니까?") == true) {
+            formObj.attr("action", "boardFileDelete");
+            formObj.attr("method", "get");
+            alert("삭제되었습니다.");
+            formObj.submit();
+         } else {
+            return;
+         }
+      });
+   })
+      // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 
+    var menuItem = document.getElementsByClassName("menu-item");
+    var boardDivId = document.getElementById("boardDivId").value;
+    var crewDiv = document.getElementById("crewDiv").value;
+    //초기화
+    menuItem.className = 'menu-item';
+    //'[2] = 게시판관리' '[3] = 공지사항' '[4] = 갤러리' '[5] = 경조사'
+    //'[10] = 골프회' '[11] = 공지사항' '[12] = 갤러리'
+    //'[17] = 산악회' '[18] = 공지사항' '[19] = 갤러리'
+    if(crewDiv == 'all'){
+        menuItem[2].className += ' open active';
+        if (boardDivId == 1) {
+            menuItem[3].className += ' active';
+        } else if (boardDivId == 2) {
+            menuItem[4].className += ' active';
+        } else if (boardDivId == 3)
+            menuItem[5].className += ' active';
+    } else if (crewDiv == 'gf'){
+        menuItem[10].className += ' open active';
+        if (boardDivId == 1) {
+            menuItem[11].className += ' active';
+        } else if (boardDivId == 2) {
+            menuItem[12].className += ' active';
+        }
+    } else if (crewDiv == 'mt'){
+        menuItem[17].className += ' open active';
+        if (boardDivId == 1) {
+            menuItem[18].className += ' active';
+        } else if (boardDivId == 2) {
+            menuItem[19].className += ' active';
+        }
+    }
+
 </script>
