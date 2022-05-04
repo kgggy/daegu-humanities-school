@@ -59,8 +59,8 @@ router.get('/', async (req, res) => {
         }
         sql += " order by eventId desc";
         connection.query(sql, crewDiv, (err, results) => {
-            var countPage = 10; //하단에 표시될 페이지 개수
-            var page_num = 10; //한 페이지에 보여줄 개수
+            var countPage = 5; //하단에 표시될 페이지 개수
+            var page_num = 5; //한 페이지에 보여줄 개수
             var last = Math.ceil((results.length) / page_num); //마지막 장
             var endPage = Math.ceil(page / countPage) * countPage; //끝페이지(10)
             var startPage = endPage - countPage; //시작페이지(1)
@@ -96,24 +96,24 @@ router.get('/', async (req, res) => {
 //투표명단 확인
 router.get('/voteList', async (req, res) => {
     try {
-        const choose = [req.query.choose];
-        const param = [req.query.eventId, req.query.choose];
-        const sql = "select u.userName from vote v left join user u on u.uid = v.uid where eventId = ? and choose = ?";
-        const nChooseSql = "select u.* from user u left join (select uid from vote v where v.eventId = ?) AS B on u.uid = B.uid WHERE B.uid IS NULL;";
+        var sql = "";
+        var param = [];
+        if(req.query.choose != undefined) {
+            param = [req.query.eventId, req.query.choose];
+            sql = "select u.userName from vote v left join user u on u.uid = v.uid where eventId = ? and choose = ?";
+        } else {
+            param = req.query.eventId;
+            sql = "select u.* from user u left join (select uid from vote v where v.eventId = ?) AS B on u.uid = B.uid WHERE B.uid IS NULL;";
+        }
+        let joinyn;
         connection.query(sql, param, (err, results) => {
             if (err) {
                 console.log(err);
             }
-            connection.query(nChooseSql, req.query.eventId, (err, noChoose) => {
-                if (err) {
-                    console.log(err);
-                }
-                res.send({
-                    results: results,
-                    noChoose: noChoose,
-                    choose: choose
-                });
-            })
+            joinyn = results
+            res.send({
+                joinyn: joinyn
+            });
         })
     } catch (error) {
         res.send(error.message);
