@@ -68,7 +68,6 @@ router.get('/', async (req, res) => {
 router.get('/bannerFileDelete', async (req, res) => {
     const param = req.query.fileId;
     const fileRoute = req.query.fileRoute; 
-    console.log(param, fileRoute)
     try {
         const sql = "delete from file where fileId = ?";
         connection.query(sql, param, (err, row) => {
