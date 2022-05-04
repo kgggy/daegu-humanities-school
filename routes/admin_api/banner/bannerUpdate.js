@@ -2,6 +2,7 @@ const multer = require("multer");
 const path = require('path');
 const fs = require('fs');
 
+const sharp = require('sharp');
 var express = require('express');
 var router = express.Router();
 
@@ -63,7 +64,6 @@ router.post('/', upload.array('file'), (req, res) => {
     var bannerDiv = req.body.bannerDiv;
     try {
         const param = [req.body.bannerTitle, req.body.bannerDetail, req.body.bannerUrl, req.body.bannerId];
-        console.log(param)
         const sql = "update banner set bannerTitle = ?, bannerDetail = ?, bannerUrl = ? where bannerId = ?";
 
         connection.query(sql, param, (err) => {
