@@ -150,7 +150,7 @@
                     <button type="button" class="btn btn-primary" id="update_btn">수정</button>
                     <button type="button" class="btn btn-danger" id="delete_btn">삭제</button>
                     <button type="button" class="btn btn-dark"
-                        onclick="location.href='/admin/m_event?page=<%=page%>&crewDiv=<%=crewDiv%><%=keepSearch%>'">목록</button>
+                        onclick="location.href='/admin/eventSelect?page=<%=page%>&crewDiv=<%=crewDiv%><%=keepSearch%>'">목록</button>
                 </div>
             </form>
         </div>
@@ -160,13 +160,13 @@
         $(document).ready(function () {
             // 수정 폼 연결
             $("#update_btn").on("click", function () {
-                formObj.attr("action", "/admin/m_event/eventUdtForm");
+                formObj.attr("action", "/admin/eventUpdate/udtForm");
                 formObj.attr("method", "post");
                 formObj.submit();
             });
             // 삭제
             $("#delete_btn").on("click", function () {
-                formObj.attr("action", "/admin/m_event/eventDelete");
+                formObj.attr("action", "/admin/eventDelete");
                 formObj.attr("method", "get");
                 if (confirm("삭제하시겠습니까?") == true) {
                     formObj.submit();

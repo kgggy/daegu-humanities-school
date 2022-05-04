@@ -228,7 +228,7 @@
 
             if (confirm("등록하시겠습니까?") == true) {
                 $('input[name=eventContent]').attr('value', content);
-                $("#eventEnrollForm").attr("action", "/admin/m_event/eventWrite");
+                $("#eventEnrollForm").attr("action", "/admin/eventInsert");
                 $("#eventEnrollForm").submit();
             } else {
                 return;

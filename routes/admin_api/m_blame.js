@@ -1,35 +1,31 @@
 var express = require('express');
 var router = express.Router();
-
-// DB 커넥션 생성
 var connection = require('../../config/db').conn;
 
 //신고 전체조회
 router.get('/blame', async (req, res) => {
     try {
         var page = req.query.page;
-        var targetType = req.query.targetType == undefined ? "" : req.query.targetType;
-        var sql = "select b.* ,date_format(blaDate, '%Y-%m-%d') as blaDatefmt, c.certiContentId, f.fileRoute \
-                    from blame b left join comment c on c.cmtId = b.targetContentId left join file f on b.targetContentId = f.certiContentId";
-        if (targetType != '') {
-            sql += " where targetType = " + targetType;
+        var blameDiv = req.query.blameDiv == undefined ? "" : req.query.blameDiv;
+        var sql = "select *, date_format(blameDate, '%Y-%m-%d') as blameDatefmt\
+                    from blame where 1=1";
+        if (blameDiv != '') {
+            sql += " and blameDiv = '" + blameDiv + "'";
         }
-            sql += " order by 1 desc"
+            sql += " order by blameDate desc"
         connection.query(sql, (err, results) => {
             var countPage = 10; //하단에 표시될 페이지 개수
             var page_num = 10; //한 페이지에 보여줄 개수
-            var last = Math.ceil((results.length) / 10); //마지막 장
+            var last = Math.ceil((results.length) / page_num); //마지막 장
             var endPage = Math.ceil(page / countPage) * countPage; //끝페이지(10)
             var startPage = endPage - countPage; //시작페이지(1)
-
-            if (err) {
-                console.log(err);
-            }
-
             if (last < endPage) {
                 endPage = last
             };
-            let route = req.app.get('views') + '/m_blame/blame';
+            if (err) {
+                console.log(err);
+            }
+            let route = req.app.get('views') + '/blame/blame';
             res.render(route, {
                 results: results,
                 page: page, //현재 페이지
@@ -39,8 +35,8 @@ router.get('/blame', async (req, res) => {
                 startPage: startPage,
                 endPage: endPage,
                 pass: true,
-                last: last, 
-                targetType: targetType
+                last: last,
+                blameDiv: blameDiv
             });
         });
     } catch (error) {

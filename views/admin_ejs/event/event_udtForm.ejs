@@ -204,7 +204,7 @@
 
             if (confirm("수정하시겠습니까?") == true) {
                 $('input[name=eventContent]').attr('value', content);
-                $("#eventUpdateForm").attr("action", "/admin/m_event/eventUpdate");
+                $("#eventUpdateForm").attr("action", "/admin/eventUpdate");
                 $("#eventUpdateForm").submit();
                 alert("수정이 완료되었습니다.");
             } else {

@@ -46,7 +46,7 @@ app.use( // request를 통해 세션 접근 가능 ex) req.session
 
 app.use(function (req, res, next) {
   if (req.session.user) {
-    global.sessionComId = req.session.user.comId;
+    global.sessionAdminId = req.session.user.adminId;
   }
   next();
 });
