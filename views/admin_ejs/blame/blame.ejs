@@ -66,11 +66,11 @@
                     <%}%></td>  
                         <td>
                     <% if(results[i].blameDiv == 0){ %>
-                    <button class="btn btn-block btn-outline-primary" onclick="board('/admin/m_blame/blameDetail?blameDiv=0&targetContentId<%=results[i].targetContentId %>', '',
-                        'resizable=no,width=640, height=700, scrollbars=1', '<%= results[i].fileRoute %>')">게시글</button>
+                    <button class="btn btn-block btn-outline-primary" onclick="board('/admin/m_blame/blameDetail?blameDiv=0&blameId=<%=results[i].blameId%>', '',
+                        'resizable=no,width=640, height=700, scrollbars=1')">게시글</button>
                     <%} else{ %>
-                    <button class="btn btn-block btn-outline-primary" onclick="board('/admin/m_blame/blameDetail?blameId=<%=results[i].blameId%>', '',
-                        'resizable=no,width=640, height=700, scrollbars=1', '<%= results[i].fileRoute %>')">댓글</button>
+                    <button class="btn btn-block btn-outline-primary" onclick="board('/admin/m_blame/blameDetail?blameDiv=1&blameId=<%=results[i].blameId%>', '',
+                        'resizable=no,width=640, height=700, scrollbars=1')">댓글</button>
                     <%}%>  
                 </td>
                             </tr>    
@@ -171,14 +171,8 @@
             $("#chkAll").prop("checked", true);
     });
 
-    //신고 댓글 확인
-    function comment(theURL, winName, features, certiContentId, targetContentId) {
-        theURL += '?certiContentId=' + certiContentId + '&targetContentId=' + targetContentId + '&blame=y';
-        window.open(theURL, winName, features);
-    }
-
     //신고 게시물 확인
-    function board(theURL, winName, features, imageRoute) {
+    function board(theURL, winName, features) {
         theURL += '';
         window.open(theURL, winName, features);
     }

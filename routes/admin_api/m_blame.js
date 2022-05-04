@@ -63,45 +63,33 @@ router.get('/blameDelete', (req, res) => {
 //게시글, 댓글 상세보기
 router.get('/blameDetail', (req, res) => {
     try {
-        if(req.query.blameDiv == '0') {
+        const param = req.query.blameId;
+        var sql = "";
+        if (req.query.blameDiv == '0') {
             //게시글
-            const param = req.query.boardId;
-            const boardDivId = req.query.boardDivId;
-            const sql = "select b.*,date_format(boardDate, '%Y-%m-%d') as boardDateFmt,\
-                                    (select count(*) from hitCount where hitCount.boardId = b.boardId) as hitCount,\
-                                    f.fileRoute from board b left join file f on b.boardId = f.boardId\
-                                    where b.boardId = ?";
-    
-            connection.query(sql, param, (err, result) => {
-                if (err) {
-                    res.json({
-                        msg: "select query error"
-                    });
-                }
-                let route = req.app.get('views') + '/board/brd_viewForm';
-                res.render(route, {
-                    result: result,
-                    boardName: boardName,
-                    boardDivId: boardDivId
-                });
-            });
+            sql = "select *, date_format(boardDate, '%Y-%m-%d') as boardDateFmt\
+                     from blame b\
+                left join board d on d.boardId = b.targetContentId\
+                left join file f on b.targetContentId = f.boardId\
+                    where b.blameId = ?";
         } else {
             //댓글
-            const param = req.query.blameId;
-            const sql = "select date_format(cmtDate, '%Y-%m-%d') as cmtDateFmt,\
+            sql = "select date_format(cmtDate, '%Y-%m-%d') as cmtDateFmt, b.blameDiv,\
                                 b.targetUserName, b.uid, c.cmtId, c.cmtContent, c.cmtDate from blame b\
                       left join comment c on c.cmtId = b.targetContentId\
                           where b.blameId = ?";
-            connection.query(sql, param, (err, result) => {
-                if (err) {
-                    console.log(err);
-                }
-                let route = req.app.get('views') + '/blame/blameDetail';
-                    res.render(route, {
-                    result: result
-                });
-            })
         }
+        connection.query(sql, param, (err, result) => {
+            if (err) {
+                console.log(err);
+            }
+            console.log(result)
+            let route = req.app.get('views') + '/blame/blameDetail';
+            res.render(route, {
+                result: result
+            });
+        })
+
     } catch (error) {
         res.status(401).send(error.message);
     }

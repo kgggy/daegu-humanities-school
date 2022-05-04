@@ -7,13 +7,12 @@
 <div class="card mb-4">
    <h5 class="card-header">신고 당한 게시글</h5>
    <div class="card-body">
-      <form name="udtForm" role="form">
          <!-- 컨텐츠 -->
          <div class="mb-3 row">
             <label class="col-md-2 col-form-label" for="text-input">글번호</label>
             <div class="col-md-9">
                <input class="form-control" id="boardId" type="text" name="boardId" disabled="disabled"
-                  value="<%=result[0].boardId%>">
+                  value="<%=result[0].targetContentId%>">
             </div>
          </div>
          <div class="mb-3 row">
@@ -27,14 +26,7 @@
             <label class="col-md-2 col-form-label" for="text-input">작성일</label>
             <div class="col-md-9">
                <input class="form-control" id="boardDatefmt" type="text" name="boardDatefmt" disabled="disabled"
-                  value="<%=result[0].boardDatefmt%>">
-            </div>
-         </div>
-         <div class="mb-3 row">
-            <label class="col-md-2 col-form-label" for="text-input">조회수</label>
-            <div class="col-md-9">
-               <input class="form-control" id="hitCount" type="text" name="hitCount" disabled="disabled"
-                  value="<%=result[0].hitCount%>">
+                  value="<%=result[0].boardDateFmt%>">
             </div>
          </div>
          <div class="mb-3 row">
@@ -51,10 +43,7 @@
                   <% for(var i = 0; i < result.length; i++) {%>
                   <div id="" style="padding: 10px;">
                      <p><img src="../../../<%= result[i].fileRoute %>" style="width:300px; margin-bottom: 15px;">
-                        <a href="../../../<%= result[i].fileRoute %>" class="btn btn-block btn-outline-success"
-                           type="button" download>파일 다운로드</a>
                      </p>
-                     <input type="hidden" name="fileRoute" value="<%=result[i].fileRoute%>">
                   </div>
                   <% } %>
                </div>
@@ -67,7 +56,6 @@
                <% } %>
             </div>
          </div>
-      </form>
    </div>
 </div>
 <% } else { %>
