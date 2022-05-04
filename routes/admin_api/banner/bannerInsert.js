@@ -2,6 +2,7 @@ const multer = require("multer");
 const path = require('path');
 const fs = require('fs');
 
+const sharp = require('sharp');
 var express = require('express');
 var router = express.Router();
 
