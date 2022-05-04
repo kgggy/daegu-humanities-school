@@ -94,37 +94,20 @@
           });
        })
 
-   // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 
+     // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 
     var menuItem = document.getElementsByClassName("menu-item");
     var bannerDiv = document.getElementById("bannerDiv").value;
-    var crewDiv = document.getElementById("crewDiv").value;
     //초기화
     menuItem.className = 'menu-item';
     //'[2] = 게시판관리' '[3] = 공지사항' '[4] = 갤러리' '[5] = 경조사'
     //'[10] = 골프회' '[11] = 공지사항' '[12] = 갤러리'
     //'[17] = 산악회' '[18] = 공지사항' '[19] = 갤러리'
-    if(crewDiv == 'all'){
-        menuItem[2].className += ' open active';
-        if (bannerDivId == 1) {
-            menuItem[3].className += ' active';
-        } else if (bannerDivId == 2) {
-            menuItem[4].className += ' active';
-        } else if (bannerDivId == 3)
-            menuItem[5].className += ' active';
-    } else if (crewDiv == 'gf'){
-        menuItem[10].className += ' open active';
-        if (bannerDivId == 1) {
-            menuItem[11].className += ' active';
-        } else if (bannerDivId == 2) {
-            menuItem[12].className += ' active';
-        }
-    } else if (crewDiv == 'mt'){
-        menuItem[17].className += ' open active';
-        if (bannerDivId == 1) {
-            menuItem[18].className += ' active';
-        } else if (bannerDivId == 2) {
-            menuItem[19].className += ' active';
-        }
+    if(bannerDiv == 'all'){
+        menuItem[8].className += ' open active';
+    } else if (bannerDiv == 'gf'){
+        menuItem[14].className += ' open active';
+    } else if (bannerDiv == 'mt'){
+        menuItem[20].className += ' open active';
     }
 
     </script>

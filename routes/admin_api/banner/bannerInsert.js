@@ -36,18 +36,22 @@ var upload = multer({ //multer안에 storage정보
 
 //후원광고 등록폼 이동
 router.get('/', async (req, res) => {
+    const bannerDiv = req.query.bannerDiv;
     let route = req.app.get('views') + '/banner/banner_writForm';
-    res.render(route);
+    res.render(route, {
+        bannerDiv: bannerDiv
+    });
 });
 
 //후원광고 등록
 router.post('/', upload.array('file'), async function (req, res) {
-    const param = [path, req.body.supporter];
+    try {
+    const param = [req.body.bannerDiv, req.body.bannerUrl, req.body.bannerTitle, req.body.bannerDetail];
     const paths = req.files.map(data => data.path);
     const orgName = req.files.map(data => data.originalname);
-    const sql = "call insertBanner(?,?,?,?,?,?);\
-                    select max(bannerId) as bannerId from banner;";
-    try {
+    const bannerDiv = req.body.bannerDiv;
+    const sql = "insert into banner (bannerDiv, bannerUrl, bannerTitle, bannerDetail) values(?,?,?,?);\
+                 select max(bannerId) as bannerId from banner;";
         for (let i = 0; i < paths.length; i++) {
             if (req.files[i].size > 1000000) {
                 sharp(paths[i]).resize({
@@ -80,8 +84,8 @@ router.post('/', upload.array('file'), async function (req, res) {
                     }
                 });
             };
+            res.send('<script>alert("배너가 등록되었습니다."); location.href="/admin/bannerMain?page=1&bannerDiv='+bannerDiv+'";"');
         });
-        res.send('<script>alert("배너가 등록되었습니다."); location.href=""');
     } catch (error) {
         res.send(error.message);
     }

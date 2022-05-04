@@ -18,36 +18,40 @@
          <div class="col-xs-6">
             <!-- HTML5 Inputs -->
             <div class="card mb-4">
-               <h5 class="card-header"><%if(result[0].crewDiv=="all"){%>총동창회<%}else if (result[0].crewDiv == "gf"){%>골프회<%}
-                                     else if (result[0].crewDiv == "mt"){%>산악회<%}%> <%=boardName%> 수정</h5>
+               <h5 class="card-header"><%if(result[0].bannerDiv=="all"){%>총동창회<%}else if (result[0].bannerDiv == "gf"){%>골프회<%}
+                                     else if (result[0].bannerDiv == "mt"){%>산악회<%}%> 후원 수정</h5>
                   <div class="card-body">
                      <!-- 컨텐츠 -->
                      <form name="udtForm" role="form">
                         <input type="hidden" name="fileId" value="">
                         <input type="hidden" name="fileRoute" value="">
                         <input type="hidden" name="page" value="<%=page%>">
-                        <input type="hidden" id="writContent" name="boardContent" value="">
-                        <input type="hidden" id="boardDivId" name="boardDivId" value="<%=result[0].boardDivId%>">
-                        <input type="hidden" id="crewDiv" name="crewDiv" value="<%=result[0].crewDiv%>">
-                        <input type="hidden" id="boardName" name="boardName" value="<%=boardName%>">
+                        <input type="hidden" id="writContent" name="bannerDetail" value="">
+                        <input type="hidden" id="bannerDiv" name="bannerDiv" value="<%=result[0].bannerDiv%>">
                         <div class="mb-3 row">
                            <label class="col-md-1 col-form-label" for="text-input">글번호</label>
                            <div class="col-md-10">
-                              <input class="form-control" id="writId" type="text" name="boardId" readonly
-                                 value="<%=boardId%>">
+                              <input class="form-control" id="writId" type="text" name="bannerId" readonly
+                                 value="<%=bannerId%>">
                            </div>
                         </div>
                         <div class="mb-3 row">
-                           <label class="col-md-1 col-form-label" for="text-input">제목</label>
+                           <label class="col-md-1 col-form-label" for="text-input">후원업체명</label>
                            <div class="col-md-10">
-                              <input class="form-control" id="writTitle" type="text" name="boardTitle"
-                                 value="<%=result[0].boardTitle%>">
+                              <input class="form-control" id="writTitle" type="text" name="bannerTitle"
+                                 value="<%=result[0].bannerTitle%>">
                            </div>
                         </div>
                         <div class="mb-3 row">
-                           <label class="col-md-1 col-form-label" for="text-input">내용</label>
+                           <label class="col-md-1 col-form-label" for="text-input">업체세부내용</label>
                            <div class="col-md-10">
-                              <textarea name="editor" class="editor" id="editor"><%-result[0].boardContent %></textarea>
+                              <textarea name="editor" class="editor" id="editor"><%-result[0].bannerDetail %></textarea>
+                           </div>
+                        </div>
+                        <div class="mb-3 row">
+                           <label class="col-md-1 col-form-label" for="text-input">사이트</label>
+                           <div class="col-md-10">
+                              <input class="form-control" id="bannerUrl" type="text" name="bannerUrl" value="">
                            </div>
                         </div>
                         <div class="mb-3 row">
@@ -56,7 +60,7 @@
                            <div class="file-wrap banner_img_wrap col-md-10">
                               <% for(var i = 0; i < result.length; i++) {%>
                               <p><span><%=result[i].fileOrgName%></span>
-                                 <button name="boardFileDelete" data-fileRoute="<%=result[i].fileRoute%>" data-fileId="<%=result[i].fileId%>"
+                                 <button name="bannerFileDelete" data-fileRoute="<%=result[i].fileRoute%>" data-fileId="<%=result[i].fileId%>"
                                     class="btn btn-block btn-outline-danger fileDelete">삭제</button></p>
                               <% } %>
                               <% if(result.length < 5) { %>
@@ -77,16 +81,6 @@
                            
                         </div>
 
-                        <div class="mb-3 row" style="margin-top: 30px; margin-bottom: 30px;">
-                           <label class="col-md-1 col-form-label" for="text-input">상단고정여부</label>
-                           <div class="col-md-10">
-                              <% if(result[0].boardFix == 1){%>
-                                 <input type="checkbox" style='zoom:3.0;' name="boardFix" value="1" checked>
-                              <%}else{%>
-                                 <input type="checkbox" style='zoom:3.0;' name="boardFix" value="0">
-                              <%}%>
-                           </div>
-                        </div>
                         <!--option 버튼  -->
                          <div class="demo-inline-spacing" >
                            <button type="button" class="btn btn-outline-success" id="update_btn">수정</button>
@@ -134,7 +128,7 @@
 
          if (confirm("수정하시겠습니까?") == true) {
             $('input[id=writContent]').attr('value', content);
-            formObj.attr("action", "brdUpdate");
+            formObj.attr("action", "bannerUpdate");
             formObj.attr("enctype", "multipart/form-data");
             formObj.attr("method", "post");
             formObj.submit();
@@ -145,11 +139,11 @@
       });
 
       //첨부파일 삭제
-      $("[name=boardFileDelete]").on("click", function () {
+      $("[name=bannerFileDelete]").on("click", function () {
          $('input[name=fileId').val($(this).attr('data-fileId'));
          $('input[name=fileRoute').val($(this).attr('data-fileRoute'));
          if (confirm("실제 파일이 삭제됩니다. 정말 삭제하시겠습니까?") == true) {
-            formObj.attr("action", "boardFileDelete");
+            formObj.attr("action", "bannerDelete/bannerFileDelete");
             formObj.attr("method", "get");
             alert("삭제되었습니다.");
             formObj.submit();
@@ -158,37 +152,19 @@
          }
       });
    })
-      // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 
+          // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 
     var menuItem = document.getElementsByClassName("menu-item");
-    var boardDivId = document.getElementById("boardDivId").value;
-    var crewDiv = document.getElementById("crewDiv").value;
+    var bannerDiv = document.getElementById("bannerDiv").value;
     //초기화
     menuItem.className = 'menu-item';
     //'[2] = 게시판관리' '[3] = 공지사항' '[4] = 갤러리' '[5] = 경조사'
     //'[10] = 골프회' '[11] = 공지사항' '[12] = 갤러리'
     //'[17] = 산악회' '[18] = 공지사항' '[19] = 갤러리'
-    if(crewDiv == 'all'){
-        menuItem[2].className += ' open active';
-        if (boardDivId == 1) {
-            menuItem[3].className += ' active';
-        } else if (boardDivId == 2) {
-            menuItem[4].className += ' active';
-        } else if (boardDivId == 3)
-            menuItem[5].className += ' active';
-    } else if (crewDiv == 'gf'){
-        menuItem[10].className += ' open active';
-        if (boardDivId == 1) {
-            menuItem[11].className += ' active';
-        } else if (boardDivId == 2) {
-            menuItem[12].className += ' active';
-        }
-    } else if (crewDiv == 'mt'){
-        menuItem[17].className += ' open active';
-        if (boardDivId == 1) {
-            menuItem[18].className += ' active';
-        } else if (boardDivId == 2) {
-            menuItem[19].className += ' active';
-        }
+    if(bannerDiv == 'all'){
+        menuItem[8].className += ' open active';
+    } else if (bannerDiv == 'gf'){
+        menuItem[14].className += ' open active';
+    } else if (bannerDiv == 'mt'){
+        menuItem[20].className += ' open active';
     }
-
 </script>

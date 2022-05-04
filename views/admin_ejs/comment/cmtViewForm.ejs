@@ -10,24 +10,6 @@
 	}
 </style>
 
-<main class="main">
-	<!-- Breadcrumb-->
-	<ol class="breadcrumb">
-		<li class="breadcrumb-item">Home</li>
-		<%if(division == 0){%>
-		<li class="breadcrumb-item">
-			<a style="font-weight: bold;">탄소 실천 관리</a>
-		</li>
-		<li class="breadcrumb-item active">탄소 실천 댓글 관리</li>
-		<% } else {%>
-		<li class="breadcrumb-item">
-			<a style="font-weight: bold;">챌린지 관리</a>
-		</li>
-		<li class="breadcrumb-item active">챌린지 댓글 관리</li>
-		<% } %>
-		<!-- Breadcrumb Menu-->
-	</ol>
-
 	<div class="container-fluid">
 		<div class="animated fadeIn">
 			<div class="row">
@@ -40,25 +22,21 @@
 						<div class="card-body">
 							<!-- 컨텐츠 -->
 							<form action="" id="commentForm" method="get" class="cmtFrm">
-								<input type="hidden" id="certiContentId" name="certiContentId"
-									value="<%= certiContentId %>">
-								<input type="hidden" id="certiDivision" name="certiDivision" value="<%= division %>">
 								<input type="hidden" id="cmtId" name="cmtId" value="">
+								<input type="hidden" id="boardId" name="boardId" value="<%=boardId%>">
 								<% for(var i = 0; i < results.length; i++) {%>
 								<div class="form-group row col-md-9">
 									<div class="cmtInfo-wrap">
 										<div class="cmtInfo">
 											<img src="../../../public/images/icon_admin.gif">
 											<span><%= results[i].userNick %></span>
-											<span><%= results[i].cmtDatefmt %><%= blame %></span>
+											<span><%= results[i].cmtDatefmt %></span>
 										</div>
-										<% if(blame != 'y') {%>
 										<input class="btn btn-block btn-outline-danger cmtDelBtn" type="submit"
 											id="delete_btn" name="delete_btn" value="삭제"
-											data-cmtId="<%= results[i].cmtId %>">
-										<% } %>
+											data-cmtId="<%= results[i].cmtId %>" style="float: right; margin-bottom: 10px">
 									</div>
-									<div class="form-control" id="writTitle" type="text" name="writTitle">
+									<div class="form-control" id="writTitle" type="text" name="writTitle" style="margin-bottom: 20px">
 										<%= results[i].cmtContent %></div>
 								</div>
 								<% } %>
@@ -81,12 +59,11 @@
 				</div>
 			</div>
 		</div>
-</main>
 <script>
 	// 삭제
 	$('input[name=delete_btn]').on("click", function () {
 		$('input[name=cmtId]').val($(this).attr('data-cmtId'));
-		$("#commentForm").attr("action", "cmtDelete");
+		$("#commentForm").attr("action", "commentDelete");
 		$("#commentForm").attr("method", "get");
 		if (confirm("댓글을 삭제하시겠습니까?") == true) {
 			$("#commentForm").submit();
