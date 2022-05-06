@@ -35,7 +35,9 @@ const bannerDelete = require('./banner/bannerDelete.js');
 const commentSelect = require('./comment/commentSelect.js');
 const commentDelete = require('./comment/commentDelete.js');
 
-const m_blame = require('./m_blame.js');
+const blameSelect = require('./blame/blameSelect.js');
+const blameDetailSelectOne = require('./blame/blameDetailSelectOne.js');
+const blamesDelete = require('./blame/blamesDelete.js');
 
 // router.use('/', (req,res,next) => {
 //     if(req.url == '/' || req.url == '/login') {
@@ -91,6 +93,8 @@ router.use('/bannerDelete', bannerDelete);
 router.use('/commentSelect', commentSelect);
 router.use('/commentDelete', commentDelete);
 
-router.use('/m_blame', m_blame);
+router.use('/blameSelect', blameSelect);
+router.use('/blameDetailSelectOne', blameDetailSelectOne);
+router.use('/blamesDelete', blamesDelete);
 
 module.exports = router;

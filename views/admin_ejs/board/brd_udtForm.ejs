@@ -89,8 +89,8 @@
                         </div>
                         <!--option 버튼  -->
                          <div class="demo-inline-spacing" >
-                           <button type="button" class="btn btn-outline-success" id="update_btn">수정</button>
-                           <button type="button" class="btn btn-outline-primary"
+                           <button type="button" class="btn btn-primary" id="update_btn">수정</button>
+                           <button type="button" class="btn btn-danger"
                               onclick="history.go(-1)">취소</button>
                         </div>
                            </div>
@@ -134,7 +134,7 @@
 
          if (confirm("수정하시겠습니까?") == true) {
             $('input[id=writContent]').attr('value', content);
-            formObj.attr("action", "brdUpdate");
+            formObj.attr("action", "boardUpdate");
             formObj.attr("enctype", "multipart/form-data");
             formObj.attr("method", "post");
             formObj.submit();

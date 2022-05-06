@@ -19,7 +19,7 @@
             <!-- HTML5 Inputs -->
             <div class="card mb-4">
                <h5 class="card-header"><%if(bannerDiv=="all"){%>총동창회<%}else if (bannerDiv == "gf"){%>골프회<%}
-                                       else if (bannerDiv == "mt"){%>산악회<%}%> / 후원 등록</h5>
+                                       else if (bannerDiv == "mt"){%>산악회<%}%> 후원 등록</h5>
                <div class="card-body">
                      <!-- 컨텐츠 -->
                      <form action="" id="bannerwrite" method="post" enctype="multipart/form-data" autocomplete="off">
@@ -46,18 +46,18 @@
                         <div class="mb-3 row">
                            <label class="col-md-1 col-form-label">첨부파일</label>
                            <div class="col-md-10" style="display: flex; flex-direction: column; gap: 25px; padding-left: 15px">
-                              <input type="file" id="file" name="file">
-                              <input type="file" id="file" name="file" />
-                              <input type="file" id="file" name="file" />
-                              <input type="file" id="file" name="file" />
-                              <input type="file" id="file" name="file" />
+                              <input class="form-control" type="file" id="file" name="file">
+                              <input class="form-control" type="file" id="file" name="file" />
+                              <input class="form-control" type="file" id="file" name="file" />
+                              <input class="form-control" type="file" id="file" name="file" />
+                              <input class="form-control" type="file" id="file" name="file" />
                            </div>
                            
                         </div>
                         <!--option 버튼  -->
                         <div class="demo-inline-spacing" >
-                           <button type="button" class="btn btn-outline-success" id="enroll_btn">등록</button>
-                           <button type="button" class="btn btn-outline-primary"
+                           <button type="button" class="btn btn-primary" id="enroll_btn">등록</button>
+                           <button type="button" class="btn btn-danger"
                               onclick="history.go(-1)">취소</button>
                         </div>
                      </div>

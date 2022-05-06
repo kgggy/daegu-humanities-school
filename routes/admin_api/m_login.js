@@ -4,7 +4,7 @@ const models = require('../../models');
 
 //로그인 페이지로 이동
 router.get('/', (req, res) => {
-    let route = req.app.get('views') + '/auth-login-basic';
+    let route = req.app.get('views') + '/index';
     res.render(route, {
         layout: false
     })

@@ -2,7 +2,8 @@
          <div class="col-xs-6">
             <!-- HTML5 Inputs -->
             <div class="card mb-4">
-               <h5 class="card-header">후원관리</h5>
+               <h5 class="card-header"><%if(bannerDiv=="all"){%>총동창회<%}else if (bannerDiv == "gf"){%>골프회<%}
+                  else if (bannerDiv == "mt"){%>산악회<%}%> 후원 상세</h5>
                <div class="card-body">
                       <form name="udtForm" role="form">
                          <input type="hidden" id="page" name="page" value="<%=page%>">
@@ -62,9 +63,9 @@
                             </div>
                             <!--option 버튼  -->
                            <div class="demo-inline-spacing">
-                           <button type="button" class="btn btn-outline-info" id="update_btn">수정</button>
-                           <button type="button" class="btn btn-outline-danger" id="delete_btn">삭제</button>
-                           <button type="button" class="btn btn-outline-primary"
+                           <button type="button" class="btn btn-primary" id="update_btn">수정</button>
+                           <button type="button" class="btn btn-danger" id="delete_btn">삭제</button>
+                           <button type="button" class="btn btn-dark"
                               onclick="location.href='/admin/bannerMain?bannerDiv=<%=result[0].bannerDiv%>&page=<%=page%>&searchText=<%=searchText%>'">목록</button>
                            </div>
                          </div>

@@ -5,7 +5,7 @@
         <input type="hidden" id="page" name="page" value="<%=page%>">
         <input type="hidden" name="bannerDiv" id="bannerDiv" value="<%=bannerDiv%>">
         <input class="searchbox" type="text" name="searchText" id="searchText"
-            <%if(searchText!=null){%>value="<%=searchText%>" <%}%> placeholder="후원업체명">
+            <%if(searchText!=null){%>value="<%=searchText%>" <%}%> placeholder=" 후원업체명">
     </form>
 <!-- Basic Bootstrap Table -->
 <div class="card">
@@ -61,9 +61,9 @@
 
 
     <div>
+        <% if(results.length > 0) { %>
         <div class="mt_20">
             <div class="paging" id="page_navi">
-                <% if(results.length > 0) { %>
                 <ul class="pagination customPaging">
                     <li>
                         <a href="/admin/bannerMain?bannerDiv=<%=bannerDiv %>&page=1&searchText=<%=searchText%>"
@@ -81,9 +81,9 @@
                     <li><a href="/admin/bannerMain?bannerDiv=<%=bannerDiv %>&page=<%= last%>&searchText=<%=searchText%>"
                             class="num">>></a></li>
                 </ul>
-                <%}%>
             </div>
         </div>
+        <%}%>
     </div>
 </div>
 </div>

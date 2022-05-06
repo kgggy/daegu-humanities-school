@@ -22,6 +22,7 @@
         <h5 class="card-header">※ 삭제시 원글(게시글/댓글)이 함께 삭제됩니다.</h5>
         <div class="table-responsive text-nowrap">
             <form id="eventForm" name="eventForm" action="" method="">
+                <input type="hidden" id="blameId" name="blameId" value="" />
                 <input type="hidden" name="page" value="1">
                 <table class="table table-hove">
                     <thead>
@@ -41,13 +42,7 @@
                             if(i > length){
                                 i++;
                             } else {  %> <tr>
-
-                <!-- <tr onclick="comment('/admin/m_comment/certiCommentOne', '', 'resizable=no,width=640, height=700, scrollbars=1',
-                                     '<%= results[i].certiContentId %>', '<%= results[i].targetContentId %>')"> -->
-
-                <td onclick='event.cancelBubble=true;'><input type="checkbox" id="chk" name="chk"
-                        value="<%=results[i].blaId %>" />
-                </td>
+                <td><input type="checkbox" id="chk" name="chk" value="<%=results[i].blameId %>" /></td>
                 <td>
                     <%=results[i].blameId%></td>
                 <td>
@@ -59,18 +54,18 @@
                 <td>
                     <%=results[i].blameDatefmt%></td>
                 <td>
-                    <% if(results[i].fileRoute){%>
+                    <% if(results[i].boardCount == 1){%>
                     Y
                     <%}else{%>
                     N
                     <%}%></td>  
                         <td>
                     <% if(results[i].blameDiv == 0){ %>
-                    <button class="btn btn-block btn-outline-primary" onclick="board('/admin/m_blame/blameDetail?blameDiv=0&blameId=<%=results[i].blameId%>', '',
-                        'resizable=no,width=640, height=700, scrollbars=1')">게시글</button>
+                    <button class="btn btn-block btn-outline-primary" onclick="board('/admin/blameDetailSelectOne?blameDiv=0&blameId=<%=results[i].blameId%>', '',
+                        'resizable=no,width=640, height=700, scrollbars=1')" <%if(results[i].boardCount==0){%> disabled <%}%>>게시글</button>
                     <%} else{ %>
-                    <button class="btn btn-block btn-outline-primary" onclick="board('/admin/m_blame/blameDetail?blameDiv=1&blameId=<%=results[i].blameId%>', '',
-                        'resizable=no,width=640, height=700, scrollbars=1')">댓글</button>
+                    <button class="btn btn-block btn-outline-primary" onclick="board('/admin/blameDetailSelectOne?blameDiv=1&blameId=<%=results[i].blameId%>', '',
+                        'resizable=no,width=640, height=700, scrollbars=1')" <%if(results[i].boardCount==0){%> disabled <%}%>>댓글</button>
                     <%}%>  
                 </td>
                             </tr>    
@@ -91,7 +86,6 @@
 <!--/ Basic Bootstrap Table -->
 <div>
     <div class="demo-inline-spacing">
-        <input type="hidden" id="blameId" name="blameId" value="" />
         <button class="btn btn-block btn-danger" type="button" id="delete_btn">삭제</button>
     </div>
     <% if(results.length > 0) { %>
@@ -100,17 +94,17 @@
             <ul class="pagination customPaging">
                 <% if(results.length > 0){ %>
                 <li>
-                    <a href="/admin/m_blame/blameAll?page=1" class="num">
+                    <a href="/admin/blameSelect?page=1" class="num">
                         << </a> </li> <li>
                             <a <%if((page<last-1)||(page==1)){%><%} else {%>
-                                href="/admin/m_blame/blameAll?page=<%= parseInt(page) - 1 %>" class="num" <% } %>>
+                                href="/admin/blameSelect?page=<%= parseInt(page) - 1 %>" class="num" <% } %>>
                                 < </a> </li> <% for(var i = startPage; i < endPage; i++){  %> <li class="paging_on">
-                                    <a href="/admin/m_blame/blameAll?page=<%= i + 1 %>"
+                                    <a href="/admin/blameSelect?page=<%= i + 1 %>"
                                         <%if(page==i+1){%>class="selected" <%}%> class="num"><%= i + 1 %></a> </li>
                                         <% } %> <li> <a <%if(page>last-1){%><%} else {%>
-                                            href="/admin/m_blame/blameAll?page=<%= parseInt(page) + 1 %>" class="num"
+                                            href="/admin/blameSelect?page=<%= parseInt(page) + 1 %>" class="num"
                                             <% } %>>></a></li>
-                <li><a href="/admin/m_blame/blameAll?page=<%= last%>" class="num">>></a></li>
+                <li><a href="/admin/blameSelect?page=<%= last%>" class="num">>></a></li>
                 <% } %>
             </ul>
         </div>
@@ -120,41 +114,31 @@
 </div>
 
 <script>
-    const formObj = $("form[name='searchForm']");
-    $(document).ready(function () {
-        //검색
-        $("#searchAction").on("click", function () {
-            searchForm.attr("action", "/admin/m_blame/blame");
-            searchForm.attr("method", "get");
-            searchForm.submit();
-        })
-    });
+    //신고 게시물 확인
+    function board(theURL, winName, features) {
+        window.open(theURL, winName, features);
+    }
     // 삭제
+    const eventForm = $("form[name='eventForm']");
     $("#delete_btn").on("click", function () {
         var chkArr = [];
         $("input[name=chk]:checked").each(function () {
             chkArr.push($(this).val());
-            console.log($(this));
+            console.log($(this).val());
         });
         $('#blameId').val(chkArr);
         if (chkArr == "") {
             alert("삭제할 목록을 선택해주세요.");
             return false;
         }
-        formObj.attr("action", "blameDelete");
-        formObj.attr("method", "get");
+        eventForm.attr("action", "/admin/blameDelete");
+        eventForm.attr("method", "get");
         if (confirm("삭제하시겠습니까?") == true) {
-            formObj.submit();
+            eventForm.submit();
         } else {
             return false;
         }
     })
-    //검색
-    function search() {
-        formObj.attr("method", "get");
-        formObj.attr("action", "blameAll");
-        formObj.submit();
-    }
     //체크박스
     $("#chkAll").click(function () {
         if ($("#chkAll").is(":checked")) {
@@ -170,14 +154,8 @@
         else
             $("#chkAll").prop("checked", true);
     });
-
-    //신고 게시물 확인
-    function board(theURL, winName, features) {
-        theURL += '';
-        window.open(theURL, winName, features);
-    }
-
+    //네비바 스타일
     var menuItem = document.getElementsByClassName("menu-item");
     menuItem.className = 'menu-item';
-    menuItem[24].className += ' open active';
+    menuItem[21].className += ' open active';
 </script>
