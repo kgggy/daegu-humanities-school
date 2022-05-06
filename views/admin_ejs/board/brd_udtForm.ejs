@@ -134,7 +134,7 @@
 
          if (confirm("수정하시겠습니까?") == true) {
             $('input[id=writContent]').attr('value', content);
-            formObj.attr("action", "brdUpdate");
+            formObj.attr("action", "boardUpdate");
             formObj.attr("enctype", "multipart/form-data");
             formObj.attr("method", "post");
             formObj.submit();
