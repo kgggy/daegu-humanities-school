@@ -61,10 +61,10 @@
                     <%}%></td>  
                         <td>
                     <% if(results[i].blameDiv == 0){ %>
-                    <button class="btn btn-block btn-outline-primary" onclick="board('/admin/blameDetailSelectOne?blameDiv=0&blameId=<%=results[i].blameId%>', '',
+                    <button type="button" class="btn btn-block btn-outline-primary" onclick="board('/admin/blameDetailSelectOne?blameDiv=0&blameId=<%=results[i].blameId%>', '',
                         'resizable=no,width=640, height=700, scrollbars=1')" <%if(results[i].boardCount==0){%> disabled <%}%>>게시글</button>
                     <%} else{ %>
-                    <button class="btn btn-block btn-outline-primary" onclick="board('/admin/blameDetailSelectOne?blameDiv=1&blameId=<%=results[i].blameId%>', '',
+                    <button type="button" class="btn btn-block btn-outline-primary" onclick="board('/admin/blameDetailSelectOne?blameDiv=1&blameId=<%=results[i].blameId%>', '',
                         'resizable=no,width=640, height=700, scrollbars=1')" <%if(results[i].boardCount==0){%> disabled <%}%>>댓글</button>
                     <%}%>  
                 </td>

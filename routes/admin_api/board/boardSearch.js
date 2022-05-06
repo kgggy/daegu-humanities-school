@@ -57,6 +57,7 @@ router.get('/', async (req, res) => {
     const crewDiv = req.query.crewDiv;
     var searchText = req.query.searchText == undefined ? "" : req.query.searchText;
     var sql = "select b.*, c.*, u.userName, u.uid, date_format(boardDate, '%Y-%m-%d') as boardDatefmt, date_format(boardUpdDate, '%Y-%m-%d') as boardUpdDatefmt\
+                 ,(select count(*) from comment c where c.boardId = b.boardId) as mcount\
                     from board b\
                     left join boardDiv c on c.boardDivId = b.boardDivId\
                     left join user u  on u.uid = b.uid\
