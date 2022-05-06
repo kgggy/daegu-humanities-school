@@ -66,10 +66,10 @@
                     <%}%></td>  
                         <td>
                     <% if(results[i].blameDiv == 0){ %>
-                    <button class="btn btn-block btn-outline-primary" onclick="board('/admin/m_blame/blameDetail?blameDiv=0&blameId=<%=results[i].blameId%>', '',
+                    <button class="btn btn-block btn-outline-primary" type="button" onclick="board('/admin/m_blame/blameDetail?blameDiv=0&blameId=<%=results[i].blameId%>', '',
                         'resizable=no,width=640, height=700, scrollbars=1')">게시글</button>
                     <%} else{ %>
-                    <button class="btn btn-block btn-outline-primary" onclick="board('/admin/m_blame/blameDetail?blameDiv=1&blameId=<%=results[i].blameId%>', '',
+                    <button class="btn btn-block btn-outline-primary" type="button" onclick="board('/admin/m_blame/blameDetail?blameDiv=1&blameId=<%=results[i].blameId%>', '',
                         'resizable=no,width=640, height=700, scrollbars=1')">댓글</button>
                     <%}%>  
                 </td>

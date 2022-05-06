@@ -33,8 +33,12 @@
                 <% if(results.length > 0) { %> <% for(var i = (page * page_num) - page_num; i < (page * page_num); i++) { 
                     if(i > length){
                         i++;
-                    } else { %> <tr class="pointer"
+                    } else { %> <% if(results[i].boardFix == 1){ %> <tr class="pointer" style="background-color: rgb(190 243 194);"
                 onclick="location.href='/admin/boardSelectOne?boardDivId=<%=results[i].boardDivId%>&page=<%=page%>&searchText=<%=searchText%>&boardId=<%=results[i].boardId%>&boardName=<%=community[0].boardName%>&crewDiv=<%=crewDiv%>'">
+                 <% }else{ %>
+                        <tr class="pointer"
+                onclick="location.href='/admin/boardSelectOne?boardDivId=<%=results[i].boardDivId%>&page=<%=page%>&searchText=<%=searchText%>&boardId=<%=results[i].boardId%>&boardName=<%=community[0].boardName%>&crewDiv=<%=crewDiv%>'">
+                <% } %>
             <td onclick='event.cancelBubble=true;'><input type="checkbox" id="chk" name="chk"
                     value="<%=results[i].boardId %>" />
             </td>
@@ -50,7 +54,7 @@
             <td onclick='event.cancelBubble=true;'>
                 <% if(results[i].mcount != 0) { %>
                 <button id="comment_btn" type="button"
-                    class="btn btn-block btn-outline-success"
+                    class="btn btn-info"
                     onclick="comment('/admin/commentSelect', '', 'resizable=0,width=640, height=700, scrollbars=1', '<%= results[i].boardId %>')">댓글(<%=results[i].mcount %>)</button>
                 <% } %></td>
             </tr>
@@ -162,18 +166,18 @@
         } else if (boardDivId == 3)
             menuItem[5].className += ' active';
     } else if (crewDiv == 'gf'){
-        menuItem[10].className += ' open active';
+        menuItem[9].className += ' open active';
         if (boardDivId == 1) {
-            menuItem[11].className += ' active';
+            menuItem[10].className += ' active';
         } else if (boardDivId == 2) {
-            menuItem[12].className += ' active';
+            menuItem[11].className += ' active';
         }
     } else if (crewDiv == 'mt'){
-        menuItem[17].className += ' open active';
+        menuItem[15].className += ' open active';
         if (boardDivId == 1) {
-            menuItem[18].className += ' active';
+            menuItem[16].className += ' active';
         } else if (boardDivId == 2) {
-            menuItem[19].className += ' active';
+            menuItem[17].className += ' active';
         }
     }
 
@@ -233,10 +237,16 @@
                                     data.ajaxSearch[i].boardTitle + '</td>';
                                 str +=
                                     '<td>' +
-                                    data.ajaxSearch[i].boardDatefmt + '</td></tr>';
+                                    data.ajaxSearch[i].boardDatefmt + '</td>';
+                                str += 
+                                    '<td onclick="event.cancelBubble=true;">';
+                                    if(data.ajaxSearch[i].mcount != 0) {
+                                        str += `<button id="comment_btn" type="button" class="btn btn-info" onclick="comment('/admin/commentSelect', '', 'resizable=0,width=640, height=700, scrollbars=1', '`+data.ajaxSearch[i].boardId+`')">댓글(`+data.ajaxSearch[i].mcount+`)</button>`;
+                                    } 
+                                str +=
+                                    '</td></tr>';
                             }
                         }
-                        console.log("str = " + str)
                         $("#tbody").append(str);
                     } else {
                         var none = '<tr> <td colspan="8"> 데이터가 존재하지 않습니다. </td> </tr>'
@@ -286,9 +296,9 @@
         }
         temp += `<li> <a `
         if (datasPage == datasLast) {
-            temp += `> > </a></li> <li><a href="/admin/boardMain?boardDivId=${boardDivId}&page=${datasPage}&searchText=${datas.searchText}&crewDiv=${datas.crewDiv}</a></li>
-                         <li><a href="/admin/boardMain?boardDivId=${boardDivId}&page=${datasPage}&searchText=${datas.searchText}&crewDiv=${datas.crewDiv}"
-                    class="num">>></a></li>`
+            temp += `> > </a></li>`
+            temp += `<li><a href='/admin/boardMain?boardDivId=${boardDivId}&page=${datasPage}&searchText=${datas.searchText}&crewDiv=${datas.crewDiv}'`
+            temp += ` class="num">>></a></li>`
         } else {
             temp += `href="/admin/boardMain?boardDivId=${boardDivId}&page=${datasPage + 1}&searchText=${datas.searchText}&crewDiv=${datas.crewDiv}"
                     class="num">></a></li>
