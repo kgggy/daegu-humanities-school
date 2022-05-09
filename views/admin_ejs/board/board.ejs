@@ -7,106 +7,99 @@
         <input type="hidden" name="boardName" id="boardName" value="<%=community[0].boardName%>">
         <input type="hidden" name="crewDiv" id="crewDiv" value="<%=crewDiv%>">
         <input class="searchbox" type="text" name="searchText" id="searchText"
-            <%if(searchText!=null){%>value="<%=searchText%>" <%}%> placeholder="작성자, 제목, 내용">
+            <%if(searchText!=null){%>value="<%=searchText%>" <%}%> placeholder=" 작성자, 제목, 내용">
     </form>
 <!-- Basic Bootstrap Table -->
 <div class="card">
-
     <form id="boardForm" name="boardForm" action="" method="">
         <input type="hidden" id="page" name="page" value="<%=page%>">
         <input type="hidden" name="boardDivId" id="boardDivId" value="<%=boardDivId%>">
         <input type="hidden" name="boardName" id="boardName" value="<%=community[0].boardName%>">
         <input type="hidden" name="crewDiv" id="crewDiv" value="<%=crewDiv%>">
         <input type="hidden" id="boardId" name="boardId" value="" />
-    <div class="table-responsive text-nowrap">
+        <div class="table-responsive text-nowrap">
             <table class="table table-hove">
-            <thead>
-                <tr>
-                    <th><input type="checkbox" name="chkAll" id="chkAll" /></th>
-                    <th>번호</th>
-                    <th>제목</th>
-                    <th>날짜</th>
-                    <th>댓글</th>
-                </tr>
-            </thead>
-            <tbody class="table-border-bottom-0" id="tbody">
-                <% if(results.length > 0) { %> <% for(var i = (page * page_num) - page_num; i < (page * page_num); i++) { 
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" name="chkAll" id="chkAll" /></th>
+                        <th>번호</th>
+                        <th>제목</th>
+                        <th>날짜</th>
+                        <th>댓글</th>
+                    </tr>
+                </thead>
+                <tbody class="table-border-bottom-0" id="tbody">
+                    <% if(results.length > 0) { %> <% for(var i = (page * page_num) - page_num; i < (page * page_num); i++) { 
                     if(i > length){
                         i++;
-                    } else { %> <% if(results[i].boardFix == 1){ %> <tr class="pointer" style="background-color: rgb(190 243 194);"
-                onclick="location.href='/admin/boardSelectOne?boardDivId=<%=results[i].boardDivId%>&page=<%=page%>&searchText=<%=searchText%>&boardId=<%=results[i].boardId%>&boardName=<%=community[0].boardName%>&crewDiv=<%=crewDiv%>'">
-                 <% }else{ %>
-                        <tr class="pointer"
-                onclick="location.href='/admin/boardSelectOne?boardDivId=<%=results[i].boardDivId%>&page=<%=page%>&searchText=<%=searchText%>&boardId=<%=results[i].boardId%>&boardName=<%=community[0].boardName%>&crewDiv=<%=crewDiv%>'">
-                <% } %>
-            <td onclick='event.cancelBubble=true;'><input type="checkbox" id="chk" name="chk"
-                    value="<%=results[i].boardId %>" />
-            </td>
-            <td>
-                <%=results.length - i%>
-            </td>
-            <td>
-                <%=results[i].boardTitle%>
-            </td>
-            <td>
-                <%= results[i].boardDatefmt %>
-            </td>
-            <td onclick='event.cancelBubble=true;'>
-                <% if(results[i].mcount != 0) { %>
-                <button id="comment_btn" type="button"
-                    class="btn btn-info"
-                    onclick="comment('/admin/commentSelect', '', 'resizable=0,width=640, height=700, scrollbars=1', '<%= results[i].boardId %>')">댓글(<%=results[i].mcount %>)</button>
-                <% } %></td>
-            </tr>
-            <% } %>
-            <% } %>
-            <% } else { %>
-            <tr>
-                <td colspan="7">등록된 게시물이 없습니다.</td>
-            </tr>
-            <% } %>
+                    } else { %> <% if(results[i].boardFix == 1){ %> <tr class="pointer"
+                        style="background-color: rgb(231 231 255);"
+                        onclick="location.href='/admin/boardSelectOne?boardDivId=<%=results[i].boardDivId%>&page=<%=page%>&searchText=<%=searchText%>&boardId=<%=results[i].boardId%>&boardName=<%=community[0].boardName%>&crewDiv=<%=crewDiv%>'">
+                        <% }else{ %>
+                    <tr class="pointer"
+                        onclick="location.href='/admin/boardSelectOne?boardDivId=<%=results[i].boardDivId%>&page=<%=page%>&searchText=<%=searchText%>&boardId=<%=results[i].boardId%>&boardName=<%=community[0].boardName%>&crewDiv=<%=crewDiv%>'">
+                        <% } %>
+                        <td onclick='event.cancelBubble=true;'><input type="checkbox" id="chk" name="chk"
+                                value="<%=results[i].boardId %>" />
+                        </td>
+                        <td>
+                            <%=results.length - i%>
+                        </td>
+                        <td>
+                            <%=results[i].boardTitle%>
+                        </td>
+                        <td>
+                            <%= results[i].boardDatefmt %>
+                        </td>
+                        <td onclick='event.cancelBubble=true;'>
+                            <% if(results[i].mcount != 0) { %>
+                            <button id="comment_btn" type="button" class="btn btn-primary"
+                                onclick="comment('/admin/commentSelect', '', 'resizable=0,width=640, height=700, scrollbars=1', '<%= results[i].boardId %>')">댓글(<%=results[i].mcount %>)</button>
+                            <% } %></td>
+                    </tr>
+                    <% } %>
+                    <% } %>
+                    <% } else { %>
+                    <tr>
+                        <td colspan="7">등록된 게시물이 없습니다.</td>
+                    </tr>
+                    <% } %>
 
-        </td>
-    </tbody>
-</table>
-</form>
-</div>
-</div>
-
-    <div style="margin-top: 30px;">
-        <button id="enrollAction" class="btn btn-primary"
-            onclick="location.href='/admin/boardInsert?boardDivId=<%=boardDivId %>&crewDiv=<%=crewDiv%>&boardName=<%=community[0].boardName%>'">등록</button>
-        <button class="btn btn-danger" type="button" id="delete_btn">삭제</button>
-    </div>
-
-
-    <div>
-        <div class="mt_20">
-            <div class="paging" id="page_navi">
-                <% if(results.length > 0) { %>
-                <ul class="pagination customPaging">
-                    <li>
-                        <a href="/admin/boardMain?boardDivId=<%=boardDivId %>&page=1&searchText=<%=searchText%>&crewDiv=<%=crewDiv%>"
-                            class="num">
-                            << </a> </li> <li>
-                                <a <%if((page==1)){%><%} else {%>
-                                    href="/admin/boardMain?boardDivId=<%=boardDivId %>&page=<%= parseInt(page) - 1 %>&searchText=<%=searchText%>&crewDiv=<%=crewDiv%>"
-                                    class="num" <% } %>>
-                                    < </a> </li> <% for(var i = startPage; i < endPage; i++){  %> <li class="paging_on">
-                                        <a href="/admin/boardMain?boardDivId=<%=boardDivId %>&page=<%= i + 1 %>&searchText=<%=searchText%>&crewDiv=<%=crewDiv%>"
-                                            <%if(page==i+1){%>class="selected" <%}%> class="num"><%= i + 1 %></a> </li>
-                                            <% } %> <li> <a <%if(page>last-1){%><%} else {%>
-                                                href="/admin/boardMain?boardDivId=<%=boardDivId %>&page=<%= parseInt(page) + 1 %>&searchText=<%=searchText%>&crewDiv=<%=crewDiv%>"
-                                                class="num" <% } %>>></a></li>
-                    <li><a href="/admin/boardMain?boardDivId=<%=boardDivId %>&page=<%= last%>&searchText=<%=searchText%>&crewDiv=<%=crewDiv%>"
-                            class="num">>></a></li>
-                </ul>
-                <%}%>
-            </div>
+                    </td>
+                </tbody>
+            </table>
         </div>
+    </form>
+</div>
+<div style="margin-top: 30px;">
+    <button id="enrollAction" class="btn btn-primary"
+        onclick="location.href='/admin/boardInsert?boardDivId=<%=boardDivId %>&crewDiv=<%=crewDiv%>&boardName=<%=community[0].boardName%>'">등록</button>
+    <button class="btn btn-danger" type="button" id="delete_btn">삭제</button>
+</div>
+<% if(results.length > 0) { %>
+<div class="mt_20">
+    <div class="paging" id="page_navi">
+        <ul class="pagination customPaging">
+            <li>
+                <a href="/admin/boardMain?boardDivId=<%=boardDivId %>&page=1&searchText=<%=searchText%>&crewDiv=<%=crewDiv%>"
+                    class="num">
+                    << </a> </li> <li>
+                        <a <%if((page==1)){%><%} else {%>
+                            href="/admin/boardMain?boardDivId=<%=boardDivId %>&page=<%= parseInt(page) - 1 %>&searchText=<%=searchText%>&crewDiv=<%=crewDiv%>"
+                            class="num" <% } %>>
+                            < </a> </li> <% for(var i = startPage; i < endPage; i++){  %> <li class="paging_on">
+                                <a href="/admin/boardMain?boardDivId=<%=boardDivId %>&page=<%= i + 1 %>&searchText=<%=searchText%>&crewDiv=<%=crewDiv%>"
+                                    <%if(page==i+1){%>class="selected" <%}%> class="num"><%= i + 1 %></a> </li> <% } %>
+                                    <li> <a <%if(page>last-1){%><%} else {%>
+                                        href="/admin/boardMain?boardDivId=<%=boardDivId %>&page=<%= parseInt(page) + 1 %>&searchText=<%=searchText%>&crewDiv=<%=crewDiv%>"
+                                        class="num" <% } %>>></a></li>
+            <li><a href="/admin/boardMain?boardDivId=<%=boardDivId %>&page=<%= last%>&searchText=<%=searchText%>&crewDiv=<%=crewDiv%>"
+                    class="num">>></a></li>
+        </ul>
     </div>
 </div>
-</div>
+<%}%>
+    </div>
 <!--/ Basic Bootstrap Table -->
 
 <script>
@@ -241,7 +234,7 @@
                                 str += 
                                     '<td onclick="event.cancelBubble=true;">';
                                     if(data.ajaxSearch[i].mcount != 0) {
-                                        str += `<button id="comment_btn" type="button" class="btn btn-info" onclick="comment('/admin/commentSelect', '', 'resizable=0,width=640, height=700, scrollbars=1', '`+data.ajaxSearch[i].boardId+`')">댓글(`+data.ajaxSearch[i].mcount+`)</button>`;
+                                        str += `<button id="comment_btn" type="button" class="btn btn-primary" onclick="comment('/admin/commentSelect', '', 'resizable=0,width=640, height=700, scrollbars=1', '`+data.ajaxSearch[i].boardId+`')">댓글(`+data.ajaxSearch[i].mcount+`)</button>`;
                                     } 
                                 str +=
                                     '</td></tr>';

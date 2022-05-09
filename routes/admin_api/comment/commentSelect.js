@@ -18,7 +18,6 @@ router.get('/', async (req, res) => {
             }
             //cmtviewForm 폼 바꾸기
             const boardId = req.query.boardId;
-            console.log(results);
             let route = req.app.get('views') + '/comment/cmtViewForm';
                 res.render(route, {
                 results: results,

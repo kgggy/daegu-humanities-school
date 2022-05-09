@@ -8,57 +8,69 @@
 	[type="reset"]:not(:disabled) {
 		pointer-events: none;
 	}
+
+	#layout-navbar {
+		display: none;
+	}
 </style>
 
-	<div class="container-fluid">
-		<div class="animated fadeIn">
-			<div class="row">
-				<div class="col-lg-6">
-					<div class="card">
-						<%if(results.length > 0){%>
-						<div class="card-header">
-							<i class="fa fa-align-justify"></i> 댓글(<%= results[0].cmtCount %>개)
-						</div>
-						<div class="card-body">
-							<!-- 컨텐츠 -->
-							<form action="" id="commentForm" method="get" class="cmtFrm">
-								<input type="hidden" id="cmtId" name="cmtId" value="">
-								<input type="hidden" id="boardId" name="boardId" value="<%=boardId%>">
-								<% for(var i = 0; i < results.length; i++) {%>
-								<div class="form-group row col-md-9">
-									<div class="cmtInfo-wrap">
-										<div class="cmtInfo">
-											<img src="../../../public/images/icon_admin.gif">
-											<span><%= results[i].userNick %></span>
-											<span><%= results[i].cmtDatefmt %></span>
-										</div>
-										<input class="btn btn-block btn-outline-danger cmtDelBtn" type="submit"
-											id="delete_btn" name="delete_btn" value="삭제"
-											data-cmtId="<%= results[i].cmtId %>" style="float: right; margin-bottom: 10px">
-									</div>
-									<div class="form-control" id="writTitle" type="text" name="writTitle" style="margin-bottom: 20px">
-										<%= results[i].cmtContent %></div>
+<div class="container-fluid">
+	<div class="animated fadeIn">
+		<div class="row">
+			<div class="col-lg-6">
+				<div class="card">
+					<%if(results.length > 0){%>
+					<div class="card-header">
+						<i class="fa fa-align-justify"></i> 댓글(<%= results[0].cmtCount %>개)
+					</div>
+					<div class="card-body">
+						<!-- 컨텐츠 -->
+						<form action="" id="commentForm" method="get" class="cmtFrm">
+							<input type="hidden" id="cmtId" name="cmtId" value="">
+							<input type="hidden" id="boardId" name="boardId" value="<%=boardId%>">
+							<% for(var i = 0; i < results.length; i++) {%>
+							<div class="form-group row col-md-9">
+								<div class="cmtInfo-wrap">
+									<img src="../../../public/images/icon_admin.gif">
+									<span><%= results[i].userNick %></span>
+									<span>(<%= results[i].cmtDatefmt %>)</span>
+									<input class="btn btn-block btn-outline-danger cmtDelBtn" 
+										id="delete_btn" name="delete_btn" value="삭제"
+										data-cmtId="<%= results[i].cmtId %>" readonly onfocus="this.blur()" style="float: right; margin-bottom: 10px; width:90px">
+									<!-- <button class="btn btn-block btn-outline-danger cmtDelBtn" type="button"
+										id="delete_btn" name="delete_btn" data-cmtId="<%= results[i].cmtId %>"
+										style="float: right; margin-bottom: 10px">삭제</button> -->
 								</div>
-								<% } %>
-							</form>
-						</div>
-						<% } else { %>
-						<div class="card-header">
-							<i class="fa fa-align-justify"></i> 댓글(0개)
-						</div>
-						<div class="card-body">
-							<!-- 컨텐츠 -->
-							<div class="form-group row">
-								<div class="col-md-9">
-									<label class="col-md-2 col-form-label" for="text-input">댓글이 존재하지 않습니다.</label>
-								</div>
+								<div class="form-control" id="writTitle" type="text" name="writTitle"
+									style="margin-bottom: 20px">
+									<%= results[i].cmtContent %></div>
+							</div>
+							<% } %>
+						</form>
+						<button class="btn btn-primary" id="refresh" name="refresh">확인</button>
+						<!-- <input class="btn btn-primary" id="refresh" name="refresh"  value="확인"> -->
+					</div>
+					<% } else { %>
+					<div class="card-header">
+						<i class="fa fa-align-justify"></i> 댓글(0개)
+					</div>
+					<div class="card-body">
+						<!-- 컨텐츠 -->
+						<div class="form-group row">
+							<div class="col-md-9">
+								<label class="col-md-2 col-form-label" for="text-input">댓글이 존재하지 않습니다.</label>
 							</div>
 						</div>
-						<% } %>
+						<input class="btn btn-primary" type="button" id="refresh" name="refresh" value="확인">
 					</div>
+					<% } %>
 				</div>
+
+
 			</div>
 		</div>
+	</div>
+</div>
 <script>
 	// 삭제
 	$('input[name=delete_btn]').on("click", function () {
@@ -67,8 +79,17 @@
 		$("#commentForm").attr("method", "get");
 		if (confirm("댓글을 삭제하시겠습니까?") == true) {
 			$("#commentForm").submit();
+			alert("댓글이 삭제되었습니다.")
 		} else {
 			return;
 		}
 	});
+
+	//팝업창 꺼지면서 부모창 새로고침
+	$(document).ready(function () {
+		$('#refresh').on("click", function () {
+			opener.location.reload();
+			self.close();
+		});
+	})
 </script>

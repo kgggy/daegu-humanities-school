@@ -50,7 +50,7 @@
                     <thead>
                         <tr>
                             <th>번호</th>
-                            <th>종류</th>
+                            <th>제목</th>
                             <th>투표기간</th>
                             <th>행사일시</th>
                             <th>위치</th>
@@ -63,7 +63,7 @@
                             if(i > length){
                                 i++;
                             } else { %>
-                        <tr
+                        <tr class="pointer"
                             onclick="location.href='/admin/eventSelectOne?eventId=<%=results[i].eventId%>&page=<%=page%>&crewDiv=<%=crewDiv%><%=keepSearch%>'">
                             <td><%= results.length - i %></td>
                             <td><%=results[i].eventTitle%></td>
@@ -80,7 +80,7 @@
                         <% } %>
                         <% } else { %>
                         <tr>
-                            <td colspan="6" style="text-align: center;">
+                            <td colspan="7" style="text-align: center;">
                                 등록된 목록이 없습니다.
                             </td>
                         </tr>
@@ -99,54 +99,57 @@
                 <h5 class="modal-title" id="modalScrollableTitle">투표자 명단</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <div class="col-xs-6">
-                    <div class="nav-align-top mb-4">
-                        <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
-                            <li class="nav-item">
-                                <button type="button" class="nav-link eventId active" role="tab" data-bs-toggle="tab"
-                                    data-bs-target="#join" aria-controls="join" aria-selected="true"
-                                    onclick="voteAjax(0)" value="">
-                                    참여자
-                                </button>
-                            </li>
-                            <li class="nav-item">
-                                <button type="button" class="nav-link eventId" role="tab" data-bs-toggle="tab"
-                                    data-bs-target="#noJoin" aria-controls="noJoin" aria-selected="false"
-                                    onclick="voteAjax(1)" value="">
-                                    불참자
-                                </button>
-                            </li>
-                            <li class="nav-item">
-                                <button type="button" class="nav-link eventId" role="tab" data-bs-toggle="tab"
-                                    data-bs-target="#noChoose" aria-controls="noChoose" aria-selected="false"
-                                    onclick="voteAjax()" value="">
-                                    미정자
-                                </button>
-                            </li>
-                        </ul>
-                        <div class="tab-content">
-                            <div class="tab-pane fade show active" id="join" role="tabpanel">
-                                <div class="form-group row col-sm-12 here">
+            <form id="form_box">
+                <div class="modal-body">
+                    <div class="col-xs-6">
+                        <div class="nav-align-top mb-4">
+                            <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
+                                <li class="nav-item">
+                                    <button type="button" class="nav-link eventId" role="tab" id="first" 
+                                        data-bs-toggle="tab" data-bs-target="#join" aria-controls="join"
+                                        aria-selected="false" onclick="voteAjax(0)" value="">
+                                        참여자
+                                    </button>
+                                </li>
+                                <li class="nav-item">
+                                    <button type="button" class="nav-link eventId" role="tab" data-bs-toggle="tab" id="second" 
+                                        data-bs-target="#noJoin" aria-controls="noJoin" aria-selected="false"
+                                        onclick="voteAjax(1)" value="">
+                                        불참자
+                                    </button>
+                                </li>
+                                <li class="nav-item">
+                                    <button type="button" class="nav-link eventId" role="tab" data-bs-toggle="tab" id="third" 
+                                        data-bs-target="#noChoose" aria-controls="noChoose" aria-selected="false"
+                                        onclick="voteAjax()" value="">
+                                        미정자
+                                    </button>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane fade show active" id="join" role="tabpanel">
+                                    <div class="form-group row col-sm-12 here">
 
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="tab-pane fade" id="noJoin" role="tabpanel">
-                                <div class="form-group row col-sm-12 here">
+                                <div class="tab-pane fade" id="noJoin" role="tabpanel">
+                                    <div class="form-group row col-sm-12 here">
 
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="tab-pane fade" id="noChoose" role="tabpanel">
-                                <div class="form-group row col-sm-12 here">
+                                <div class="tab-pane fade" id="noChoose" role="tabpanel">
+                                    <div class="form-group row col-sm-12 here">
 
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">확인</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                    onclick="location.reload">확인</button>
             </div>
         </div>
     </div>
@@ -162,15 +165,16 @@
             <ul class="pagination customPaging">
                 <li> <a href="/admin/eventSelect?page=1&crewDiv=<%=crewDiv%><%=keepSearch%>" class="num">
                         <<</a> </li> <li> <a <%if((page<startPage)||(page==1)){%><%} else {%>
-                                href="/admin/eventSelect?page=<%= parseInt(page) - 1 %>&crewDiv=<%=crewDiv%><%=keepSearch%>" class="num"
-                                <% } %>>
+                                href="/admin/eventSelect?page=<%= parseInt(page) - 1 %>&crewDiv=<%=crewDiv%><%=keepSearch%>"
+                                class="num" <% } %>>
                                 <</a> </li> <% for(var i = startPage; i < endPage ; i++){  %> <li class="paging_on">
                                     <a href="/admin/eventSelect?page=<%= i + 1 %>&crewDiv=<%=crewDiv%><%=keepSearch%>"
                                         <%if(page==i+1){%>class="selected" <%}%> class="num"><%= i + 1 %></a> </li>
                                         <% } %> <li> <a <%if(page>last-1){%><%} else {%>
                                             href="/admin/eventSelect?page=<%= parseInt(page) + 1 %>&crewDiv=<%=crewDiv%><%=keepSearch%>"
                                             class="num" <% } %>>></a></li>
-                <li><a href="/admin/eventSelect?page=<%= last %>&crewDiv=<%=crewDiv%><%=keepSearch%>" class="num">>></a></li>
+                <li><a href="/admin/eventSelect?page=<%= last %>&crewDiv=<%=crewDiv%><%=keepSearch%>" class="num">>></a>
+                </li>
             </ul>
         </div>
     </div>
@@ -214,11 +218,11 @@
     } else if (param.crewDiv == 'gf') {
         var menuItem = document.getElementsByClassName("menu-item");
         menuItem.className = 'menu-item';
-        menuItem[13].className += ' open active';
+        menuItem[12].className += ' open active';
     } else {
         var menuItem = document.getElementsByClassName("menu-item");
         menuItem.className = 'menu-item';
-        menuItem[20].className += ' open active';
+        menuItem[18].className += ' open active';
     }
 
     function voteAjax(choose) {
@@ -242,7 +246,8 @@
                     for (var i = 0; i < data.joinyn.length; i++) {
                         str += '<br><br><div class="cmtInfo-wrap col-sm-4" style="margin-bottom: 30px;">';
                         str += '<div class="cmtInfo">';
-                        str += '<img src="../../../public/images/icon_admin.gif"><span>&nbsp;' + data.joinyn[i].userName + '</span>';
+                        str += '<img src="../../../public/images/icon_admin.gif"><span>&nbsp;' + data
+                            .joinyn[i].userName + '</span>';
                         str += '</div>';
                         str += '</div>';
                     }
@@ -261,4 +266,12 @@
             }
         });
     }
+
+    // 모달창 닫기버튼 누르면 리셋
+    $("button[name='voteEventId']").on("click", function () {
+        $('#third').removeClass('active');
+        $('#second').removeClass('active');
+        $('#first').attr('aria-selected', true);
+        $('#first').attr('class', 'nav-link eventId active');
+    })
 </script>

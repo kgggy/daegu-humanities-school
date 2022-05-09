@@ -6,8 +6,10 @@ const multer = require("multer");
 const path = require('path');
 const sharp = require('sharp');
 
-// DB 커넥션 생성\              
 var connection = require('../../../config/db').conn;
+
+const {ONE_SIGNAL_CONFIG} = require("../../../config/pushNotification_config");
+const pushNotificationService = require("../../../services/push_Notification.services");
 
 //파일업로드 모듈
 var upload = multer({ //multer안에 storage정보  
@@ -71,7 +73,8 @@ router.post('/', upload.array('file'), async (req, res, next) => {
         const orgName = req.files.map(data => data.originalname);
         const crewDiv = req.body.crewDiv;
         const boardDivId = req.body.boardDivId;
-        const uid = req.session.user.uid;
+        // const uid = req.session.user.uid;
+        const uid = 1;
         const param = [boardDivId, crewDiv, req.body.boardTitle, req.body.boardContent, uid, boardFix];
         const sql = "call insertBoard(?,?,?,?,?,?);\
                     select max(boardId) as boardId from board;";
@@ -99,6 +102,27 @@ router.post('/', upload.array('file'), async (req, res, next) => {
                 throw err;
             }
             const boardId = results[1][0].boardId; 
+            //OneSignal 푸쉬 알림
+            var message = {
+                app_id: ONE_SIGNAL_CONFIG.APP_ID,
+                contents: {
+                    "en": req.body.boardTitle
+                },
+                included_segments: ["All"],
+                content_avaliable: true,
+                small_icon: "ic_notification_icon",
+                data: {
+                    PushTitle: "boardId = " + boardId
+                }
+            };
+
+            pushNotificationService.sendNotification(message, (error, results) => {
+                if (error) {
+                    return next(error);
+                }
+                return null;
+            })
+            //파일 넣기
             for (let i = 0; i < paths.length; i++) {
                 const param2 = [boardId, paths[i], orgName[i], path.extname(paths[i])];
                 const sql2 = "insert into file(boardId, fileRoute, fileOrgName, fileType) values (?, ?, ?, ?)";
@@ -108,8 +132,8 @@ router.post('/', upload.array('file'), async (req, res, next) => {
                     }
                 });
             };
+            res.send('<script>alert("공지사항이 등록되었습니다."); location.href="/admin/boardMain?boardDivId='+boardDivId+'&page=1&crewDiv='+crewDiv+'";</script>');
         });
-        res.send('<script>alert("공지사항이 등록되었습니다."); location.href="/admin/boardMain?boardDivId='+boardDivId+'&page=1&crewDiv='+crewDiv+'";</script>');
     } catch (error) {
         res.send(error.message);
     }

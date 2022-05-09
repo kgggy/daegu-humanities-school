@@ -7,55 +7,67 @@
 <div class="card mb-4">
    <h5 class="card-header">신고 당한 게시글</h5>
    <div class="card-body">
-         <!-- 컨텐츠 -->
-         <div class="mb-3 row">
-            <label class="col-md-2 col-form-label" for="text-input">글번호</label>
-            <div class="col-md-9">
-               <input class="form-control" id="boardId" type="text" name="boardId" disabled="disabled"
-                  value="<%=result[0].targetContentId%>">
-            </div>
+      <!-- 컨텐츠 -->
+      <div class="mb-3 row">
+         <label class="col-md-2 col-form-label" for="text-input">글번호</label>
+         <div class="col-md-9">
+            <input class="form-control" id="boardId" type="text" name="boardId" disabled="disabled"
+               value="<%=result[0].targetContentId%>">
          </div>
-         <div class="mb-3 row">
-            <label class="col-md-2 col-form-label" for="text-input">제목</label>
-            <div class="col-md-9">
-               <input class="form-control" id="boardTitle" type="text" name="boardTitle" disabled="disabled"
-                  value="<%=result[0].boardTitle%>">
-            </div>
+      </div>
+      <div class="mb-3 row">
+         <label class="col-md-2 col-form-label" for="text-input">게시판명</label>
+         <div class="col-md-9">
+            <input class="form-control" id="boardName" type="text" name="boardName" disabled="disabled"
+               <%if(result[0].crewDiv=='all'){%> value="총동창회 <%=result[0].boardName%>">
+               <%}else if(result[0].crewDiv=='gf') {%>
+               value="골프회 <%=result[0].boardName%>">
+               <%}else if(result[0].crewDiv=='mt') {%>
+               value="산악회 <%=result[0].boardName%>">
+               <%}%>
          </div>
-         <div class="mb-3 row">
-            <label class="col-md-2 col-form-label" for="text-input">작성일</label>
-            <div class="col-md-9">
-               <input class="form-control" id="boardDatefmt" type="text" name="boardDatefmt" disabled="disabled"
-                  value="<%=result[0].boardDateFmt%>">
-            </div>
+      </div>
+      <div class="mb-3 row">
+         <label class="col-md-2 col-form-label" for="text-input">제목</label>
+         <div class="col-md-9">
+            <input class="form-control" id="boardTitle" type="text" name="boardTitle" disabled="disabled"
+               value="<%=result[0].boardTitle%>">
          </div>
-         <div class="mb-3 row">
-            <label class="col-md-2 col-form-label" for="text-input">내용</label>
-            <div class="col-md-9">
-               <%-result[0].boardContent%>
-            </div>
+      </div>
+      <div class="mb-3 row">
+         <label class="col-md-2 col-form-label" for="text-input">작성일</label>
+         <div class="col-md-9">
+            <input class="form-control" id="boardDatefmt" type="text" name="boardDatefmt" disabled="disabled"
+               value="<%=result[0].boardDateFmt%>">
          </div>
-         <div class="mb-3 row">
-            <label class="col-md-2 col-form-label">첨부파일</label>
-            <div class="col-md-9">
-               <% if(result[0].fileRoute != null) { %>
-               <div class="file-wrap">
-                  <% for(var i = 0; i < result.length; i++) {%>
-                  <div id="" style="padding: 10px;">
-                     <p><img src="../../../<%= result[i].fileRoute %>" style="width:300px; margin-bottom: 15px;">
-                     </p>
-                  </div>
-                  <% } %>
+      </div>
+      <div class="mb-3 row">
+         <label class="col-md-2 col-form-label" for="text-input">내용</label>
+         <div class="col-md-9">
+            <%-result[0].boardContent%>
+         </div>
+      </div>
+      <div class="mb-3 row">
+         <label class="col-md-2 col-form-label">첨부파일</label>
+         <div class="col-md-9">
+            <% if(result[0].fileRoute != null) { %>
+            <div class="file-wrap">
+               <% for(var i = 0; i < result.length; i++) {%>
+               <div id="" style="padding: 10px;">
+                  <p><img src="../../../<%= result[i].fileRoute %>" style="width:300px; margin-bottom: 15px;">
+                  </p>
                </div>
-               <% }%>
-               <% if(result[0].fileRoute == null) { %>
-               <div id="fileDiv" style="padding: 10px;">
-                  파일이 없습니다.
-               </div>
-               <br>
                <% } %>
             </div>
+            <% }%>
+            <% if(result[0].fileRoute == null) { %>
+            <div id="fileDiv" style="padding: 10px;">
+               파일이 없습니다.
+            </div>
+            <br>
+            <% } %>
          </div>
+      </div>
    </div>
 </div>
 <% } else { %>

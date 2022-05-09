@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
         var sql = "";
         if (req.query.blameDiv == '0') {
             //게시글
-            sql = "select *, date_format(boardDate, '%Y-%m-%d') as boardDateFmt\
+            sql = "select b.*, d.*, f.fileRoute, (select boardName from boardDiv where d.boardDivId = boardDiv.boardDivId) as boardName, d.crewDiv, date_format(boardDate, '%Y-%m-%d') as boardDateFmt\
                      from blame b\
                 left join board d on d.boardId = b.targetContentId\
                 left join file f on b.targetContentId = f.boardId\
