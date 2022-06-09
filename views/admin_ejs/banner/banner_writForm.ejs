@@ -18,21 +18,21 @@
          <div class="col-xs-6">
             <!-- HTML5 Inputs -->
             <div class="card mb-4">
-               <h5 class="card-header"><%if(bannerDiv=="all"){%>총동창회<%}else if (bannerDiv == "gf"){%>골프회<%}
-                                       else if (bannerDiv == "mt"){%>산악회<%}%> 후원 등록</h5>
+               <h5 class="card-header"><%if(crewDiv=="all"){%>총동창회<%}else if (crewDiv == "gf"){%>골프회<%}
+                                       else if (crewDiv == "mt"){%>산악회<%}%> 후원 등록</h5>
                <div class="card-body">
                      <!-- 컨텐츠 -->
                      <form action="" id="bannerwrite" method="post" enctype="multipart/form-data" autocomplete="off">
                         <input type="hidden" id="writContent" name="writContent" value="">
-                        <input type="hidden" id="bannerDiv" name="bannerDiv" value="<%=bannerDiv%>">
+                        <input type="hidden" id="crewDiv" name="crewDiv" value="<%=crewDiv%>">
                         <div class="mb-3 row">
-                           <label class="col-md-1 col-form-label" for="text-input">후원업체명</label>
+                           <label class="col-md-1 col-form-label primary" for="text-input">* 후원업체명</label>
                            <div class="col-md-10">
                               <input class="form-control" id="writTitle" type="text" name="bannerTitle" value="">
                            </div>
                         </div>
                         <div class="mb-3 row">
-                           <label class="col-md-1 col-form-label" for="text-input">업체세부내용</label>
+                           <label class="col-md-1 col-form-label primary" for="text-input">* 업체세부내용</label>
                            <div class="col-md-10">
                               <textarea name="bannerDetail" class="editor" id="editor"></textarea>
                            </div>
@@ -70,17 +70,17 @@
 <script type="text/javascript">
        // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 
     var menuItem = document.getElementsByClassName("menu-item");
-    var bannerDiv = document.getElementById("bannerDiv").value;
+    var crewDiv = document.getElementById("crewDiv").value;
     //초기화
     menuItem.className = 'menu-item';
     //'[2] = 게시판관리' '[3] = 공지사항' '[4] = 갤러리' '[5] = 경조사'
     //'[10] = 골프회' '[11] = 공지사항' '[12] = 갤러리'
     //'[17] = 산악회' '[18] = 공지사항' '[19] = 갤러리'
-    if(bannerDiv == 'all'){
+    if(crewDiv == 'all'){
         menuItem[8].className += ' open active';
-    } else if (bannerDiv == 'gf'){
+    } else if (crewDiv == 'gf'){
         menuItem[14].className += ' open active';
-    } else if (bannerDiv == 'mt'){
+    } else if (crewDiv == 'mt'){
         menuItem[20].className += ' open active';
     }
     
@@ -107,13 +107,13 @@
          // console.log(content);
 
          if (writTitle == "") {
-            alert("제목을 입력하세요.");
+            alert("후원업체명을 입력하세요.");
             $("#writTitle").focus();
             return false;
          }
 
          if (content == "") {
-            alert("내용을 입력하세요.");
+            alert("업체세부내용을 입력하세요.");
             $("#editor").focus();
             return false;
          }

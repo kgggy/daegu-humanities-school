@@ -15,76 +15,78 @@
    }
 </style>
 
-         <div class="col-xs-6">
-            <!-- HTML5 Inputs -->
-            <div class="card mb-4">
-               <h5 class="card-header"><%if(result[0].crewDiv=="all"){%>총동창회<%}else if (result[0].crewDiv == "gf"){%>골프회<%}
+<div class="col-xs-6">
+   <!-- HTML5 Inputs -->
+   <div class="card mb-4">
+      <h5 class="card-header"><%if(result[0].crewDiv=="all"){%>총동창회<%}else if (result[0].crewDiv == "gf"){%>골프회<%}
                                      else if (result[0].crewDiv == "mt"){%>산악회<%}%> <%=boardName%> 수정</h5>
-                  <div class="card-body">
-                     <!-- 컨텐츠 -->
-                     <form name="udtForm" role="form">
-                        <input type="hidden" name="fileId" value="">
-                        <input type="hidden" name="fileRoute" value="">
-                        <input type="hidden" name="page" value="<%=page%>">
-                        <input type="hidden" id="writContent" name="boardContent" value="">
-                        <input type="hidden" id="boardDivId" name="boardDivId" value="<%=result[0].boardDivId%>">
-                        <input type="hidden" id="crewDiv" name="crewDiv" value="<%=result[0].crewDiv%>">
-                        <input type="hidden" id="boardName" name="boardName" value="<%=boardName%>">
-                        <div class="mb-3 row">
-                           <label class="col-md-1 col-form-label" for="text-input">글번호</label>
-                           <div class="col-md-10">
-                              <input class="form-control" id="writId" type="text" name="boardId" readonly
-                                 value="<%=boardId%>">
-                           </div>
-                        </div>
-                        <div class="mb-3 row">
-                           <label class="col-md-1 col-form-label" for="text-input">제목</label>
-                           <div class="col-md-10">
-                              <input class="form-control" id="writTitle" type="text" name="boardTitle"
-                                 value="<%=result[0].boardTitle%>">
-                           </div>
-                        </div>
-                        <div class="mb-3 row">
-                           <label class="col-md-1 col-form-label" for="text-input">내용</label>
-                           <div class="col-md-10">
-                              <textarea name="editor" class="editor" id="editor"><%-result[0].boardContent %></textarea>
-                           </div>
-                        </div>
-                        <div class="mb-3 row">
-                           <label class="col-md-1 col-form-label">첨부파일</label>
-                           <% if(result[0].fileRoute != null) { %>
-                           <div class="file-wrap banner_img_wrap col-md-10">
-                              <% for(var i = 0; i < result.length; i++) {%>
-                              <p><span><%=result[i].fileOrgName%></span>
-                                 <button name="boardFileDelete" data-fileRoute="<%=result[i].fileRoute%>" data-fileId="<%=result[i].fileId%>"
-                                    class="btn btn-block btn-outline-danger fileDelete">삭제</button></p>
-                              <% } %>
-                              <% if(result.length < 5) { %>
-                              <% for(var i = 0; i < 5-result.length; i++) {%>
-                              <br><input class="form-control" type="file" id="file" name="file" />
-                              <% } %>
-                              <% } %>
-                              </div>
-                              <% } else {%>
-                              <div class="col-md-10" style="display: flex; flex-direction: column; gap: 25px; padding-left: 15px">
-                                 <input class="form-control" type="file" id="file" name="file">
-                                 <input class="form-control" type="file" id="file" name="file" />
-                                 <input class="form-control" type="file" id="file" name="file" />
-                                 <input class="form-control" type="file" id="file" name="file" />
-                                 <input class="form-control" type="file" id="file" name="file" />
-                              </div>
-                              <% } %>
-                           
-                        </div>
+      <div class="card-body">
+         <!-- 컨텐츠 -->
+         <form name="udtForm" role="form" onsubmit="return false">
+            <input type="hidden" name="fileId" value="">
+            <input type="hidden" name="fileRoute" value="">
+            <input type="hidden" name="page" value="<%=page%>">
+            <input type="hidden" id="writContent" name="boardContent" value="">
+            <input type="hidden" id="boardDivId" name="boardDivId" value="<%=result[0].boardDivId%>">
+            <input type="hidden" id="crewDiv" name="crewDiv" value="<%=result[0].crewDiv%>">
+            <input type="hidden" id="boardName" name="boardName" value="<%=boardName%>">
+            <div class="mb-3 row">
+               <label class="col-md-1 col-form-label" for="text-input">글번호</label>
+               <div class="col-md-10">
+                  <input class="form-control" id="writId" type="text" name="boardId" readonly value="<%=boardId%>">
+               </div>
+            </div>
+            <div class="mb-3 row">
+               <label class="col-md-1 col-form-label" for="text-input">제목</label>
+               <div class="col-md-10">
+                  <input class="form-control" id="writTitle" type="text" name="boardTitle"
+                     value="<%=result[0].boardTitle%>" maxlength="200">
+               </div>
+            </div>
+            <div class="mb-3 row">
+               <label class="col-md-1 col-form-label" for="text-input">내용</label>
+               <div class="col-md-10">
+                  <textarea name="editor" class="editor" id="editor"><%-result[0].boardContent %></textarea>
+               </div>
+            </div>
+            <div class="mb-3 row">
+               <label class="col-md-1 col-form-label">첨부파일</label>
+               <% if(result[0].fileRoute != null) { %>
+               <div class="file-wrap banner_img_wrap col-md-10">
+                  <% for(var i = 0; i < result.length; i++) {%>
+                  <p><span><%=result[i].fileOrgName%></span>
+                     <button name="boardFileDelete" data-fileRoute="<%=result[i].fileRoute%>"
+                        data-fileId="<%=result[i].fileId%>"
+                        class="btn btn-block btn-outline-danger fileDelete">삭제</button></p>
+                  <% } %>
+                  <% if(result.length < 5) { %>
+                  <% for(var i = 0; i < 5-result.length; i++) {%>
+                  <br><input class="form-control" type="file" id="file" name="file" />
+                  <% } %>
+                  <% } %>
+               </div>
+               <% } else {%>
+               <div class="col-md-10" style="display: flex; flex-direction: column; gap: 25px; padding-left: 15px">
+                  <input class="form-control" type="file" id="file" name="file">
+                  <input class="form-control" type="file" id="file" name="file" />
+                  <input class="form-control" type="file" id="file" name="file" />
+                  <input class="form-control" type="file" id="file" name="file" />
+                  <input class="form-control" type="file" id="file" name="file" />
+               </div>
+               <% } %>
 
+            </div>
+
+            <div class="mb-3 row" style="margin-top: 30px; margin-bottom: 30px;">
+               <label class="col-md-1 col-form-label" for="text-input">상단고정여부</label>
+               <div class="col-md-10">
+                  <input type="checkbox" style='zoom:3.0;' name="boardFix" value="1" <%if(result[0].boardFix==1){%>checked<%}%>>
+                           </div>
+                        </div>
                         <div class="mb-3 row" style="margin-top: 30px; margin-bottom: 30px;">
-                           <label class="col-md-1 col-form-label" for="text-input">상단고정여부</label>
+                           <label class="col-md-1 col-form-label" for="text-input">푸쉬 알림 여부</label>
                            <div class="col-md-10">
-                              <% if(result[0].boardFix == 1){%>
-                                 <input type="checkbox" style='zoom:3.0;' name="boardFix" value="1" checked>
-                              <%}else{%>
-                                 <input type="checkbox" style='zoom:3.0;' name="boardFix" value="0">
-                              <%}%>
+                              <input type="checkbox" style='zoom:3.0;' name="pushyn" value="1">
                            </div>
                         </div>
                         <!--option 버튼  -->
@@ -103,6 +105,12 @@
 
 <script type="text/javascript">
    $(document).ready(function () {
+      //엔터로 submit 막기
+      $('input[type="text"]').keydown(function() {
+         if (event.keyCode === 13) {
+            event.preventDefault();
+         }
+      });
       //ckeditor
       ClassicEditor
          .create(document.querySelector('#editor'), {
@@ -132,6 +140,12 @@
             return false;
          }
 
+         var convertContent = content.replace(/(<([^>]+)>)/ig,"");
+			if (convertContent.length > 3000) {
+				alert("입력 메세지는 3000자를 초과할 수 없습니다.");
+				return false;
+			}
+         
          if (confirm("수정하시겠습니까?") == true) {
             $('input[id=writContent]').attr('value', content);
             formObj.attr("action", "boardUpdate");
@@ -149,14 +163,44 @@
          $('input[name=fileId').val($(this).attr('data-fileId'));
          $('input[name=fileRoute').val($(this).attr('data-fileRoute'));
          if (confirm("실제 파일이 삭제됩니다. 정말 삭제하시겠습니까?") == true) {
-            formObj.attr("action", "boardFileDelete");
-            formObj.attr("method", "get");
+            formObj.attr("action", "/admin/boardDelete/boardFileDelete");
+            formObj.attr("method", "post");
             alert("삭제되었습니다.");
             formObj.submit();
          } else {
             return;
          }
       });
+
+      //쿼리스트링값 가져와서 넘기기
+      function getUrlParams() {
+         var params = {};
+         window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (str, key, value) {
+            params[key] = value;
+         });
+         return params;
+      }
+      var param = getUrlParams();
+      // console.log(param.boardName)
+      if (param.boardName == '%EA%B0%A4%EB%9F%AC%EB%A6%AC') {
+         //확장자 체크
+         $("input:file[name='file']").change(function () {
+            var str = $(this).val();
+            var fileName = str.split('\\').pop().toLowerCase();
+            // alert(fileName);
+            checkFileName(fileName);
+         });
+
+         //확장자 체크
+         function checkFileName(str) {
+            var ext = str.split('.').pop().toLowerCase();
+            // alert(ext);
+            if ($.inArray(ext, ['jpg', 'png', 'jpeg', 'gif']) == -1) {
+               alert(ext + '파일은 업로드 하실 수 없습니다.');
+               $("input:file[name='file']").val("");
+            }
+         }
+      }
    })
       // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 
     var menuItem = document.getElementsByClassName("menu-item");
@@ -176,18 +220,18 @@
         } else if (boardDivId == 3)
             menuItem[5].className += ' active';
     } else if (crewDiv == 'gf'){
-        menuItem[10].className += ' open active';
+        menuItem[9].className += ' open active';
         if (boardDivId == 1) {
-            menuItem[11].className += ' active';
+            menuItem[10].className += ' active';
         } else if (boardDivId == 2) {
-            menuItem[12].className += ' active';
+            menuItem[11].className += ' active';
         }
     } else if (crewDiv == 'mt'){
-        menuItem[17].className += ' open active';
+        menuItem[15].className += ' open active';
         if (boardDivId == 1) {
-            menuItem[18].className += ' active';
+            menuItem[16].className += ' active';
         } else if (boardDivId == 2) {
-            menuItem[19].className += ' active';
+            menuItem[17].className += ' active';
         }
     }
 

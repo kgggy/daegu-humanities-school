@@ -29,8 +29,8 @@
             <div class="mb-3 row">
                <label class="col-md-2 col-form-label" for="text-input">작성일</label>
                <div class="col-md-9">
-                  <input class="form-control" id="boardDatefmt" type="text" name="boardDatefmt" disabled="disabled"
-                     value="<%=result[0].boardDatefmt%>">
+                  <input class="form-control" id="boardDate" type="text" name="boardDate" disabled="disabled"
+                     value="<%=result[0].boardDateFmt%>">
                </div>
             </div>
             <div class="mb-3 row">
@@ -48,22 +48,23 @@
             </div>
             <div class="mb-3 row">
                <label class="col-md-2 col-form-label">첨부파일</label>
-               <div class="col-md-9">
+               <div class="col-md-10">
                   <% if(result[0].fileRoute != null) { %>
                   <div class="file-wrap">
                      <% for(var i = 0; i < result.length; i++) {%>
-                     <div id="" style="padding: 10px;">
-                        <p><img src="../../../<%= result[i].fileRoute %>" style="width:300px; margin-bottom: 15px;">
-                           <a href="../../../<%= result[i].fileRoute %>" class="btn btn-block btn-outline-success"
+                     <div id="">
+                        <!-- <p><img src="../../../<%= result[i].fileRoute %>"  class="viewFormImgs"> -->
+                           <p><span><%=result[i].fileOrgName%></span></p>
+                           <a href="../../../<%= result[i].fileRoute %>" class="btn btn-block btn-outline-success textFileButton"
                               type="button" download>파일 다운로드</a>
-                        </p>
+                        <!-- </p> -->
                         <input type="hidden" name="fileRoute" value="<%=result[i].fileRoute%>">
                      </div>
                      <% } %>
                   </div>
                   <% }%>
                   <% if(result[0].fileRoute == null) { %>
-                  <div id="fileDiv" style="padding: 10px;">
+                  <div id="fileDiv">
                      파일이 없습니다.
                   </div>
                   <br>

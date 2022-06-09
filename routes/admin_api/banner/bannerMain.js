@@ -10,16 +10,16 @@ var connection = require('../../../config/db').conn;
 
 //후원목록조회
 router.get('/', async (req, res) => {
-    const bannerDiv = req.query.bannerDiv;
+    const crewDiv = req.query.crewDiv;
     const page = req.query.page;
     var searchText = req.query.searchText == undefined ? "" : req.query.searchText;
-    var sql = "select * from banner where bannerDiv = ?";
+    var sql = "select * from banner where crewDiv = ?";
     if (searchText != '') {
         sql += " and (bannerTitle like '%" + searchText + "%')";
     }
     sql += " order by 1 desc";
     try {
-        connection.query(sql, bannerDiv, (err, results) => {
+        connection.query(sql, crewDiv, (err, results) => {
             var countPage = 10; //하단에 표시될 페이지 개수
             var page_num = 10; //한 페이지에 보여줄 개수
             var last = Math.ceil((results.length) / page_num); //마지막 장
@@ -33,7 +33,7 @@ router.get('/', async (req, res) => {
             };
             let route = req.app.get('views') + '/banner/banner';
             res.render(route, {
-                bannerDiv: bannerDiv,
+                crewDiv: crewDiv,
                 searchText: searchText,
                 results: results,
                 page: page, //현재 페이지

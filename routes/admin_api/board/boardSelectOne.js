@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
         const crewDiv = req.query.crewDiv;
         const sql = "select b.*,date_format(boardDate, '%Y-%m-%d') as boardDateFmt,\
                             (select count(*) from hitCount where hitCount.boardId = b.boardId) as hitCount,\
-                            f.fileRoute from board b left join file f on b.boardId = f.boardId\
+                            f.fileRoute, f.fileOrgName from board b left join file f on b.boardId = f.boardId\
                             where b.boardId = ?";
 
         connection.query(sql, param, (err, result) => {

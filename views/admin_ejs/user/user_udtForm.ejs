@@ -22,60 +22,50 @@
          <form id="userForm" name="userForm" role="form" enctype="multipart/form-data">
             <input type="hidden" id="uid" name="uid" value="<%=result.uid%>">
             <input type="hidden" id="page" name="page" value="<%=page%>">
+            <input type="hidden" name="deleteFileRoute" value="">
+            <input type="hidden" name="profileyn" value="">
             <div class="mb-3 row">
                <label for="html5-text-input" class="col-md-2 col-form-label">프로필</label>
                <div class="col-md-10">
-                  <% if(result.userImg != null && result.userImg != '') {%> <img src="../../../<%= result.userImg %>" alt="사진" width="40%" />
-                  <button name="searchAction" class="btn btn-block btn-outline-danger fileDelete"
-                                    type="button" data-route="<%=result.userImg%>" data-img="userImg"
-                                    data-inputReset="userImg">삭제</button>
+                  <% if(userImg != null && userImg != '') {%> <img src="../../../<%= userImg %>" alt="사진"
+                     class="viewFormImg" />
+                  <button name="profile_fileDelete" class="btn btn-block btn-outline-danger" type="button"
+                     data-route="<%= userImg%>" data-yn="0">삭제</button>
                   </td>
+                  <input type="hidden" id="userProfile" value="" />
                   <% }else{ %>
-                  <input class="form-control" type="file" id="file" name="userImg" />
+                  <input class="form-control" type="file" id="userProfile" name="file" />
                   <% } %>
-                  <input type="hidden" id="userImg" name="userImg" value="<%=result.userImg%>">
+                  <input type="hidden" id="file" name="userImg" value="<%= userImg%>">
+                  <input type="hidden" id="userImgyn" name="userImgyn" />
                </div>
             </div>
             <div class="mb-3 row">
-               <label for="html5-text-input" class="col-md-2 col-form-label">첨부파일</label>
-               <div class="col-md-10">
-                  <% if(result.detailImg != null && result.detailImg != '') {%> <img src="../../../<%= result.detailImg %>" alt="사진" width="40%" />
-                  <button name="searchAction" class="btn btn-block btn-outline-danger fileDelete"
-                                    type="button" data-route="<%=result.detailImg%>" data-img="detailImg"
-                                    data-inputReset="detailImg">삭제</button>
-                  </td>
-                  <% }else{ %>
-                  <input class="form-control" type="file" id="file" name="detailImg" />
-                  <% } %>
-                  <input type="hidden" id="detailImg" name="detailImg" value="<%=result.detailImg%>">
-               </div>
-            </div>
-            <div class="mb-3 row">
-               <label for="html5-text-input" class="col-md-2 col-form-label">회원명</label>
+               <label for="html5-text-input" class="col-md-2 col-form-label primary">* 회원명</label>
                <div class="col-md-10">
                   <input class="form-control" type="text" value="<%=result.userName%>" id="userName" name="userName"
-                     placeholder="ex) 홍길동" />
+                     placeholder="ex) 홍길동" maxlength="10" />
                </div>
             </div>
             <div class="mb-3 row">
-               <label for="html5-text-input" class="col-md-2 col-form-label">휴대번호</label>
+               <label for="html5-text-input" class="col-md-2 col-form-label primary">* 휴대번호</label>
                <div class="col-md-10">
                   <input class="form-control" type="text" value="<%=result.userPhone%>" id="userPhone" name="userPhone"
-                     placeholder="ex) 01011112222" />
+                     placeholder="ex) 010-1111-2222" />
                </div>
             </div>
             <div class="mb-3 row">
                <label for="html5-text-input" class="col-md-2 col-form-label">이메일</label>
                <div class="col-md-10">
                   <input class="form-control" type="text" value="<%=result.userEmail%>" id="userEmail" name="userEmail"
-                     placeholder="ex) abcd@naver.com" />
+                     placeholder="ex) abcd@naver.com" maxlength="30" />
                </div>
             </div>
             <div class="mb-3 row">
                <label for="html5-text-input" class="col-md-2 col-form-label">전화번호</label>
                <div class="col-md-10">
                   <input class="form-control" type="text" value="<%=result.officePhone%>" id="officePhone"
-                     name="officePhone" placeholder="ex) 01011112222" />
+                     name="officePhone" placeholder="ex) 053-111-2222" />
                </div>
             </div>
             <div class="mb-3 row">
@@ -89,34 +79,34 @@
                <label for="html5-text-input" class="col-md-2 col-form-label">상세주소</label>
                <div class="col-md-10">
                   <input class="form-control" type="text" value="<%=result.userAdres4%>" id="address_detail"
-                     name="userAdres4" placeholder="상세주소를 입력해주세요" />
+                     name="userAdres4" placeholder="상세주소를 입력해주세요" maxlength="100" />
                </div>
             </div>
             <div class="mb-3 row">
-               <label for="html5-text-input" class="col-md-2 col-form-label">기수</label>
+               <label for="html5-text-input" class="col-md-2 col-form-label primary">* 기수</label>
                <div class="col-md-10">
                   <input class="form-control" type="text" value="<%=result.userNum%>" id="userNum" name="userNum"
-                     placeholder="ex) 06기" />
+                     placeholder="ex) 06기" maxlength="5" />
                </div>
             </div>
             <div class="mb-3 row">
                <label for="html5-text-input" class="col-md-2 col-form-label">홈페이지</label>
                <div class="col-md-10">
                   <input class="form-control" type="text" value="<%=result.userUrl%>" id="userUrl" name="userUrl"
-                     placeholder="ex) https://www.naver.com" />
+                     placeholder="ex) https://www.naver.com" maxlength="300" />
                </div>
             </div>
             <div class="mb-3 row">
                <label for="html5-text-input" class="col-md-2 col-form-label">소속</label>
                <div class="col-md-10">
                   <input class="form-control" type="text" value="<%=result.userJob%>" id="userJob" name="userJob"
-                     placeholder="ex) XX 회사 대표" />
+                     placeholder="ex) XX 회사 대표" maxlength="45" />
                </div>
             </div>
             <div class="mb-3 row">
                <label for="html5-text-input" class="col-md-2 col-form-label">팩스</label>
                <div class="col-md-10">
-                  <input class="form-control" type="text" value="<%=result.faxPhone%>" id="faxPhone" name="faxPhone" />
+                  <input class="form-control" type="text" value="<%=result.userFax%>" id="userFax" name="userFax" maxlength="13" />
                </div>
             </div>
             <div class="mb-3 row">
@@ -124,8 +114,7 @@
                <div class="col-md-10">
                   <div class="col-md">
                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" id="userCrew" name="userCrew1" value="gf"
-                           <%if(result.userCrew=='gf'){%>checked<%}%> />
+                        <input class="form-check-input" type="radio" id="userCrew" name="userCrew1" value="gf" <%if(result.userCrew=='gf'){%>checked<%}%> />
                         <label class="form-check-label" for="inlineRadio2">골프회</label>
                      </div>
                      <div class="form-check form-check-inline">
@@ -146,38 +135,146 @@
             <div class="mb-3 row">
                <label for="html5-text-input" class="col-md-2 col-form-label">총동창회 직책</label>
                <div class="col-md-10">
-                  <input class="form-control" type="text" value="<%=result.userAuth%>" id="userAuth" name="userAuth"
-                           placeholder="ex) 회장, 상임부회장, 이사..." />
+                  <select class="dropdown" id="dropdown" name="userAuth">
+                     <% for(i = 0; i < userAuth.length; i++) { %> 
+                     <option <%if(userAuth[i].userAuth=='전체'){%> value="" <%}else{%> value="<%= userAuth[i].userAuth %>" <%}%> <%if(userAuth[i].userAuth==result.userAuth){%> selected="selected" <%}%>>
+                        <%= userAuth[i].userAuth %></option>
+                     <% } %> 
+                  </select> 
+                  <div class="col-md-10 otherCheck">
+                     <div class="col-md-1">
+                        <input type='checkbox' class="others" value='others' onclick="is_checked()"
+                           style="width:20px" /> 기타
                      </div>
+                     <input class="form-control new_userAuth" type="text" value="" id="new_userAuth" name="userAuth"
+                        placeholder="새롭게 등록하실 직책명을 입력해주세요." maxlength="20" />
                   </div>
-                  <div class="mb-3 row">
-                     <label for="html5-text-input" class="col-md-2 col-form-label">골프회 직책</label>
-                     <div class="col-md-10">
-                        <input class="form-control" type="text" value="<%=result.gfPosition%>" id="gfPosition"
-                           name="gfPosition" placeholder="ex) 회장, 사무국장..." />
+               </div>
+            </div>
+            <div class="mb-3 row">
+               <label for="html5-text-input" class="col-md-2 col-form-label">골프회 직책</label>
+               <div class="col-md-10">
+                  <select class="dropdown" id="dropdown" name="gfPosition">
+                     <% for(i = 0; i < gfPosition.length; i++) { %> 
+                     <option <%if(gfPosition[i].gfPosition=='전체'){%> value="" <%}else{%> value="<%= gfPosition[i].gfPosition %>" <%}%> <%if(gfPosition[i].gfPosition==result.gfPosition){%> selected="selected" <%}%>>
+                        <%= gfPosition[i].gfPosition %></option>
+                     <% } %> 
+                  </select> 
+                  <div class="col-md-10 otherCheck">
+                     <div class="col-md-1">
+                        <input type='checkbox' class="others" value='others' onclick="is_checked()"
+                           style="width:20px" /> 기타
                      </div>
+                     <input class="form-control new_userAuth" type="text" value="" id="new_gfPosition" name="gfPosition"
+                        placeholder="새롭게 등록하실 직책명을 입력해주세요." maxlength="20" />
                   </div>
-                  <div class="mb-3 row">
-                     <label for="html5-text-input" class="col-md-2 col-form-label">산악회 직책</label>
-                     <div class="col-md-10">
-                        <input class="form-control" type="text" value="<%=result.mtPosition%>" id="mtPosition"
-                           name="mtPosition" placeholder="ex) 회장, 사무국장..." />
+               </div>
+            </div>
+            <div class="mb-3 row">
+               <label for="html5-text-input" class="col-md-2 col-form-label">산악회 직책</label>
+               <div class="col-md-10">
+                  <select class="dropdown" id="dropdown" name="mtPosition">
+                     <% for(i = 0; i < mtPosition.length; i++) { %> 
+                     <option <%if(mtPosition[i].mtPosition=='전체'){%> value="" <%}else{%> value="<%= mtPosition[i].mtPosition %>" <%}%> <%if(mtPosition[i].mtPosition==result.mtPosition){%> selected="selected" <%}%>>
+                        <%= mtPosition[i].mtPosition %></option>
+                     <% } %> 
+                  </select> 
+                  <div class="col-md-10 otherCheck">
+                     <div class="col-md-1">
+                        <input type='checkbox' class="others" value='others' onclick="is_checked()"
+                           style="width:20px" /> 기타
                      </div>
+                     <input class="form-control new_userAuth" type="text" value="" id="new_mtPosition" name="mtPosition"
+                        placeholder="새롭게 등록하실 직책명을 입력해주세요." maxlength="20" />
                   </div>
-                  <div class="demo-inline-spacing">
-                     <button type="button" class="btn btn-primary" id="update_btn">수정</button>
-                     <button type="button" class="btn btn-danger" onclick="history.go(-1)">취소</button>
+               </div>
+            </div>
+            <div class="mb-3 row">
+               <label for="html5-text-input" class="col-md-2 col-form-label">첨부파일</label>
+               <div class="col-md-10">
+                  <% if(fileRoute != undefined) { %>
+                  <% for(var i = 0; i <  fileRoute.length; i++) {%>
+                  <img src="../../../<%= fileRoute[i] %>" alt="사진" class="viewFormImgs" />
+                  <button name="fileDelete" class="btn btn-block btn-outline-danger fileButton" type="button"
+                     data-route="<%= fileRoute[i] %>">삭제</button>
+                  <input type="hidden" id="fileRoute" name="fileRoute" value="<%= fileRoute[i] %>">
+                  <% } %>
+                  <% if(fileRoute.length < 6) { %>
+                  <% for(var i = 0; i < 6- fileRoute.length; i++) {%>
+                  <br><input class="form-control" type="file" id="file" name="file" />
+                  <% } %>
+                  <% } %>
+                  <% }else{ %>
+                  <div style="display: flex; flex-direction: column; gap: 25px;">
+                     <input class="form-control" type="file" id="file" name="file">
+                     <input class="form-control" type="file" id="file" name="file" />
+                     <input class="form-control" type="file" id="file" name="file" />
+                     <input class="form-control" type="file" id="file" name="file" />
+                     <input class="form-control" type="file" id="file" name="file" />
+                     <input class="form-control" type="file" id="file" name="file" />
                   </div>
+                  <% } %>
+               </div>
+            </div>
+            <div class="demo-inline-spacing">
+               <button type="button" class="btn btn-primary" id="update_btn">수정</button>
+               <button type="button" class="btn btn-danger" onclick="history.go(-1)">취소</button>
+            </div>
          </form>
       </div>
    </div>
 
    <script type="text/javascript">
+      $(document).ready(function () {
+         const target = document.getElementById('new_userAuth');
+         target.disabled = true;
+         const target1 = document.getElementById('new_gfPosition');
+         target1.disabled = true;
+         const target2 = document.getElementById('new_mtPosition');
+         target2.disabled = true;
+
+         //확장자 체크
+         $("input:file[name='file']").change(function () {
+            var str = $(this).val();
+            var fileName = str.split('\\').pop().toLowerCase();
+            // alert(fileName);
+            checkFileName(fileName);
+         });
+      });
+      //확장자 체크
+      function checkFileName(str) {
+         var ext = str.split('.').pop().toLowerCase();
+         // alert(ext);
+         if ($.inArray(ext, ['jpg', 'png', 'jpeg', 'gif']) == -1) {
+            alert(ext + '파일은 업로드 하실 수 없습니다.');
+            $("input:file[name='file']").val("");
+         }
+      }
+      //기타 체크 시 비활성화 해제.
+      function is_checked() {
+         const checkbox = document.getElementsByClassName('others');
+         const target = document.getElementsByClassName('new_userAuth');
+         const dropdown = document.getElementsByClassName('dropdown');
+         // const is_checked = checkbox.checked;
+         for(i=0; i < 3; i++) {
+            if(checkbox[i].checked == true) {
+               target[i].disabled = false;
+               dropdown[i].options[0].selected = true;
+               // dropdown[i].options.length = 0;
+               dropdown[i].disabled = true;
+            } else {
+               target[i].disabled = true;
+               dropdown[i].disabled = false;
+            }
+         }
+      }
       //수정
       $("#update_btn").click(function () {
          var userName = $("#userName").val();
          var userPhone = $("#userPhone").val();
+         var officePhone = $("#officePhone").val();
          var userNum = $("#userNum").val();
+         var userProfile = $("#userProfile").val();
 
          if (userName == '') {
             alert("회원명을 입력해주세요.");
@@ -191,6 +288,20 @@
             return false;
          }
 
+         var regPhone = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+         if (regPhone.test(userPhone) != true) {
+            alert('올바른 휴대번호를 입력해주세요.');
+            $("#userPhone").focus();
+            return false;
+         }
+
+         var regPhone2 = /^[0-9]{3}-?([0-9]{3})-?([0-9]{4})$/;
+         if (officePhone != '' && regPhone2.test(officePhone) != true) {
+            alert('올바른 전화번호를 입력해주세요.');
+            $("#officePhone").focus();
+            return false;
+         }
+
          if (userNum == '') {
             alert("기수를 입력해주세요.");
             $("#userNum").focus();
@@ -198,8 +309,18 @@
          }
 
          if (confirm("수정하시겠습니까?")) {
+            //프로필 없으면 userImgyn값은 0
+            if (userProfile == '') {
+               $("#userImgyn").val("0");
+            }
             var userCrew = $("input[name=userCrew1]:checked").val();
             $("input[name=userCrew]").attr('value', userCrew);
+            //휴대폰번호 숫자만 넘기기
+            var regNumber = /[^0-9]/g;
+            userPhone = userPhone.replace(regNumber, "");
+            officePhone = officePhone.replace(regNumber, "");
+            $("#userPhone").val(userPhone);
+            $("#officePhone").val(officePhone);
             $("#userForm").attr("action", "/admin/userUpdate");
             $("#userForm").attr("method", "post");
             $("#userForm").submit();
@@ -218,20 +339,39 @@
       }
 
       //첨부파일 삭제
-      $('button[name="searchAction"]').on('click', function (e) {
-      parent = this.parentNode;
-      parent.innerHTML = "";
-      const input = document.createElement('input');
-      parent.append(input);
-      input.setAttribute('type', 'hidden');
-      input.setAttribute('name', 'deleteFileId');
-      input.value = this.dataset['route'];
-      const inputReset = document.createElement('input');
-      const resetName = this.dataset['inputreset']
-      inputReset.setAttribute('type', 'file');
-      inputReset.setAttribute('id', 'file');
-      inputReset.setAttribute('name', resetName);
-      inputReset.className += 'certiImg'
-      parent.append(inputReset);
-   })
+      $("[name=fileDelete]").on("click", function () {
+         $('input[name=deleteFileRoute').val($(this).attr('data-route'));
+         if (confirm("실제 파일이 삭제됩니다. 정말 삭제하시겠습니까?") == true) {
+            $("#userForm").attr("action", "/admin/userDelete/imgDelete");
+            $("#userForm").attr("method", "post");
+            $("#userForm").attr("enctype", "application/x-www-form-urlencoded");
+            $("#userForm").submit();
+            alert("삭제되었습니다.");
+         } else {
+            return;
+         }
+      });
+
+      //프로필 삭제
+      $("[name=profile_fileDelete]").on("click", function () {
+         $('input[name=deleteFileRoute').val($(this).attr('data-route'));
+         $('input[name=profileyn').val($(this).attr('data-yn'));
+         if (confirm("실제 파일이 삭제됩니다. 정말 삭제하시겠습니까?") == true) {
+            $("#userForm").attr("action", "/admin/userDelete/imgDelete");
+            $("#userForm").attr("method", "post");
+            $("#userForm").attr("enctype", "application/x-www-form-urlencoded");
+            $("#userForm").submit();
+            alert("삭제되었습니다.");
+         } else {
+            return;
+         }
+      });
+
+      // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 
+      var menuItem = document.getElementsByClassName("menu-item");
+      //초기화
+      menuItem.className = 'menu-item';
+      //'[0] = 회원 관리' '[1] = 일반회원관리' if문 걸어주기.
+      menuItem[0].className += ' open active';
+      menuItem[1].className += ' active';
    </script>

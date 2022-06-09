@@ -1,31 +1,26 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('history', {
+  return sequelize.define('positionHistory', {
     id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
-      comment: "일련번호"
+      comment: "역대직책번호"
     },
-    year: {
-      type: DataTypes.STRING(45),
-      allowNull: true,
-      comment: "년도"
+    uid: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      comment: "회원번호"
     },
-    date: {
-      type: DataTypes.STRING(45),
+    auth: {
+      type: DataTypes.STRING(100),
       allowNull: true,
-      comment: "날짜"
-    },
-    content: {
-      type: DataTypes.STRING(200),
-      allowNull: true,
-      comment: "내용"
+      comment: "기수 + 직책"
     }
   }, {
     sequelize,
-    tableName: 'history',
+    tableName: 'positionHistory',
     timestamps: false,
     indexes: [
       {

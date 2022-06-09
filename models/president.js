@@ -8,7 +8,7 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true,
       comment: "일련번호\n"
     },
-    psd: {
+    psdNo: {
       type: DataTypes.STRING(10),
       allowNull: false,
       comment: "1대, 23대.."
@@ -18,8 +18,8 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       comment: "회장 이름"
     },
-    psdDate: {
-      type: DataTypes.STRING(15),
+    psdLong: {
+      type: DataTypes.STRING(20),
       allowNull: true,
       comment: "취임기간"
     },

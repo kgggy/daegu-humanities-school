@@ -3,6 +3,15 @@
         color: #696cff;
         background-color: rgba(105, 108, 255, 0.16) !important;
     }
+
+    .modal-content {
+        overflow-y: initial !important
+    }
+
+    .modal-body {
+        height: 600px;
+        overflow-y: auto;
+    }
 </style>
 <h4 class="fw-bold py-3 mb-4">
     <% if(crewDiv == 'all') { %>
@@ -105,23 +114,23 @@
                         <div class="nav-align-top mb-4">
                             <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
                                 <li class="nav-item">
-                                    <button type="button" class="nav-link eventId" role="tab" id="first" 
+                                    <button type="button" class="nav-link eventId" role="tab" id="first"
                                         data-bs-toggle="tab" data-bs-target="#join" aria-controls="join"
                                         aria-selected="false" onclick="voteAjax(0)" value="">
                                         참여자
                                     </button>
                                 </li>
                                 <li class="nav-item">
-                                    <button type="button" class="nav-link eventId" role="tab" data-bs-toggle="tab" id="second" 
-                                        data-bs-target="#noJoin" aria-controls="noJoin" aria-selected="false"
-                                        onclick="voteAjax(1)" value="">
+                                    <button type="button" class="nav-link eventId" role="tab" data-bs-toggle="tab"
+                                        id="second" data-bs-target="#noJoin" aria-controls="noJoin"
+                                        aria-selected="false" onclick="voteAjax(1)" value="">
                                         불참자
                                     </button>
                                 </li>
                                 <li class="nav-item">
-                                    <button type="button" class="nav-link eventId" role="tab" data-bs-toggle="tab" id="third" 
-                                        data-bs-target="#noChoose" aria-controls="noChoose" aria-selected="false"
-                                        onclick="voteAjax()" value="">
+                                    <button type="button" class="nav-link eventId" role="tab" data-bs-toggle="tab"
+                                        id="third" data-bs-target="#noChoose" aria-controls="noChoose"
+                                        aria-selected="false" onclick="voteAjax()" value="">
                                         미정자
                                     </button>
                                 </li>

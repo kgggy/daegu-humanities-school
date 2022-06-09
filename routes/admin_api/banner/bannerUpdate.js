@@ -61,7 +61,7 @@ router.post('/', upload.array('file'), (req, res) => {
     const orgName = req.files.map(data => data.originalname);
     var searchText = req.body.searchText == undefined ? "" : req.body.searchText;
     const page = req.body.page;
-    var bannerDiv = req.body.bannerDiv;
+    var crewDiv = req.body.crewDiv;
     try {
         const param = [req.body.bannerTitle, req.body.bannerDetail, req.body.bannerUrl, req.body.bannerId];
         const sql = "update banner set bannerTitle = ?, bannerDetail = ?, bannerUrl = ? where bannerId = ?";
@@ -81,7 +81,7 @@ router.post('/', upload.array('file'), (req, res) => {
             };
             res.redirect('bannerSelectOne?bannerId=' +
                 req.body.bannerId + '&page=' + page + '&searchText=' + searchText
-                + '&bannerDiv=' + bannerDiv);
+                + '&crewDiv=' + crewDiv);
         });
     } catch (error) {
         res.send(error.message);

@@ -76,25 +76,25 @@ router.post('/', upload.single('file'), async (req, res, next) => {
                 throw err;
             }
             //OneSignal 푸쉬 알림
-            var message = {
-                app_id: ONE_SIGNAL_CONFIG.APP_ID,
-                contents: {
-                    "en": req.body.eventTitle
-                },
-                included_segments: ["All"],
-                content_avaliable: true,
-                small_icon: "ic_notification_icon",
-                data: {
-                    PushTitle: "CUSTOM NOTIFICATION"
-                }
-            };
+            // var message = {
+            //     app_id: ONE_SIGNAL_CONFIG.APP_ID,
+            //     contents: {
+            //         "en": req.body.eventTitle
+            //     },
+            //     included_segments: ["All"],
+            //     content_avaliable: true,
+            //     small_icon: "ic_notification_icon",
+            //     data: {
+            //         PushTitle: "CUSTOM NOTIFICATION"
+            //     }
+            // };
 
-            pushNotificationService.sendNotification(message, (error, results) => {
-                if (error) {
-                    return next(error);
-                }
-                return null;
-            })
+            // pushNotificationService.sendNotification(message, (error, results) => {
+            //     if (error) {
+            //         return next(error);
+            //     }
+            //     return null;
+            // })
 
             res.send('<script>alert("행사가 등록되었습니다."); location.href="/admin/eventSelect?page=1&crewDiv=' + crewDiv + '";</script>');
         });

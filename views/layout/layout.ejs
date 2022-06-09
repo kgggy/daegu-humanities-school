@@ -1,17 +1,10 @@
-<html
-  lang="en"
-  class="light-style layout-menu-fixed"
-  dir="ltr"
-  data-theme="theme-default"
-  data-assets-path="../../public/sneat/assets/"
-  data-template="vertical-menu-template-free"
->
-  <head>
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default"
+    data-assets-path="../../public/sneat/assets/" data-template="vertical-menu-template-free">
+
+<head>
     <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
-    />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
     <title>대구인문사회대학 회원수첩 관리자</title>
 
@@ -25,9 +18,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
-      rel="stylesheet"
-    />
+        href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+        rel="stylesheet" />
     <!--드롭다운-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.easydropdown/2.1.4/themes/easydropdown.css">
     <script type='text/javascript' src="https://cdn.jsdelivr.net/jquery.easydropdown/2.1.4/jquery.easydropdown.js">
@@ -38,7 +30,8 @@
 
     <!-- Core CSS -->
     <link rel="stylesheet" href="../../public/sneat/assets/vendor/css/core.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="../../public/sneat/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="../../public/sneat/assets/vendor/css/theme-default.css"
+        class="template-customizer-theme-css" />
     <link rel="stylesheet" href="../../public/sneat/assets/css/demo.css" />
 
     <!-- Vendors CSS -->
@@ -52,7 +45,7 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="../../public/sneat/assets/js/config.js"></script>
-  </head>
+</head>
 <style>
     /* table.dataTable td,
     table.dataTable th {
@@ -78,29 +71,34 @@
             justify-content: end;
             margin-bottom: 7px;
             gap: 8px;
-    }
+        }
+
         .dropdown {
             display: inline-block;
             text-align: left;
             height: 40px;
         }
     }
+
     @media (max-width:767px) {
-        .easydropdown{
+        .easydropdown {
             display: grid;
-        } 
-        .dropdown{
+        }
+
+        .dropdown {
             text-align: center;
             height: 50px;
             margin-bottom: 10px;
             width: auto;
         }
     }
+
     .searchbox {
         height: 40px !important;
         border: 1px solid darkgray;
         border-radius: 0.375rem;
     }
+
     /* .certidropdown {
         width: 200px !important;
     }
@@ -200,6 +198,7 @@
         -webkit-border-radius: 100%; */
         /* border-radius: 100%; */
     }
+
     .customPaging .selected {
         margin-left: 3px;
         padding: 0;
@@ -263,82 +262,157 @@
         min-width: 950px;
         text-align: center;
     }
+
     .pointer {
         cursor: pointer;
     }
+
+    /* 필수입력항목 */
+    .primary {
+        font-weight: bolder;
+        color: red;
+    }
+
+    @media (max-width: 767px) {
+        /* 전화번호 반응형 */
+        .phone_num {
+            display: flex;
+            text-align: center;
+            align-items: baseline;
+            width: 90px;
+            flex-direction: column;
+        }
+
+        .viewFormImg {
+            width: 100%;
+        }
+
+        .viewFormImgs {
+            padding: 0 50px 8px 0 !important;
+            width: 100%;
+            vertical-align: top !important;
+        }
+
+        /* 기타 반응형 */
+        .otherCheck {
+            /* display: flex; */
+        }
+    }
+
+    @media (min-width: 768px) {
+        .phone_num {
+            display: flex;
+            text-align: center;
+            align-items: center;
+            width: 90px;
+        }
+
+        .viewFormImg {
+            width: 40%;
+        }
+
+        .viewFormImgs {
+            padding: 0 50px 8px 0 !important;
+            width: 40%;
+            vertical-align: top !important;
+        }
+
+        /* 기타 체크박스 반응형 */
+        .otherCheck {
+            display: flex;
+            align-items: baseline;
+            margin-top: 10px;
+        }
+    }
+
+    /* 파일 아래에 버튼 정렬 */
+    .fileButton {
+        width: 150px;
+        display: block;
+        margin-left: 120px;
+        margin-bottom: 20px;
+    }
+
+    /* 텍스트 */
+    .textFileButton {
+        width: 150px;
+        display: block;
+        margin-bottom: 20px;
+    }
 </style>
+
 <body>
-   <!-- Layout wrapper -->
-   <div class="layout-wrapper layout-content-navbar">
-    <div class="layout-container">
-      <!-- Menu -->
-      <%- include('../partials/adminNav.ejs') %>
-      <!-- / Menu -->
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <!-- Menu -->
+            <%- include('../partials/adminNav.ejs') %>
+            <!-- / Menu -->
 
-      <!-- Layout container -->
-      <div class="layout-page">
-        <!-- Navbar -->
-        <%- include('../partials/adminTop.ejs') %>
-        
+            <!-- Layout container -->
+            <div class="layout-page">
+                <!-- Navbar -->
+                <%- include('../partials/adminTop.ejs') %>
 
-        <!-- / Navbar -->
 
-        <!-- Content wrapper -->
-        <div class="content-wrapper">
-          <!-- Content -->
+                <!-- / Navbar -->
 
-          <div class="container-xxl flex-grow-1 container-p-y">
-            
+                <!-- Content wrapper -->
+                <div class="content-wrapper">
+                    <!-- Content -->
 
-            
+                    <div class="container-xxl flex-grow-1 container-p-y">
 
-            
-            <%- defineContent('body') %>
-            
 
-            
 
-            
-          </div>
-          <!-- / Content -->
 
-          <!-- 푸터!!!!Footer -->
-          <%- include('../partials/adminTail.ejs') %>
-          <!-- / Footer -->
 
-          <div class="content-backdrop fade"></div>
+                        <%- defineContent('body') %>
+
+
+
+
+
+                    </div>
+                    <!-- / Content -->
+
+                    <!-- 푸터!!!!Footer -->
+                    <%- include('../partials/adminTail.ejs') %>
+                    <!-- / Footer -->
+
+                    <div class="content-backdrop fade"></div>
+                </div>
+                <!-- Content wrapper -->
+            </div>
+            <!-- / Layout page -->
         </div>
-        <!-- Content wrapper -->
-      </div>
-      <!-- / Layout page -->
+
+        <!-- Overlay -->
+        <div class="layout-overlay layout-menu-toggle"></div>
     </div>
+    <!-- / Layout wrapper -->
 
-    <!-- Overlay -->
-    <div class="layout-overlay layout-menu-toggle"></div>
-  </div>
-  <!-- / Layout wrapper -->
+    <!-- Core JS -->
+    <!-- build:js assets/vendor/js/core.js -->
+    <script src="../../public/sneat/assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="../../public/sneat/assets/vendor/libs/popper/popper.js"></script>
+    <script src="../../public/sneat/assets/vendor/js/bootstrap.js"></script>
+    <script src="../../public/sneat/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
 
-  <!-- Core JS -->
-  <!-- build:js assets/vendor/js/core.js -->
-  <script src="../../public/sneat/assets/vendor/libs/jquery/jquery.js"></script>
-  <script src="../../public/sneat/assets/vendor/libs/popper/popper.js"></script>
-  <script src="../../public/sneat/assets/vendor/js/bootstrap.js"></script>
-  <script src="../../public/sneat/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="../../public/sneat/assets/vendor/js/menu.js"></script>
+    <!-- endbuild -->
 
-  <script src="../../public/sneat/assets/vendor/js/menu.js"></script>
-  <!-- endbuild -->
+    <!-- Vendors JS -->
+    <script src="../../public/sneat/assets/vendor/libs/masonry/masonry.js"></script>
 
-  <!-- Vendors JS -->
-  <script src="../../public/sneat/assets/vendor/libs/masonry/masonry.js"></script>
+    <!-- Main JS -->
+    <script src="../../public/sneat/assets/js/main.js"></script>
 
-  <!-- Main JS -->
-  <script src="../../public/sneat/assets/js/main.js"></script>
+    <!-- Page JS -->
 
-  <!-- Page JS -->
-
-  <!-- Place this tag in your head or just before your close body tag. -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  </body>
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+</body>
 <%- script %>
 <script>
     $("#exampleTable").DataTable({

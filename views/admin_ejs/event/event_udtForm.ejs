@@ -47,28 +47,28 @@
                 <input type="hidden" id="eventId" name="eventId" value="<%=result[0].eventId%>">
                 <input type="hidden" name="keepSearch" value="<%=keepSearch%>">
                 <div class="mb-3 row">
-                    <label for="html5-text-input" class="col-md-2 col-form-label">행사 제목</label>
+                    <label for="html5-text-input" class="col-md-2 col-form-label primary">* 행사 제목</label>
                     <div class="col-md-10">
                         <input class="form-control" type="text" value="<%=result[0].eventTitle%>" id="eventTitle"
                             name="eventTitle" />
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="html5-text-input" class="col-md-2 col-form-label">행사 내용</label>
+                    <label for="html5-text-input" class="col-md-2 col-form-label primary">* 행사 내용</label>
                     <div class="col-md-10">
                         <textarea name="editor" class="editor" id="editor"><%-result[0].eventContent%></textarea>
                         <input type="hidden" value="" id="eventContent" name="eventContent" />
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="html5-text-input" class="col-md-2 col-form-label">행사 일시</label>
+                    <label for="html5-text-input" class="col-md-2 col-form-label primary">* 행사 일시</label>
                     <div class="col-md-10">
                         <input class="form-control" id="eventDate" type="datetime-local" name="eventDate"
                             value="<%=result[0].eventDateFmt%>">
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="html5-text-input" class="col-md-2 col-form-label">행사 위치</label>
+                    <label for="html5-text-input" class="col-md-2 col-form-label primary">* 행사 위치</label>
                     <div class="col-md-10">
                         <input class="form-control" type="text" value="<%=result[0].eventAdres%>" id="address_kakao"
                             name="eventAdres" />
@@ -182,26 +182,30 @@
             const eventDate = $("#eventDate").val();
 
             if (eventTitle == "") {
-                alert("제목을 입력하세요.");
+                alert("행사 제목을 입력하세요.");
                 $("#eventTitle").focus();
                 return false;
             }
             if (content == "") {
-                alert("내용을 입력하세요.");
+                alert("행사 내용을 입력하세요.");
                 $("#editor").focus();
                 return false;
             }
             if (eventDate == "") {
-                alert("행사일을 입력하세요.");
+                alert("행사 일시를 입력하세요.");
                 $("#eventDate").focus();
                 return false;
             }
             if (eventPlace == "") {
-                alert("장소를 입력하세요.");
+                alert("행사 위치를 입력하세요.");
                 $("#address_kakao").focus();
                 return false;
             }
-
+            var convertContent = content.replace(/(<([^>]+)>)/ig,"");
+			if (convertContent.length > 3000) {
+				alert("입력 메세지는 3000자를 초과할 수 없습니다.");
+				return false;
+			}
             if (confirm("수정하시겠습니까?") == true) {
                 $('input[name=eventContent]').attr('value', content);
                 $("#eventUpdateForm").attr("action", "/admin/eventUpdate");

@@ -61,7 +61,12 @@ module.exports = function(sequelize, DataTypes) {
     eventStatus: {
       type: DataTypes.STRING(1),
       allowNull: true,
-      comment: "0 : 진행중, 1 : 마감"
+      comment: "default => null, 투표시작 => 0, 행사끝 => 1"
+    },
+    eventImg: {
+      type: DataTypes.STRING(300),
+      allowNull: true,
+      comment: "대표이미지"
     }
   }, {
     sequelize,

@@ -24,7 +24,7 @@ module.exports = function(sequelize, DataTypes) {
       comment: "댓글작성일자"
     },
     cmtContent: {
-      type: DataTypes.STRING(1000),
+      type: DataTypes.STRING(500),
       allowNull: false,
       comment: "댓글내용"
     },

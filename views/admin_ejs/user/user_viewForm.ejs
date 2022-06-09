@@ -12,6 +12,13 @@
                </div>
             </div>
             <div class="mb-3 row">
+               <label for="html5-text-input" class="col-md-2 col-form-label">설치</label>
+               <div class="col-md-10">
+                  <input class="form-control" readonly type="text" value="<%=result[0].userSocialDiv%>"
+                     id="userSocialDiv" name="userSocialDiv" />
+               </div>
+            </div>
+            <div class="mb-3 row">
                <label for="html5-text-input" class="col-md-2 col-form-label">프로필</label>
                <div class="col-md-3">
                   <% if(result.length > 0 && result[0].userImg != null && result[0].userImg != '') {%>
@@ -20,17 +27,6 @@
                   등록된 프로필 사진이 없습니다.
                   <% } %>
                   <input type="hidden" value="<%=result[0].userImg%>" id="userImg" name="userImg" />
-               </div>
-            </div>
-            <div class="mb-3 row">
-               <label for="html5-text-input" class="col-md-2 col-form-label">첨부파일</label>
-               <div class="col-md-3">
-                  <% if(result.length > 0 && result[0].detailImg != null && result[0].detailImg != '') {%>
-                  <img src="../../../<%=result[0].detailImg%>" style="width:100%">
-                  <% }else{ %>
-                  등록된 첨부파일이 없습니다.
-                  <% } %>
-                  <input type="hidden" value="<%=result[0].detailImg%>" id="detailImg" name="detailImg" />
                </div>
             </div>
             <div class="mb-3 row">
@@ -43,7 +39,7 @@
             <div class="mb-3 row">
                <label for="html5-text-input" class="col-md-2 col-form-label">휴대번호</label>
                <div class="col-md-10">
-                  <input class="form-control" readonly type="text" value="<%=result[0].userPhone%>" id="userPhone"
+                  <input class="form-control" readonly type="text" value="<%=result[0].userPhoneFmt%>" id="userPhone"
                      name="userPhone" />
                </div>
             </div>
@@ -57,7 +53,7 @@
             <div class="mb-3 row">
                <label for="html5-text-input" class="col-md-2 col-form-label">전화번호</label>
                <div class="col-md-10">
-                  <input class="form-control" readonly type="text" value="<%=result[0].officePhone%>" id="officePhone"
+                  <input class="form-control" readonly type="text"  <%if(result[0].officePhone==''){%>value=""<%}else{%>value="<%=result[0].officePhoneFmt%>"<%}%> id="officePhone"
                      name="officePhone" />
                </div>
             </div>
@@ -67,7 +63,8 @@
                   <input class="form-control" readonly type="text"
                      value="<%=result[0].userAdres1%> <%=result[0].userAdres2%> <%=result[0].userAdres3%> <%=result[0].userAdres4%>"
                      id="" />
-                  <input type="hidden" id="userAdres" name="userAdres" value="<%=result[0].userAdres1%> <%=result[0].userAdres2%> <%=result[0].userAdres3%>">
+                  <input type="hidden" id="userAdres" name="userAdres"
+                     value="<%=result[0].userAdres1%> <%=result[0].userAdres2%> <%=result[0].userAdres3%>">
                   <input type="hidden" id="userAdres4" name="userAdres4" value="<%=result[0].userAdres4%>">
                </div>
             </div>
@@ -95,8 +92,8 @@
             <div class="mb-3 row">
                <label for="html5-text-input" class="col-md-2 col-form-label">팩스</label>
                <div class="col-md-10">
-                  <input class="form-control" readonly type="text" value="<%=result[0].faxPhone%>" id="faxPhone"
-                     name="faxPhone" />
+                  <input class="form-control" readonly type="text" value="<%=result[0].userFax%>" id="userFax"
+                     name="userFax" />
                </div>
             </div>
             <div class="mb-3 row">
@@ -143,10 +140,21 @@
                      </div>
                   </div>
                   <div class="mb-3 row">
-                     <label for="html5-text-input" class="col-md-2 col-form-label">설치</label>
+                     <label for="html5-text-input" class="col-md-2 col-form-label">첨부파일</label>
                      <div class="col-md-10">
-                        <input class="form-control" readonly type="text" value="<%=result[0].userSocialDiv%>"
-                           id="userSocialDiv" name="userSocialDiv" />
+                        <% if(result.length > 0 && result[0].fileRoute != null && result[0].fileRoute != '') {%>
+                        <% for(var i = 0; i < result.length ; i++) { %> <img src="../../../<%= result[i].fileRoute %>"
+                           alt="사진" class="viewFormImgs" />
+                        <!-- <p><span><%=result[i].fileOrgName%></span></p> -->
+                        <a href="../../../<%= result[i].fileRoute %>"
+                           class="btn btn-block btn-outline-success fileButton" type="button" download>파일 다운로드</a>
+                        </p>
+                        <input type="hidden" name="fileRoute" value="<%=result[i].fileRoute%>">
+                        <% } %>
+                        <% }else{ %>
+                        등록된 첨부파일이 없습니다.
+                        <% } %>
+                        <input type="hidden" value="<%=result[0].detailImg%>" id="detailImg" name="detailImg" />
                      </div>
                   </div>
                   <div class="demo-inline-spacing">
@@ -181,4 +189,12 @@
             }
          });
       })
+
+      // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 
+      var menuItem = document.getElementsByClassName("menu-item");
+      //초기화
+      menuItem.className = 'menu-item';
+      //'[0] = 회원 관리' '[1] = 일반회원관리' if문 걸어주기.
+      menuItem[0].className += ' open active';
+      menuItem[1].className += ' active';
    </script>

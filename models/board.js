@@ -49,12 +49,13 @@ module.exports = function(sequelize, DataTypes) {
     boardFix: {
       type: DataTypes.STRING(1),
       allowNull: false,
-      defaultValue: "0"
+      defaultValue: "0",
+      comment: "0이면 일반 1이면 상단고정"
     },
     crewDiv: {
       type: DataTypes.STRING(5),
       allowNull: false,
-      comment: "총동창회 : all,\\\\n골프회 : gf,\\\\n산악회: mt\n골프 및 산악회 모두 참여 : mtgf"
+      comment: "총동창회만 참여 : all, 골프회 : gf, 산악회: mt, 골프 및 산악회 모두 참여 : mtgf"
     }
   }, {
     sequelize,

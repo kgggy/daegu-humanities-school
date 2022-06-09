@@ -17,12 +17,6 @@ module.exports = function(sequelize, DataTypes) {
         key: 'boardId'
       }
     },
-    hitDate: {
-      type: DataTypes.DATE,
-      allowNull: true,
-      defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP'),
-      comment: "조회일자"
-    },
     uid: {
       type: DataTypes.INTEGER,
       allowNull: true,
@@ -31,6 +25,12 @@ module.exports = function(sequelize, DataTypes) {
         model: 'user',
         key: 'uid'
       }
+    },
+    hitDate: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP'),
+      comment: "조회일자"
     }
   }, {
     sequelize,

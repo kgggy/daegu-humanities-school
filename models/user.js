@@ -43,6 +43,11 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       comment: "도로명"
     },
+    userAdres4: {
+      type: DataTypes.STRING(100),
+      allowNull: true,
+      comment: "상세주소"
+    },
     userAuth: {
       type: DataTypes.STRING(20),
       allowNull: true,
@@ -52,11 +57,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(500),
       allowNull: true,
       comment: "프로필사진"
-    },
-    detailImg: {
-      type: DataTypes.STRING(500),
-      allowNull: true,
-      comment: "홍보사진"
     },
     userNum: {
       type: DataTypes.STRING(5),
@@ -73,7 +73,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       comment: "소속(회사 및 직급)"
     },
-    faxPhone: {
+    userFax: {
       type: DataTypes.STRING(13),
       allowNull: true,
       comment: "팩스번호"
@@ -103,10 +103,11 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       comment: "소셜로그인 종류"
     },
-    userAdres4: {
-      type: DataTypes.STRING(100),
-      allowNull: true,
-      comment: "상세주소"
+    userAdmin: {
+      type: DataTypes.STRING(1),
+      allowNull: false,
+      defaultValue: "0",
+      comment: "0: 일반회원, 1: 관리자"
     }
   }, {
     sequelize,

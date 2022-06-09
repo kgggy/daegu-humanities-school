@@ -10,10 +10,10 @@
 <div style="background-color: #ededfa; padding: 30;">
     <form name="searchForm" action="" method="get" class="easydropdown">
         <input type="hidden" name="page" value="1">
-        <select name="blameDiv" class="dropdown">
+        <select name="targetType" class="dropdown">
             <option value="" selected="selected">종류</option>
-            <option value="0" <%if(blameDiv =="0"){%> selected="selected" <%}%>>게시글</option>
-            <option value="1" <%if(blameDiv =="1"){%> selected="selected" <%}%>>댓글</option>
+            <option value="0" <%if(targetType =="0"){%> selected="selected" <%}%>>게시글</option>
+            <option value="1" <%if(targetType =="1"){%> selected="selected" <%}%>>댓글</option>
         </select>
         <button class="btn btn-primary" type="submit" id="searchAction" style="margin-bottom: 10px;">검색</button>
     </form>
@@ -60,11 +60,11 @@
                     N
                     <%}%></td>  
                         <td>
-                    <% if(results[i].blameDiv == 0){ %>
-                    <button type="button" class="btn btn-block btn-outline-primary" onclick="board('/admin/blameDetailSelectOne?blameDiv=0&blameId=<%=results[i].blameId%>', '',
+                    <% if(results[i].targetType == 0){ %>
+                    <button type="button" class="btn btn-block btn-outline-primary" onclick="board('/admin/blameDetailSelectOne?targetType=0&blameId=<%=results[i].blameId%>', '',
                         'resizable=no,width=640, height=700, scrollbars=1')" <%if(results[i].boardCount==0){%> disabled <%}%>>게시글</button>
                     <%} else{ %>
-                    <button type="button" class="btn btn-block btn-outline-primary" onclick="board('/admin/blameDetailSelectOne?blameDiv=1&blameId=<%=results[i].blameId%>', '',
+                    <button type="button" class="btn btn-block btn-outline-primary" onclick="board('/admin/blameDetailSelectOne?targetType=1&blameId=<%=results[i].blameId%>', '',
                         'resizable=no,width=640, height=700, scrollbars=1')" <%if(results[i].boardCount==0){%> disabled <%}%>>댓글</button>
                     <%}%>  
                 </td>

@@ -6,12 +6,12 @@ var connection = require('../../../config/db').conn;
 router.get('/', async (req, res) => {
     try {
         var page = req.query.page;
-        var blameDiv = req.query.blameDiv == undefined ? "" : req.query.blameDiv;
+        var targetType = req.query.targetType == undefined ? "" : req.query.targetType;
         var sql = "select *, date_format(blameDate, '%Y-%m-%d') as blameDatefmt,\
                          (select count(*) from board where blame.targetContentId = board.boardId) as boardCount\
                     from blame where 1=1";
-        if (blameDiv != '') {
-            sql += " and blameDiv = '" + blameDiv + "'";
+        if (targetType != '') {
+            sql += " and targetType = '" + targetType + "'";
         }
         sql += " order by blameDate desc"
         connection.query(sql, (err, results) => {
@@ -37,7 +37,7 @@ router.get('/', async (req, res) => {
                 endPage: endPage,
                 pass: true,
                 last: last,
-                blameDiv: blameDiv
+                targetType: targetType
             });
         });
     } catch (error) {

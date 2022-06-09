@@ -26,6 +26,24 @@ module.exports = function(sequelize, DataTypes) {
         key: 'eventId'
       }
     },
+    bannerId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      comment: "배너 일련번호",
+      references: {
+        model: 'banner',
+        key: 'bannerId'
+      }
+    },
+    uid: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      comment: "회원번호",
+      references: {
+        model: 'user',
+        key: 'uid'
+      }
+    },
     fileRoute: {
       type: DataTypes.STRING(300),
       allowNull: true,
@@ -40,11 +58,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(10),
       allowNull: true,
       comment: "파일타입"
-    },
-    bannerId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      comment: "배너 일련번호"
     }
   }, {
     sequelize,
@@ -71,6 +84,20 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "eventId" },
+        ]
+      },
+      {
+        name: "FK_event_TO_file_3_idx",
+        using: "BTREE",
+        fields: [
+          { name: "bannerId" },
+        ]
+      },
+      {
+        name: "FK_event_TO_file_4_idx",
+        using: "BTREE",
+        fields: [
+          { name: "uid" },
         ]
       },
     ]

@@ -13,31 +13,15 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       comment: "신고자"
     },
+    userName: {
+      type: DataTypes.STRING(10),
+      allowNull: true,
+      comment: "신고자이름"
+    },
     targetUid: {
       type: DataTypes.INTEGER,
       allowNull: true,
       comment: "대상자"
-    },
-    blameDiv: {
-      type: DataTypes.STRING(2),
-      allowNull: true,
-      comment: "구분"
-    },
-    blameContent: {
-      type: DataTypes.STRING(500),
-      allowNull: true,
-      comment: "내용"
-    },
-    targetContentId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      comment: "신고한게시글\/댓글번호"
-    },
-    blameDate: {
-      type: DataTypes.DATE,
-      allowNull: true,
-      defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP'),
-      comment: "신고일자"
     },
     targetUserName: {
       type: DataTypes.STRING(45),
@@ -48,6 +32,27 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(13),
       allowNull: true,
       comment: "대상자전화번호"
+    },
+    targetType: {
+      type: DataTypes.STRING(1),
+      allowNull: true,
+      comment: "0이면 게시글, 1이면 댓글"
+    },
+    blameContent: {
+      type: DataTypes.STRING(500),
+      allowNull: true,
+      comment: "신고사유"
+    },
+    targetContentId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      comment: "신고된게시글\/댓글번호"
+    },
+    blameDate: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP'),
+      comment: "신고일자"
     }
   }, {
     sequelize,

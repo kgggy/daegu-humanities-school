@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
     try {
         const param = req.query.blameId;
         var sql = "";
-        if (req.query.blameDiv == '0') {
+        if (req.query.targetType == '0') {
             //게시글
             sql = "select b.*, d.*, f.fileRoute, (select boardName from boardDiv where d.boardDivId = boardDiv.boardDivId) as boardName, d.crewDiv, date_format(boardDate, '%Y-%m-%d') as boardDateFmt\
                      from blame b\
@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
                     where b.blameId = ?";
         } else {
             //댓글
-            sql = "select date_format(cmtDate, '%Y-%m-%d') as cmtDateFmt, b.blameDiv,\
+            sql = "select date_format(cmtDate, '%Y-%m-%d') as cmtDateFmt, b.targetType,\
                                 b.targetUserName, b.uid, c.cmtId, c.cmtContent, c.cmtDate from blame b\
                       left join comment c on c.cmtId = b.targetContentId\
                           where b.blameId = ?";

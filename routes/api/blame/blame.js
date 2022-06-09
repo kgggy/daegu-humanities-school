@@ -5,8 +5,8 @@ var connection = require('../../../config/db').conn;
 //신고하기
 router.get('/', async (req, res) => {
     try {
-        var targetUid = req.query.targetUid == undefined ? "10000" : req.query.targetUid;
-        const param = [req.query.uid, req.query.blameContent, targetUid, req.query.blameDiv, req.query.targetContentId];
+        var targetUid = req.query.targetUid == undefined ? "" : req.query.targetUid;
+        const param = [req.query.uid, req.query.blameContent, targetUid, req.query.targetType, req.query.targetContentId];
         const sql = "call blameInsert (?, ?, ?, ?, ?);";
         connection.query(sql, param, (err) => {
             if (err) {

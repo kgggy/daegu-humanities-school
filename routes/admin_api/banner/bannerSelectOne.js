@@ -10,8 +10,8 @@ router.get('/', async (req, res) => {
         const param = req.query.bannerId;
         var searchText = req.query.searchText == undefined ? "" : req.query.searchText;
         const page = req.query.page;
-        const bannerDiv = req.query.bannerDiv;
-        const sql = "select b.*, f.* from banner b join file f on b.bannerId = f.bannerId where b.bannerId = ?";
+        const crewDiv = req.query.crewDiv;
+        const sql = "select b.*, f.fileRoute, f.fileOrgName from banner b left join file f on b.bannerId = f.bannerId where b.bannerId = ?";
         connection.query(sql, param, (err, result) => {
             if (err) {
                 console.log(err);
@@ -19,9 +19,10 @@ router.get('/', async (req, res) => {
                     msg: "query error"
                 });
             }
+            console.log(result)
             let route = req.app.get('views') + '/banner/banner_viewForm';
             res.render(route, {
-                bannerDiv: bannerDiv,
+                crewDiv: crewDiv,
                 searchText: searchText,
                 page: page,
                 result: result

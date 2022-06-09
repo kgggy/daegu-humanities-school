@@ -10,7 +10,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     boardId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       comment: "게시글번호",
       references: {
         model: 'board',
@@ -24,6 +24,14 @@ module.exports = function(sequelize, DataTypes) {
       references: {
         model: 'user',
         key: 'uid'
+      }
+    },
+    cmtId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'comment',
+        key: 'cmtId'
       }
     }
   }, {
@@ -51,6 +59,13 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "boardId" },
+        ]
+      },
+      {
+        name: "FK_board_TO_recommand_3_idx",
+        using: "BTREE",
+        fields: [
+          { name: "cmtId" },
         ]
       },
     ]

@@ -15,62 +15,73 @@
    }
 </style>
 
-         <div class="col-xs-6">
-            <!-- HTML5 Inputs -->
-            <div class="card mb-4">
-               <h5 class="card-header"><%if(crewDiv=="all"){%>총동창회<%}else if (crewDiv == "gf"){%>골프회<%}
+<div class="col-xs-6">
+   <!-- HTML5 Inputs -->
+   <div class="card mb-4">
+      <h5 class="card-header"><%if(crewDiv=="all"){%>총동창회<%}else if (crewDiv == "gf"){%>골프회<%}
     else if (crewDiv == "mt"){%>산악회<%}%> / <%=boardName%> 등록</h5>
-               <div class="card-body">
-                     <!-- 컨텐츠 -->
-                     <form action="" id="boardwrite" method="post" enctype="multipart/form-data" autocomplete="off">
-                        <input type="hidden" id="writContent" name="writContent" value="">
-                        <input type="hidden" id="boardDivId" name="boardDivId" value="<%=boardDivId%>">
-                        <input type="hidden" id="crewDiv" name="crewDiv" value="<%=crewDiv%>">
-                        <input type="hidden" id="boardName" name="boardName" value="<%=boardName%>">
-                        <div class="mb-3 row">
-                           <label class="col-md-1 col-form-label" for="text-input">제목</label>
-                           <div class="col-md-10">
-                              <input class="form-control" id="writTitle" type="text" name="boardTitle" value="">
-                           </div>
-                        </div>
-                        <div class="mb-3 row">
-                           <label class="col-md-1 col-form-label" for="text-input">내용</label>
-                           <div class="col-md-10">
-                              <textarea name="boardContent" class="editor" id="editor"></textarea>
-                           </div>
-                        </div>
-                        <div class="mb-3 row">
-                           <label class="col-md-1 col-form-label">첨부파일</label>
-                           <div class="col-md-10" style="display: flex; flex-direction: column; gap: 25px; padding-left: 15px">
-                              <input class="form-control" type="file" id="file" name="file">
-                              <input class="form-control" type="file" id="file" name="file" />
-                              <input class="form-control" type="file" id="file" name="file" />
-                              <input class="form-control" type="file" id="file" name="file" />
-                              <input class="form-control" type="file" id="file" name="file" />
-                           </div>
-                           
-                        </div>
-                        <div class="mb-3 row" style="margin-top: 30px; margin-bottom: 30px;">
-                           <label class="col-md-1 col-form-label" for="text-input">상단고정여부</label>
-                           <div class="col-md-10">
-                              <input type="checkbox" style='zoom:3.0;' name="boardFix" value="1">
-                           </div>
-                        </div>
-                        <!--option 버튼  -->
-                        <div class="demo-inline-spacing" >
-                           <button type="button" class="btn btn-primary" id="enroll_btn">등록</button>
-                           <button type="button" class="btn btn-danger"
-                              onclick="history.go(-1)">취소</button>
-                        </div>
-                     </div>
-
-                  </form>
+      <div class="card-body">
+         <!-- 컨텐츠 -->
+         <form action="" id="boardwrite" method="post" enctype="multipart/form-data" autocomplete="off">
+            <input type="hidden" id="writContent" name="writContent" value="">
+            <input type="hidden" id="boardDivId" name="boardDivId" value="<%=boardDivId%>">
+            <input type="hidden" id="crewDiv" name="crewDiv" value="<%=crewDiv%>">
+            <input type="hidden" id="boardName" name="boardName" value="<%=boardName%>">
+            <div class="mb-3 row">
+               <label class="col-md-1 col-form-label primary" for="text-input">* 제목</label>
+               <div class="col-md-10">
+                  <input class="form-control" id="writTitle" type="text" name="boardTitle" value="" maxlength="200" />
                </div>
             </div>
-         </div>
+            <div class="mb-3 row">
+               <label class="col-md-1 col-form-label primary" for="text-input">* 내용</label>
+               <div class="col-md-10">
+                  <textarea name="boardContent" class="editor" id="editor"></textarea>
+               </div>
+            </div>
+            <div class="mb-3 row">
+               <label class="col-md-1 col-form-label">첨부파일</label>
+               <div class="col-md-10" style="display: flex; flex-direction: column; gap: 25px; padding-left: 15px">
+                  <input class="form-control" type="file" id="file" name="file">
+                  <input class="form-control" type="file" id="file" name="file" />
+                  <input class="form-control" type="file" id="file" name="file" />
+                  <input class="form-control" type="file" id="file" name="file" />
+                  <input class="form-control" type="file" id="file" name="file" />
+               </div>
+
+            </div>
+            <div class="mb-3 row" style="margin-top: 30px; margin-bottom: 30px;">
+               <label class="col-md-1 col-form-label" for="text-input">상단 고정 여부</label>
+               <div class="col-md-10">
+                  <input type="checkbox" style='zoom:3.0;' name="boardFix" value="1">
+               </div>
+            </div>
+            <div class="mb-3 row" style="margin-top: 30px; margin-bottom: 30px;">
+               <label class="col-md-1 col-form-label" for="text-input">푸쉬 알림 여부</label>
+               <div class="col-md-10">
+                  <input type="checkbox" style='zoom:3.0;' name="pushyn" value="1">
+               </div>
+            </div>
+            <!--option 버튼  -->
+            <div class="demo-inline-spacing">
+               <button type="button" class="btn btn-primary" id="enroll_btn">등록</button>
+               <button type="button" class="btn btn-danger" onclick="history.go(-1)">취소</button>
+            </div>
+      </div>
+
+      </form>
+   </div>
+</div>
+</div>
 
 <script type="text/javascript">
    $(document).ready(function () {
+      //엔터로 submit 막기
+      $('input[type="text"]').keydown(function () {
+         if (event.keyCode === 13) {
+            event.preventDefault();
+         }
+      });
       //ckeditor
       ClassicEditor
          .create(document.querySelector('#editor'), {
@@ -104,6 +115,12 @@
             return false;
          }
 
+         var convertContent = content.replace(/(<([^>]+)>)/ig, "");
+         if (convertContent.length > 3000) {
+            alert("입력 메세지는 3000자를 초과할 수 없습니다.");
+            return false;
+         }
+
          if (confirm("등록하시겠습니까?") == true) {
             $('input[name=writContent]').attr('value', content);
             $("#boardwrite").attr("action", "boardInsert");
@@ -114,17 +131,66 @@
       });
 
       //쿼리스트링값 가져와서 넘기기
-      // function getUrlParams() {
-      //    var params = {};
-      //    window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (str, key, value) {
-      //       params[key] = value;
-      //    });
-      //    return params;
-      // }
-      // var param = getUrlParams();
-      // var uid = document.getElementById("uid");
-      // uid.value = param.uid;
-      // var boardId = document.getElementById("boardId");
-      // boardId.value = param.boardId;
+      function getUrlParams() {
+         var params = {};
+         window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (str, key, value) {
+            params[key] = value;
+         });
+         return params;
+      }
+      var param = getUrlParams();
+      // console.log(param.boardName)
+      if (param.boardName == '%EA%B0%A4%EB%9F%AC%EB%A6%AC') {
+         //확장자 체크
+         $("input:file[name='file']").change(function () {
+            var str = $(this).val();
+            var fileName = str.split('\\').pop().toLowerCase();
+            // alert(fileName);
+            checkFileName(fileName);
+         });
+
+         //확장자 체크
+         function checkFileName(str) {
+            var ext = str.split('.').pop().toLowerCase();
+            // alert(ext);
+            if ($.inArray(ext, ['jpg', 'png', 'jpeg', 'gif']) == -1) {
+               alert(ext + '파일은 업로드 하실 수 없습니다.');
+               $("input:file[name='file']").val("");
+            }
+         }
+      }
    });
+
+   // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 
+   var menuItem = document.getElementsByClassName("menu-item");
+   var boardDivId = document.getElementById("boardDivId").value;
+   var crewDiv = document.getElementById("crewDiv").value;
+   //초기화
+   menuItem.className = 'menu-item';
+   //'[2] = 게시판관리' '[3] = 공지사항' '[4] = 갤러리' '[5] = 경조사'
+   //'[10] = 골프회' '[11] = 공지사항' '[12] = 갤러리'
+   //'[17] = 산악회' '[18] = 공지사항' '[19] = 갤러리'
+   if (crewDiv == 'all') {
+      menuItem[2].className += ' open active';
+      if (boardDivId == 1) {
+         menuItem[3].className += ' active';
+      } else if (boardDivId == 2) {
+         menuItem[4].className += ' active';
+      } else if (boardDivId == 3)
+         menuItem[5].className += ' active';
+   } else if (crewDiv == 'gf') {
+      menuItem[9].className += ' open active';
+      if (boardDivId == 1) {
+         menuItem[10].className += ' active';
+      } else if (boardDivId == 2) {
+         menuItem[11].className += ' active';
+      }
+   } else if (crewDiv == 'mt') {
+      menuItem[15].className += ' open active';
+      if (boardDivId == 1) {
+         menuItem[16].className += ' active';
+      } else if (boardDivId == 2) {
+         menuItem[17].className += ' active';
+      }
+   }
 </script>

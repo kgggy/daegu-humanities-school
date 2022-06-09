@@ -42,9 +42,9 @@
 </select>
 <select name="searchType3" class="dropdown">
     <option value="">동아리</option>
-    <option value="총동창회" <%if(searchType3=="총동창회"){%> selected="selected" <%}%>>총동창회</option>
-    <option value="골프회" <%if(searchType3=="골프회"){%> selected="selected" <%}%>>골프회</option>
-    <option value="산악회" <%if(searchType3=="산악회"){%> selected="selected" <%}%>>산악회</option>
+    <option value="gf" <%if(searchType3=="gf"){%> selected="selected" <%}%>>골프회</option>
+    <option value="mt" <%if(searchType3=="mt"){%> selected="selected" <%}%>>산악회</option>
+    <option value="mtgf" <%if(searchType3=="mtgf"){%> selected="selected" <%}%>>골프회 및 산악회</option>
 </select>
 <% if(searchText != '') { %> <input class="searchbox" type="text" name="searchText" value="<%=searchText%>" />
             <% } else {%>
@@ -65,6 +65,7 @@
                         <tr>
                             <th><input type="checkbox" name="chkAll" id="chkAll" /></th>
                             <th>번호</th>
+                            <th>설치</th>
                             <th>이름</th>
                             <th>기수</th>
                             <th>휴대폰</th>
@@ -85,6 +86,14 @@
                             </td>
                             <td>
                                 <%=results[i].uid%>
+                            </td>
+                            <td>
+                                <% if (results[i].userSocialDiv == 'android') { %>
+                                <img src="../../../public/images/android.png">
+                                <% } else if (results[i].userSocialDiv == 'ios') { %>
+                                <img src="../../../public/images/ios.png">
+                                <% } else { %>
+                                <% } %>
                             </td>
                             <td>
                                 <i class="fab fa-angular fa-lg text-danger me-3"></i>

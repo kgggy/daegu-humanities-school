@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var connection = require('../../config/db').conn;
+var connection = require('../../../config/db').conn;
+
 //인삿말 조회
 router.get('/', async (req, res) => {
     try {

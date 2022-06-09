@@ -18,8 +18,8 @@
          <div class="col-xs-6">
             <!-- HTML5 Inputs -->
             <div class="card mb-4">
-               <h5 class="card-header"><%if(result[0].bannerDiv=="all"){%>총동창회<%}else if (result[0].bannerDiv == "gf"){%>골프회<%}
-                                     else if (result[0].bannerDiv == "mt"){%>산악회<%}%> 후원 수정</h5>
+               <h5 class="card-header"><%if(result[0].crewDiv=="all"){%>총동창회<%}else if (result[0].crewDiv == "gf"){%>골프회<%}
+                                     else if (result[0].crewDiv == "mt"){%>산악회<%}%> 후원 수정</h5>
                   <div class="card-body">
                      <!-- 컨텐츠 -->
                      <form name="udtForm" role="form">
@@ -27,7 +27,7 @@
                         <input type="hidden" name="fileRoute" value="">
                         <input type="hidden" name="page" value="<%=page%>">
                         <input type="hidden" id="writContent" name="bannerDetail" value="">
-                        <input type="hidden" id="bannerDiv" name="bannerDiv" value="<%=result[0].bannerDiv%>">
+                        <input type="hidden" id="crewDiv" name="crewDiv" value="<%=result[0].crewDiv%>">
                         <div class="mb-3 row">
                            <label class="col-md-1 col-form-label" for="text-input">글번호</label>
                            <div class="col-md-10">
@@ -36,14 +36,14 @@
                            </div>
                         </div>
                         <div class="mb-3 row">
-                           <label class="col-md-1 col-form-label" for="text-input">후원업체명</label>
+                           <label class="col-md-1 col-form-label primary" for="text-input">* 후원업체명</label>
                            <div class="col-md-10">
                               <input class="form-control" id="writTitle" type="text" name="bannerTitle"
                                  value="<%=result[0].bannerTitle%>">
                            </div>
                         </div>
                         <div class="mb-3 row">
-                           <label class="col-md-1 col-form-label" for="text-input">업체세부내용</label>
+                           <label class="col-md-1 col-form-label primary" for="text-input">* 업체세부내용</label>
                            <div class="col-md-10">
                               <textarea name="editor" class="editor" id="editor"><%-result[0].bannerDetail %></textarea>
                            </div>
@@ -97,6 +97,12 @@
 
 <script type="text/javascript">
    $(document).ready(function () {
+      //엔터로 submit 막기
+      $('input[type="text"]').keydown(function() {
+         if (event.keyCode === 13) {
+            event.preventDefault();
+         }
+      });
       //ckeditor
       ClassicEditor
          .create(document.querySelector('#editor'), {
@@ -115,13 +121,13 @@
          var writTitle = $("#writTitle").val();
          var content = editor.getData();
          if (writTitle == "") {
-            alert("제목을 입력하세요.");
+            alert("후원업체명을 입력하세요.");
             $("#writTitle").focus();
             return false;
          }
 
          if (content == null) {
-            alert("내용을 입력하세요.");
+            alert("업체세부내용을 입력하세요.");
             $("#editor").focus();
             return false;
          }
@@ -154,17 +160,17 @@
    })
           // 레이아웃 adminNav 해당 탭에 접근했을때 펼쳐주기 
     var menuItem = document.getElementsByClassName("menu-item");
-    var bannerDiv = document.getElementById("bannerDiv").value;
+    var crewDiv = document.getElementById("crewDiv").value;
     //초기화
     menuItem.className = 'menu-item';
     //'[2] = 게시판관리' '[3] = 공지사항' '[4] = 갤러리' '[5] = 경조사'
     //'[10] = 골프회' '[11] = 공지사항' '[12] = 갤러리'
     //'[17] = 산악회' '[18] = 공지사항' '[19] = 갤러리'
-    if(bannerDiv == 'all'){
+    if(crewDiv == 'all'){
         menuItem[8].className += ' open active';
-    } else if (bannerDiv == 'gf'){
+    } else if (crewDiv == 'gf'){
         menuItem[14].className += ' open active';
-    } else if (bannerDiv == 'mt'){
+    } else if (crewDiv == 'mt'){
         menuItem[20].className += ' open active';
     }
 </script>

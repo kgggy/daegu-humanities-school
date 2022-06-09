@@ -3,6 +3,7 @@ var router = express.Router();
 var connection = require('../../../config/db').conn;
 
 //게시판 메인
+//UI 나오면 다시 확인!!!
 router.get('/', async (req, res) => {
     try {
         const param = req.query.crewDiv;

@@ -39,6 +39,8 @@ const blameSelect = require('./blame/blameSelect.js');
 const blameDetailSelectOne = require('./blame/blameDetailSelectOne.js');
 const blamesDelete = require('./blame/blamesDelete.js');
 
+const dropDown = require('./dropDown.js');
+
 // router.use('/', (req,res,next) => {
 //     if(req.url == '/' || req.url == '/login') {
 //         // console.log("세션 검사 하지않고 로그인페이지로")
@@ -96,5 +98,7 @@ router.use('/commentDelete', commentDelete);
 router.use('/blameSelect', blameSelect);
 router.use('/blameDetailSelectOne', blameDetailSelectOne);
 router.use('/blamesDelete', blamesDelete);
+
+router.use('/dropDown', dropDown);
 
 module.exports = router;

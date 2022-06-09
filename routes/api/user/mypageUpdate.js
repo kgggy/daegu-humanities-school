@@ -80,13 +80,13 @@ router.patch('/:uid', upload.fields([{ name: 'userImg' }, { name: 'detailImg' }]
 
         const param = [req.body.userName, req.body.userPhone, req.body.userEmail, req.body.officePhone,
             req.body.userAdres1, req.body.userAdres2, req.body.userAdres3, req.body.userAdres4, req.body.userAuth, req.body.userUrl,
-            req.body.userNum, req.body.userJob, req.body.faxPhone, req.params.uid
+            req.body.userNum, req.body.userJob, req.body.userFax, req.params.uid
         ];
         console.log(param)
         const sql = "update user set userName = ?, userPhone = ?, userEmail = ?,\
                                  officePhone = ?, userAdres1 = ?, userAdres2 = ?, userAdres3 = ?, userAdres4 = ?,\
                                  userAuth = ?, userUrl = ?,\
-                                 userNum = ?, userJob = ?, faxPhone = ?\
+                                 userNum = ?, userJob = ?, userFax = ?\
                   where uid = ?";
         
         connection.query(sql, param, async (err) => {

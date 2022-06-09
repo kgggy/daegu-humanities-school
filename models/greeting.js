@@ -1,37 +1,41 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('banner', {
-    bannerId: {
+  return sequelize.define('greeting', {
+    id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
-      comment: "배너번호"
+      comment: "일련번호"
     },
-    crewDiv: {
-      type: DataTypes.STRING(5),
+    title: {
+      type: DataTypes.STRING(45),
       allowNull: true,
-      defaultValue: "all",
-      comment: "총동창회: all 산악회 : mt 골프회 : gt"
+      comment: "제목"
     },
-    bannerUrl: {
-      type: DataTypes.STRING(200),
+    writer: {
+      type: DataTypes.STRING(45),
       allowNull: true,
-      comment: "홈페이지"
+      comment: "작성자"
     },
-    bannerTitle: {
-      type: DataTypes.STRING(30),
+    content: {
+      type: DataTypes.STRING(3000),
       allowNull: true,
-      comment: "후원업체명"
+      comment: "내용"
     },
-    bannerDetail: {
+    img: {
       type: DataTypes.STRING(500),
       allowNull: true,
-      comment: "후원업체설명"
+      comment: "이미지"
+    },
+    no: {
+      type: DataTypes.STRING(4),
+      allowNull: true,
+      comment: "회"
     }
   }, {
     sequelize,
-    tableName: 'banner',
+    tableName: 'greeting',
     timestamps: false,
     indexes: [
       {
@@ -39,7 +43,7 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "bannerId" },
+          { name: "id" },
         ]
       },
     ]

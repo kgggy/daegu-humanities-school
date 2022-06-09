@@ -1,15 +1,15 @@
 var express = require('express');
 var router = express.Router();
-var connection = require('../../../config/db').conn;
 const models = require("../../../models");
+
 //광고 조회
 router.get('/', async (req, res) => {
     try {
-        const param = req.query.bannerDiv;
+        const param = req.query.crewDiv;
         const all = [];
         const banner = await models.banner.findAll({
             where: {
-                bannerDiv: param
+                crewDiv: param
             },
             raw: true
         })

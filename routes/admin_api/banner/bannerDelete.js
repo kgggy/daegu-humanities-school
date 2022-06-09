@@ -37,7 +37,7 @@ var upload = multer({ //multer안에 storage정보
 router.get('/', async (req, res) => {
     try {
         const param = req.query.bannerId;
-        var bannerDiv = req.query.bannerDiv;
+        var crewDiv = req.query.crewDiv;
         const sql = "delete from banner where bannerId = ?;\
                         delete from file where bannerId = ?";
         connection.query(sql, [param, param], (err) => {
@@ -57,7 +57,7 @@ router.get('/', async (req, res) => {
                     });
                 }
             }
-            res.send('<script>alert("게시물이 삭제되었습니다."); location.href="/admin/bannerMain?page=1&bannerDiv=' + bannerDiv + '";</script>');
+            res.send('<script>alert("게시물이 삭제되었습니다."); location.href="/admin/bannerMain?page=1&crewDiv=' + crewDiv + '";</script>');
         });
     } catch (error) {
         res.send(error.message);

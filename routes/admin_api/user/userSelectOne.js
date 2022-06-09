@@ -13,10 +13,12 @@ router.get('/', async (req, res) => {
       "&searchType2=" + searchType2 + "&searchType3=" + searchType3 + "&searchText=" + searchText;
     var page = req.query.page;
     const param = [req.query.uid, req.query.uid, req.query.uid];
-    const sql = "select *,\
-                        concat(substr(userPhone, 1, 3), '-',  substr(userPhone, 4, 4), '-', substr(userPhone, 8, 4)) as userPhone,\
-                        concat(substr(officePhone, 1, 3), '-',  substr(officePhone, 4, 4), '-', substr(officePhone, 8, 4)) as officePhone\
-                   from user where uid = ?";
+    const sql = "select u.*, f.fileRoute,\
+                        concat(substr(u.userPhone, 1, 3), '-',  substr(u.userPhone, 4, 4), '-', substr(u.userPhone, 8, 4)) as userPhoneFmt,\
+                        concat(substr(u.officePhone, 1, 3), '-',  substr(u.officePhone, 4, 3), '-', substr(u.officePhone, 7, 4)) as officePhoneFmt\
+                   from user u\
+                   left join file f on f.uid = u.uid\
+                  where u.uid = ?";
     connection.query(sql, param, function (err, result) {
       if (err) {
         console.log(err);

@@ -1,5 +1,5 @@
 const ONE_SIGNAL_CONFIG = {
-    APP_ID:"a98963e7-a4a8-455a-b894-aa4cdc0466ac",
+    APP_ID:"",
     API_KEY:"ZmM4MmRjYzctMjM1My00NTI3LWIzZGItOTk5ZDE5OTUyNTcz"
 }
 
