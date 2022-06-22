@@ -142,10 +142,11 @@ router.post('/', upload.array('file'), (req, res) => {
       if (err) {
         console.log(err);
       }
-      if(paths.length > 0) {
+      if(paths.length > 0 && userImg == '') {
         let remainQueryCnt = paths.length;
+        // console.log(remainQueryCnt)
         //파일 테이블 업데이트
-        for (let i = a; i < paths.length; i++) {
+        for (let i = a; i < remainQueryCnt; i++) {
           const fileSql = "insert into file(uid, fileRoute, fileOrgName, fileType) values (?, ?, ?, ?)";
           const param1 = [uid, paths[i], orgName[i], path.extname(paths[i])];
           // console.log(param1);
