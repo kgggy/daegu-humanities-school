@@ -39,7 +39,7 @@
                            <label class="col-md-1 col-form-label primary" for="text-input">* 후원업체명</label>
                            <div class="col-md-10">
                               <input class="form-control" id="writTitle" type="text" name="bannerTitle"
-                                 value="<%=result[0].bannerTitle%>">
+                                 value="<%=result[0].bannerTitle%>" maxlength="30" >
                            </div>
                         </div>
                         <div class="mb-3 row">
@@ -51,7 +51,7 @@
                         <div class="mb-3 row">
                            <label class="col-md-1 col-form-label" for="text-input">사이트</label>
                            <div class="col-md-10">
-                              <input class="form-control" id="bannerUrl" type="text" name="bannerUrl" value="<%=result[0].bannerUrl%>">
+                              <input class="form-control" id="bannerUrl" type="text" name="bannerUrl" value="<%=result[0].bannerUrl%>" maxlength="200" >
                            </div>
                         </div>
                         <div class="mb-3 row">
@@ -131,6 +131,11 @@
             $("#editor").focus();
             return false;
          }
+         var convertContent = content.replace(/(<([^>]+)>)/ig,"");
+			if (convertContent.length > 3000) {
+				alert("입력 메세지는 3000자를 초과할 수 없습니다.");
+				return false;
+			}
 
          if (confirm("수정하시겠습니까?") == true) {
             $('input[id=writContent]').attr('value', content);
